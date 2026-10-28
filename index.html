@@ -419,7 +419,7 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
     <div class="field"><label for="apiKey">爸爸攻略用的 Anthropic API 金鑰（選填）</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-…"></div>
     <div class="row"><button class="btn coral" type="submit">儲存</button><button class="btn light" type="button" id="closeSettings">取消</button></div>
     <div class="row"><button class="btn light sm" type="button" id="exportData">匯出備份</button><label class="btn light sm" for="importFile" style="cursor:pointer">匯入備份</label><input id="importFile" type="file" accept="application/json" hidden></div>
-    <p class="note">所有資料（含金鑰）只存在這支手機裡。換手機前記得先匯出備份。</p>
+    <p class="note">所有資料（含金鑰）只存在這支手機裡。換手機前記得先匯出備份。<span id="appVer"></span></p>
   </form>
 </div>
 
@@ -1488,7 +1488,18 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+const APP_VERSION='v6';
+if('serviceWorker' in navigator){
+  const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
+  window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{
+    const check=()=>reg.update().catch(()=>{});
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
+    setInterval(check,30*60*1000);
+  }).catch(()=>{})});
+}
+try{if(sessionStorage.getItem('gd_updated')){sessionStorage.removeItem('gd_updated');setTimeout(()=>toast('已更新到最新版'),400)}}catch(_){}
+try{document.getElementById('appVer').textContent='（版本 '+APP_VERSION+'）'}catch(_){}
 setupAsk();
 let firstRun=false;try{firstRun=localStorage.getItem('gd_date')===null}catch(_){}
 render();

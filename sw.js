@@ -1,5 +1,5 @@
 // 好爸爸 service worker：離線也能打開，App 本體和精選優先抓最新
-const CACHE = 'good-dad-v5';
+const CACHE = 'good-dad-v6';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -24,7 +24,7 @@ self.addEventListener('fetch', e => {
   const networkFirst = url.pathname.endsWith('/') || url.pathname.endsWith('.html') || url.pathname.endsWith('feed.json');
   if (networkFirst) {
     e.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-store' })
         .then(res => { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); return res; })
         .catch(() => caches.match(req, { ignoreSearch: true }))
     );
