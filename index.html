@@ -332,6 +332,14 @@ body{overflow-x:hidden;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom;
 .lvup .card h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:26px}
 .lvup .card .k{color:var(--coral-ink)}
 @media (prefers-reduced-motion:no-preference){.lvup .card{animation:pop2 .45s cubic-bezier(.2,1.4,.4,1)}@keyframes pop2{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}}
+
+/* 影片橫向滑動列 */
+.swipe{scroll-padding-inline:16px}
+.vrow{display:flex;flex-direction:column;gap:8px}
+.vrow h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:19px}
+.vswipe>.vcard{flex:0 0 80%}
+.vswipe>.vcard:only-child{flex-basis:100%}
+.vlist{display:flex;flex-direction:column;gap:18px}
 .hist{border:0;text-align:left;background:var(--bg);border-radius:14px;padding:10px 14px;font-size:14px}
 .vinfo b{font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .vinfo small{font-size:12px;color:var(--muted)}
@@ -718,6 +726,20 @@ function videoCard(v){const st=stageOf(v.stage);const c=v.topic==='mom'?'rose':s
 function threadCard(t){const st=stageOf(t.stage);const h=String(t.author||'').replace(/^@/,'');
   return `<a class="tcard" href="${esc(t.url)}" target="_blank" rel="noopener"><span class="who"><span class="avatar" style="background:${dcol(st.color)}">${esc((h[0]||'T').toUpperCase())}</span>
    <span><b>@${esc(h)}</b><small>${esc(st.title)}</small></span></span><p>${esc(t.summary)}</p>${t.why?`<span class="why2"><span class="lbl" style="background:var(--lemon-d)">爸爸看點</span>${esc(t.why)}</span>`:''}<span class="go">到 Threads 看原文 →</span></a>`}
+function videoRows(vs,filt,cur){
+  const groups=[];
+  if(filt){
+    const a=vs.filter(v=>v.topic!=='mom'),b=vs.filter(v=>v.topic==='mom');
+    if(a.length)groups.push([stageOf(filt).title+'・育兒',a]);if(b.length)groups.push(['照顧媽媽',b]);
+  }else{
+    const byStage=id=>vs.filter(v=>v.stage===id&&v.topic!=='mom');
+    const mom=vs.filter(v=>v.topic==='mom');
+    if(byStage(cur.id).length)groups.push(['現在・'+cur.title,byStage(cur.id)]);
+    if(mom.length)groups.push(['照顧媽媽',mom]);
+    STAGES.forEach(x=>{if(x.id!==cur.id&&byStage(x.id).length)groups.push([x.title,byStage(x.id)])});
+  }
+  return groups.map(([t,l])=>`<div class="vrow"><div class="row between"><h2>${esc(t)}</h2><span class="note">${l.length} 支${l.length>1?'・左右滑':''}</span></div><div class="swipe vswipe">${l.map(videoCard).join('')}</div></div>`).join('');
+}
 function updatedLine(){const m=s.feed.meta;
   if(s.feed.state==='off')return '<span class="updated">精選暫時無法載入，可先用下方搜尋</span>';
   if(!m||!m.updatedAt)return '<span class="updated">精選載入中…</span>';
@@ -1042,7 +1064,7 @@ const V={
    <div class="swipe">${st.tips.map((t,k)=>tipHTML(t,COLORS[(i+k+1)%COLORS.length])).join('')}<article class="tipcard t-sky"><p class="k">媽媽此時</p><h3>${esc(st.mom)}</h3></article></div></div>`+
   (soon.length?`<section class="tile t-mint span2"><div class="row between"><h2>該買了</h2><button class="btn sm ghost" type="button" data-go="lists">清單</button></div>
     <div class="swipe">${soon.map(o=>`<div class="mini-shop"><span class="name">${esc(o.x[1])}</span><span class="meta">${esc(o.x[3])}・${esc(o.x[4])}</span><a class="shopee" style="align-self:flex-start" href="${shopee(o.x[5])}" target="_blank" rel="noopener">去蝦皮看看</a></div>`).join('')}</div></section>`:'')+
-  (()=>{const v=feedFor('videos',st.id,1)[0];return v?`<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">本週推薦影片</h2><button class="btn sm light" type="button" data-learn="video">更多</button></div>${videoCard(v)}</div>`:''})()+
+  (()=>{const vl=feedFor('videos',st.id).filter(v=>v.topic!=='mom').slice(0,8);return vl.length?`<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">本週推薦影片</h2><button class="btn sm light" type="button" data-learn="video">更多</button></div><div class="swipe vswipe">${vl.map(videoCard).join('')}</div></div>`:''})()+
   (()=>{const ts=feedFor('threads',st.id,2);return `<section class="tile t-ink span2"><p class="k">THREADS 精選</p><h2>其他爸媽最近在聊「${esc(st.kw)}」</h2>
    ${ts.length?`<div class="feed">${ts.map(threadCard).join('')}</div>`:''}
    ${refreshBtn(true)}
@@ -1089,7 +1111,7 @@ const V={
   if(s.learnSeg==='video'){
     const vs=feedFor('videos',filt);const topics=YT_TOPICS[filt||cur.id]||[];
     return head+stageChips+`<div class="row between">${updatedLine()}</div>
-     ${vs.length?`<div class="feed">${vs.map(videoCard).join('')}</div>`:(s.feed.state==='loading'?'':'<section class="tile"><p class="note">這個階段的精選影片還在整理中，下次更新會補上。</p></section>')}
+     ${vs.length?`<div class="vlist">${videoRows(vs,filt,cur)}</div>`:(s.feed.state==='loading'?'':'<section class="tile"><p class="note">這個階段的精選影片還在整理中，下次更新會補上。</p></section>')}
      <section class="tile t-sky"><p class="k">想看更多就搜尋</p><div class="ytsearch">${topics.map(q=>`<a href="${yt(q)}" target="_blank" rel="noopener">${esc(q)}</a>`).join('')}</div></section>
      <p class="note">影片會在 YouTube 開啟。內容來自各頻道，醫療問題仍以你們的醫師為準。</p>`;
   }
