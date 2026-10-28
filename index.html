@@ -355,6 +355,48 @@ body{overflow-x:hidden;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom;
 .cal .cd{background:var(--bg)}
 .cal .cd.on{background:var(--coral);color:#fff;font-weight:700}
 .cal .cd.today{box-shadow:inset 0 0 0 2px var(--coral)}
+
+/* 每日任務 */
+.quests h2{font-size:18px}
+.quest .qtag{font-size:11px;color:#fff;border-radius:999px;padding:2px 9px;white-space:nowrap;font-weight:700}
+.quest .btn{flex:none}
+.xpfloat{position:fixed;z-index:35;transform:translate(-50%,0);font-weight:900;font-size:18px;color:var(--coral);text-shadow:0 2px 0 var(--surface);pointer-events:none;animation:xpup 1.1s ease-out forwards}
+@keyframes xpup{0%{opacity:0;transform:translate(-50%,6px) scale(.7)}20%{opacity:1;transform:translate(-50%,-6px) scale(1.15)}100%{opacity:0;transform:translate(-50%,-60px) scale(1)}}
+/* 升等動畫 */
+.lvup{background:rgba(16,8,28,.78);overflow:hidden;padding:0}
+.lvfx{position:relative;width:100%;height:100%;display:grid;place-items:center}
+.rays{position:absolute;left:50%;top:50%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(from 0deg,rgba(255,212,92,.32) 0deg 8deg,transparent 8deg 22deg);border-radius:50%;
+  -webkit-mask:radial-gradient(circle,#000 0 18%,transparent 62%);mask:radial-gradient(circle,#000 0 18%,transparent 62%);animation:spin 14s linear infinite,fadein .6s ease-out both}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadein{from{opacity:0}}
+.spark{position:absolute;bottom:-20px;color:#FFD45C;font-size:18px;animation:spark 2.6s ease-out infinite;opacity:0}
+@keyframes spark{0%{opacity:0;transform:translateY(0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(calc(-100vh + var(--d))) scale(1.2) rotate(180deg)}}
+.card2{position:relative;background:var(--surface);border-radius:30px;padding:24px 22px;width:min(340px,calc(100% - 40px));box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);animation:pop3 .6s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes pop3{from{transform:scale(.4) translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.lvk{margin:0;font-weight:900;letter-spacing:.18em;font-size:15px;background:var(--hero);-webkit-background-clip:text;background-clip:text;color:transparent;animation:lvk 1.4s ease-in-out infinite alternate}
+@keyframes lvk{to{letter-spacing:.3em}}
+.morph{position:relative;width:170px;height:200px}
+.morph>div{position:absolute;inset:0}
+.morph svg{width:100%;height:100%}
+.morph .new{animation:jump 1s .5s ease-in-out infinite;transform-origin:50% 100%}
+.job .morph .old{animation:oldout .5s .5s ease-in forwards}
+.job .morph .new{opacity:0;animation:newin .6s .95s cubic-bezier(.2,1.6,.4,1) forwards,jump 1s 1.6s ease-in-out infinite}
+.morph .flash{border-radius:50%;background:radial-gradient(circle,#fff 0 30%,rgba(255,212,92,.8) 45%,transparent 70%);transform:scale(0);opacity:0}
+.job .morph .flash{animation:flash .7s .8s ease-out forwards}
+@keyframes oldout{to{transform:scale(.3) rotate(-25deg);opacity:0;filter:brightness(3)}}
+@keyframes newin{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:scale(1)}}
+@keyframes flash{0%{transform:scale(0);opacity:1}100%{transform:scale(1.8);opacity:0}}
+@keyframes jump{0%,100%{transform:translateY(0) scaleY(1)}40%{transform:translateY(-14px) scaleY(1.03)}55%{transform:translateY(0) scaleY(.94)}}
+.lvnum{display:flex;align-items:center;gap:10px;font-weight:900;font-variant-numeric:tabular-nums}
+.lvnum .from{font-size:18px;color:var(--muted);animation:fromout .4s 1s ease-in forwards}
+.lvnum .arr{color:var(--muted)}
+.lvnum .to{font-size:34px;color:var(--coral);opacity:0;animation:toin .6s 1.1s cubic-bezier(.2,1.8,.4,1) forwards}
+@keyframes fromout{to{opacity:.45;transform:scale(.85)}}
+@keyframes toin{from{opacity:0;transform:scale(2.2)}to{opacity:1;transform:none}}
+.card2 h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:26px}
+.card2 p{margin:0}
+@media (prefers-reduced-motion:reduce){.rays,.spark,.lvk,.morph .new,.morph .old,.morph .flash,.lvnum .to,.lvnum .from,.card2,.xpfloat{animation:none!important;opacity:1}.job .morph .old,.spark,.morph .flash{display:none}}
 .hist{border:0;text-align:left;background:var(--bg);border-radius:14px;padding:10px 14px;font-size:14px}
 .vinfo b{font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .vinfo small{font-size:12px;color:var(--muted)}
@@ -669,7 +711,7 @@ const yt=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q
 let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.get('baby','寶寶'),
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
-  checkins:store.get('checkins',[]),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
+  checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
   learnSeg:'ask',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
@@ -867,6 +909,94 @@ function checkinCalendar(){
   return `<section class="tile span2"><div class="row between"><h2>${m} 月簽到</h2><span class="note">本月 ${s.checkins.filter(d=>d.startsWith(t.slice(0,7))).length} 天</span></div>
    <div class="cal">${['日','一','二','三','四','五','六'].map(w=>`<b>${w}</b>`).join('')}${cells.join('')}</div></section>`;
 }
+// ---------- 每日任務 ----------
+const QUEST_XP=10,QUEST_ALL=20;
+const QUESTS=[
+ {id:'q-massage',b:'mom',t:'幫她按摩腰背或小腿 10 分鐘',st:['pre']},
+ {id:'q-pillow',b:'mom',t:'睡前幫她把側睡枕頭擺好',st:['pre']},
+ {id:'q-walk',b:'mom',t:'陪她散步 15 分鐘',st:['pre','m1','m3','m6','y1','y2']},
+ {id:'q-water',b:'mom',t:'主動倒一杯溫水給她',st:null},
+ {id:'q-line',b:'mom',t:'傳一句甜蜜話術給她',st:null,act:'lines'},
+ {id:'q-listen',b:'mom',t:'問她今天哪裡不舒服，認真聽完不給建議',st:null},
+ {id:'q-dinner',b:'mom',t:'包辦今天的晚餐或外送',st:null},
+ {id:'q-hair',b:'mom',t:'幫她吹頭髮',st:null},
+ {id:'q-praise',b:'mom',t:'具體稱讚她一件今天做得很好的事',st:null},
+ {id:'q-dishes',b:'mom',t:'今天的碗盤你包了',st:null},
+ {id:'q-sleep',b:'mom',t:'讓她連續睡 3 小時，寶寶交給你',st:['n0','n1','m1']},
+ {id:'q-soup',b:'mom',t:'幫她準備一碗熱湯或熱飲',st:['n0','n1']},
+ {id:'q-talk',b:'baby',t:'對著肚子跟寶寶說話 5 分鐘',st:['pre']},
+ {id:'q-kick',b:'baby',t:'陪她一起感受一次胎動',st:['pre']},
+ {id:'q-bag',b:'baby',t:'檢查待產包，補齊一樣東西',st:['pre']},
+ {id:'q-diaper',b:'baby',t:'今天換 3 次尿布',st:['n0','n1','m1','m3','m6','y1']},
+ {id:'q-burp',b:'baby',t:'餵完奶由你拍嗝',st:['n0','n1','m1','m3']},
+ {id:'q-bath',b:'baby',t:'幫寶寶洗一次澡',st:['n0','n1','m1','m3','m6','y1','y2']},
+ {id:'q-tummy',b:'baby',t:'陪寶寶趴著玩 5 分鐘（醒著且有人看著）',st:['m1','m3']},
+ {id:'q-book',b:'baby',t:'睡前唸一本繪本',st:['m3','m6','y1','y2']},
+ {id:'q-play',b:'baby',t:'放下手機，專心陪玩 20 分鐘',st:['m6','y1','y2']},
+ {id:'q-read',b:'prep',t:'讀一篇知識文章',st:null,act:'read'},
+ {id:'q-video',b:'prep',t:'看一支育兒影片',st:null,act:'video'},
+ {id:'q-ask',b:'prep',t:'問一次爸爸攻略',st:null,act:'ask'},
+ {id:'q-week',b:'prep',t:'看這週寶寶的狀態說明',st:null,act:'weeks'},
+ {id:'q-buy',b:'prep',t:'買好清單上的一樣東西',st:null,act:'lists'}
+];
+function hashStr(x){let h=2166136261;for(const c of x){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function questsFor(date){
+  const rec=s.quests[date];if(rec&&rec.pick)return rec.pick.map(id=>QUESTS.find(q=>q.id===id)).filter(Boolean);
+  const st=STAGES[stageIdx(age())].id;const ok=q=>!q.st||q.st.includes(st);
+  const pickFrom=(b,n)=>QUESTS.filter(q=>q.b===b&&ok(q)).map(q=>({q,k:hashStr(date+q.id)})).sort((a,c)=>a.k-c.k).slice(0,n).map(x=>x.q);
+  return [...pickFrom('mom',2),...pickFrom('baby',1),...pickFrom('prep',1)];
+}
+function questXP(){
+  const r={baby:0,mom:0,prep:0,bonus:0};
+  for(const d in s.quests){const rec=s.quests[d];if(!rec||!rec.done)continue;
+    rec.done.forEach(id=>{const q=QUESTS.find(x=>x.id===id);if(q)r[q.b]+=QUEST_XP});
+    if(rec.pick&&rec.pick.length&&rec.pick.every(id=>rec.done.includes(id)))r.bonus+=QUEST_ALL}
+  return r;
+}
+function toggleQuest(id,el){
+  const d=todayStr();const pick=questsFor(d).map(q=>q.id);
+  const rec=s.quests[d]||{pick,done:[]};rec.pick=rec.pick||pick;
+  const on=!rec.done.includes(id);rec.done=on?[...rec.done,id]:rec.done.filter(x=>x!==id);
+  s.quests[d]=rec;store.set('quests',s.quests);
+  if(on){floatXP(el,'+'+QUEST_XP+' XP');confetti(el);
+    if(rec.pick.every(x=>rec.done.includes(x)))setTimeout(()=>{toast(`今日任務全部完成！再加 ${QUEST_ALL} XP`);floatXP(el,'+'+QUEST_ALL+' XP')},500)}
+  setTimeout(render,on?380:0);
+}
+function floatXP(el,txt){
+  if(!el)return;const r=el.getBoundingClientRect(),f=document.createElement('span');
+  f.className='xpfloat';f.textContent=txt;f.style.left=(r.left+r.width/2)+'px';f.style.top=(r.top)+'px';
+  document.body.appendChild(f);setTimeout(()=>f.remove(),1100);
+}
+function questTile(){
+  const d=todayStr(),qs=questsFor(d),rec=s.quests[d]||{done:[]},done=qs.filter(q=>rec.done.includes(q.id)).length;
+  const bc={mom:'var(--rose-d)',baby:'var(--sky-d)',prep:'var(--mint-d)'},bn={mom:'老婆',baby:'寶寶',prep:'準備'};
+  const actLabel={lines:'挑話術',read:'去讀',video:'去看',ask:'去問',weeks:'去看',lists:'去清單'};
+  return `<section class="tile span2 quests"><div class="row between"><div><p class="k">每日任務・${done}/${qs.length}</p><h2>${done===qs.length?'今天全部完成，太強了':'今天的任務'}</h2></div><span class="points">每項 +${QUEST_XP}</span></div>
+   <div class="bar"><i style="width:${done/qs.length*100}%;background:var(--coral)"></i></div>
+   <div class="tasks">${qs.map(q=>{const on=rec.done.includes(q.id);return `<div class="task quest${on?' done':''}"><input type="checkbox" id="qq-${q.id}" data-quest="${q.id}"${on?' checked':''}>
+     <label for="qq-${q.id}">${esc(q.t)}</label>${q.act&&!on?`<button type="button" class="btn sm light" data-qact="${q.act}">${actLabel[q.act]}</button>`:`<span class="qtag" style="background:${bc[q.b]}">${bn[q.b]}</span>`}</div>`}).join('')}</div>
+   <p class="note">每天換一組新任務。全部完成再加 ${QUEST_ALL} XP。</p></section>`;
+}
+function questAct(a){
+  if(a==='lines'){s.wifeSeg='lines';go('lines')}
+  else if(a==='read'||a==='video'||a==='ask'){s.learnSeg=a;go('learn')}
+  else if(a==='weeks'){s.abuSeg='weeks';s.weekSel=null;go('timeline')}
+  else if(a==='lists'){go('lists')}
+}
+// ---------- 升等動畫 ----------
+function showLevelUp(pl,lv,pc,cid){
+  const job=pc&&cid!==pc,c=CLASSES[cid],box=document.getElementById('lvup');
+  const stars=Array.from({length:14},(_,i)=>`<span class="spark" style="left:${(i*37)%100}%;animation-delay:${(i%7)*.18}s;--d:${60+(i*23)%60}px">✦</span>`).join('');
+  box.innerHTML=`<div class="lvfx${job?' job':''}"><div class="rays"></div>${stars}
+   <div class="card2"><p class="lvk">${job?'轉職成功':'LEVEL UP'}</p>
+    <div class="morph">${job?`<div class="old">${dadSVG(pc)}</div>`:''}<div class="new">${dadSVG(cid)}</div><div class="flash"></div></div>
+    <div class="lvnum"><span class="from">Lv.${pl}</span><span class="arr">→</span><span class="to">Lv.${lv}</span></div>
+    <h2>${esc(c.name)}</h2><p>${esc(job?c.line:'繼續加油，下一級在等你。')}</p>
+    <button class="btn coral" type="button" id="lvClose">太好了</button></div></div>`;
+  box.hidden=false;
+  const art=box.querySelector('.morph');
+  setTimeout(()=>confetti(art),job?1000:450);setTimeout(()=>confetti(art),job?1500:900);
+}
 // ---------- 好爸爸等級與轉職 ----------
 const BRANCH={baby:{name:'寶寶系',color:'var(--sky-d)',how:'完成寶寶待辦'},mom:{name:'老婆系',color:'var(--rose-d)',how:'完成照顧老婆'},prep:{name:'準備系',color:'var(--mint-d)',how:'採買、成長紀錄、問攻略、填她的資料'}};
 const CLASSES={
@@ -889,8 +1019,9 @@ function xpStats(){
   let baby=0,mom=0;for(const k in s.tasks){if(!s.tasks[k])continue;if(k.startsWith('mom-'))mom+=10;else baby+=10}
   const bought=Object.values(s.bought).filter(Boolean).length,wifeFilled=s.wife?Object.keys(s.wife).filter(k=>k!=='updatedAt'&&s.wife[k]).length:0;
   const prep=bought*5+s.growth.length*5+Math.min(s.askHist.length,20)*3+(wifeFilled>=3?20:0);
-  const checkin=checkinInfo().xp;
-  return {baby,mom,prep,checkin,total:baby+mom+prep+checkin};
+  const checkin=checkinInfo().xp,qx=questXP();baby+=qx.baby;mom+=qx.mom;
+  const prep2=prep+qx.prep;
+  return {baby,mom,prep:prep2,checkin:checkin+qx.bonus,total:baby+mom+prep2+checkin+qx.bonus};
 }
 function levelOf(xp){let lv=1;for(let i=1;i<LV.length;i++)if(xp>=LV[i])lv=i+1;return lv}
 function tierOf(lv){return lv<3?0:lv<6?1:lv<9?2:3}
@@ -956,6 +1087,7 @@ function levelHTML(){
    <section class="tile span2"><div class="row between"><h2>三大系統</h2><span class="note">最高的那一系決定轉職方向</span></div>
     ${['baby','mom','prep'].map(b=>`<div class="branch"><span>${BRANCH[b].name}</span><div class="bar"><i style="width:${st[b]/maxB*100}%;background:${BRANCH[b].color}"></i></div><b>${st[b]}</b></div>`).join('')}
     <p class="note">三系都練到差不多，三轉時有機會解鎖隱藏職業。</p></section>
+   <section class="tile span2"><div class="row between"><h2>升等動畫</h2><button type="button" class="btn sm coral" data-lvdemo="1">預覽一次</button></div><p class="note">升級或轉職時會自動播放。</p></section>
    ${checkinCalendar()}
    <section class="tile span2"><h2>進化路線</h2><div class="tree">
     <div class="tier one"><p>新手村・Lv.1–2</p><div class="clsrow one">${clsCard('apprentice')}</div></div>
@@ -965,7 +1097,7 @@ function levelHTML(){
    <section class="tile span2"><h2>怎麼賺經驗值</h2><div class="xpways">
     <span>完成一項寶寶待辦（寶寶系）</span><b>+10</b><span>完成一項照顧老婆（老婆系）</span><b>+10</b>
     <span>買好一樣東西（準備系）</span><b>+5</b><span>記一筆成長紀錄（準備系）</span><b>+5</b>
-    <span>問一次爸爸攻略（準備系，最多 20 次）</span><b>+3</b><span>填好她的資料三項以上（準備系）</span><b>+20</b><span>每日簽到</span><b>+5</b><span>連續簽到 7 天／30 天加碼</span><b>+20／+50</b></div></section>
+    <span>問一次爸爸攻略（準備系，最多 20 次）</span><b>+3</b><span>填好她的資料三項以上（準備系）</span><b>+20</b><span>每日任務（依任務分到三系）</span><b>+10</b><span>每日任務全部完成</span><b>+20</b><span>每日簽到</span><b>+5</b><span>連續簽到 7 天／30 天加碼</span><b>+20／+50</b></div></section>
   </div>`;
 }
 let lvReady=false;
@@ -974,11 +1106,7 @@ function checkLevel(){
   const pl=store.get('lastLv',null),pc=store.get('lastCls',null);
   store.set('lastLv',lv);store.set('lastCls',cid);
   if(!lvReady||pl===null)return;
-  if(lv>pl||cid!==pc&&lv>=pl){
-    const c=CLASSES[cid],job=cid!==pc;
-    const box=document.getElementById('lvup');
-    box.innerHTML=`<div class="card"><p class="k">${job?'轉職成功！':'升級！'}</p><div class="art">${dadSVG(cid)}</div><h2>${job?esc(c.name):'Lv.'+lv}</h2><p style="margin:0">${job?esc(c.line):`距離下一級還差 ${(LV[lv]||st.total)-st.total} XP`}</p><button class="btn coral" type="button" id="lvClose">太好了</button></div>`;
-    box.hidden=false;confetti(box.querySelector('.art'));
+  if(lv>pl||cid!==pc&&lv>=pl){showLevelUp(pl,lv,pc,cid)
   }
 }
 
@@ -1109,7 +1237,7 @@ const V={
   const [dn,tot]=stageDone(st.id);
   const soon=SHOP.map((x,k)=>({x,k})).filter(o=>(o.x[0]===st.id||(nx&&o.x[0]===nx.id))&&!s.bought[o.k]).slice(0,4);
   const mk=MOM[momKey(st.id)],md=mk.care.filter((_,j)=>s.tasks['mom-'+mk.key+'-'+j]).length;
-  return `<div class="bento">`+heroHTML()+checkinTile()+
+  return `<div class="bento">`+heroHTML()+checkinTile()+questTile()+
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
   (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true);
@@ -1423,7 +1551,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -1433,6 +1561,8 @@ view.addEventListener('click',e=>{
   if(el.dataset.refresh){doRefresh();return}
   if(el.dataset.golevel){go('level');return}
   if(el.dataset.checkin){doCheckin(el);return}
+  if(el.dataset.qact){questAct(el.dataset.qact);return}
+  if(el.dataset.lvdemo){const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);const prev={apprentice:'apprentice',knight_diaper:'apprentice',mage_love:'apprentice',ranger_supply:'apprentice',paladin_night:'knight_diaper',archmage_love:'mage_love',craftsman:'ranger_supply',hero_baby:'paladin_night',partner:'archmage_love',steward:'craftsman',allround:'partner'}[cid];showLevelUp(Math.max(1,lv-1),lv,cid==='apprentice'?'apprentice':prev,cid);return}
   if(el.dataset.goabu){s.abuSeg='grow';go('timeline');return}
   if(el.dataset.gdel){const id=el.dataset.gdel;if(s.delArm!==id){s.delArm=id;render();return}
     s.delArm=null;if(DB){DB.doc('growth/'+id).delete().then(()=>toast('已刪除'),()=>toast('刪除失敗，再試一次'))}return}
@@ -1453,6 +1583,7 @@ view.addEventListener('click',e=>{
 });
 view.addEventListener('change',e=>{
   const t=e.target;
+  if(t.dataset.quest){toggleQuest(t.dataset.quest,t);return}
   if(t.dataset.task){s.tasks[t.dataset.task]=t.checked;store.set('tasks',s.tasks);if(t.checked){confetti(t);toast('+10 點，好爸爸')}setTimeout(render,t.checked?350:0)}
   if(t.dataset.buy){s.bought[t.dataset.buy]=t.checked;store.set('bought',s.bought);if(t.checked)confetti(t);render()}
 });
@@ -1592,7 +1723,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v8';
+const APP_VERSION='v9';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
