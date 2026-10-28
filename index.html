@@ -775,9 +775,9 @@ function wifeHTML(){
   const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true);
   const counters=[nc!=null&&nc>=0?['下次產檢',nc,w.checkupNote||'']:null,bd!=null?['她的生日',bd,'']:null,an!=null?['結婚紀念日',an,'']:null].filter(Boolean);
   return `<div class="bento">
-   <section class="hero span2" style="background:linear-gradient(140deg,#A774FF,#E9579E 60%,#FF8A7A)"><p class="k">她的資料</p>
-    <div style="grid-column:span 2"><p class="big" style="font-size:26px">${esc(w.name||'老婆')}</p></div>
-    <div class="stage"><button type="button" class="glasschip" style="border:0;color:#fff" data-wedit="1">${has?'編輯資料':'開始填寫'}</button></div></section>
+   <section class="lvhero span2" style="background:linear-gradient(140deg,#A774FF,#E9579E 60%,#FF8A7A)"><div class="lvart">${momSVG(momPose(STAGES[stageIdx(age())].id))}</div>
+    <div class="lvinfo"><span class="lv">她的資料</span><h2>${esc(w.name||'老婆')}</h2>
+     <button type="button" class="glasschip" style="border:0;color:#fff;align-self:flex-start" data-wedit="1">${has?'編輯資料':'開始填寫'}</button></div></section>
    ${counters.map(([l,n,sub])=>`<section class="tile t-${l==='下次產檢'?'sky':l==='她的生日'?'peach':'lilac'} stat"><p class="k">${l}</p><span class="n">${n===0?'今天':n}<small>${n===0?'':'天後'}</small></span>${sub?`<p class="note">${esc(sub)}</p>`:''}</section>`).join('')}
    ${counters.length%2?'<span></span>':''}
    ${has?WIFE_FIELDS.map(([sec,fs])=>{const rows=fs.filter(([k])=>w[k]);return rows.length?`<section class="tile span2"><p class="k">${sec}</p>${rows.map(([k,l,t])=>`<div class="kv"><span>${l}</span><b>${esc(t==='date'?w[k].replace(/-/g,'/'):w[k])}</b>${t==='tel'||k==='emergency'?`<button type="button" class="copy" data-copy="${esc(w[k])}">複製</button>`:''}</div>`).join('')}</section>`:''}).join(''):
@@ -1032,7 +1032,7 @@ const V={
     const items=[nc!=null&&nc>=0&&nc<=30?`下次產檢 ${nc===0?'就是今天':nc+' 天後'}`:null,bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null].filter(Boolean);
     return items.length?`<button type="button" class="tile t-lemon span2 momlink" data-gowife="info"><span><span class="k">別忘了</span><b>${items.join('・')}</b></span><span class="momprog">›</span></button>`:''})()+
   (()=>{const w=WEEKS[weekIdx()];return `<button type="button" class="tile t-sky span2 momlink" data-goweek="1"><span><span class="k">這週的${esc(s.baby)}・${esc(w.label)}</span><b>${esc(w.baby)}</b></span><span class="momprog">›</span></button>`})()+
-  `<button type="button" class="tile t-rose span2 momlink" data-gowife="care"><span><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`+
+  `<button type="button" class="tile t-rose span2 momlink abulink" data-gowife="care"><span class="mini-abu">${momSVG(momPose(st.id))}</span><span style="flex:1;min-width:0"><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`+
   (()=>{const x=xpStats(),lv=levelOf(x.total),c=CLASSES[classOf(x)];return `<button type="button" class="tile t-peach stat lvlink" data-golevel="1" style="border:0;text-align:left;color:var(--ink)"><p class="k">好爸爸等級</p><span class="n">Lv.${lv}</span><p class="note" style="color:var(--ink)">${esc(c.name)}・${x.total} XP</p></button>`})()+
   `<section class="tile t-lilac stat"><p class="k">本階段待辦</p><span class="n">${dn}<small>/ ${tot}</small></span><div class="bar"><i style="width:${tot?dn/tot*100:0}%"></i></div></section>`+
   `<section class="tile span2"><div class="row between"><h2>今天可以做的事</h2><button class="btn sm light" type="button" data-go="lists">全部</button></div>${taskRows(st.id,3)}</section>`+
@@ -1121,15 +1121,48 @@ const V={
  level(){return levelHTML()},
  _unused(){return ''}
 };
+function momSVG(pose){
+  const skin='#F7CDA8',hair='#4A2E25',eye='#2A1E1E',dress='#FF8DB0',dress2='#F0507F',shoe='#8B6CFF';
+  const head=`<path d="M37 42q-3-28 23-28t23 28v30q-7 6-13 1V52H50v21q-6 5-13-1z" fill="${hair}"/>
+   <circle cx="60" cy="38" r="19" fill="${skin}"/>
+   <path d="M41 36q4-18 19-18q16 0 19 18q-8-9-19-9q-3 6-11 7q-5 1-8 2z" fill="${hair}"/>
+   <circle cx="78" cy="22" r="7" fill="${hair}"/><circle cx="74" cy="20" r="2.4" fill="#FFD45C"/>
+   <path d="M51 40q2.5-3 5 0M64 40q2.5-3 5 0" stroke="${eye}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+   <circle cx="48" cy="45" r="3.2" fill="#FF8DA0" opacity=".55"/><circle cx="72" cy="45" r="3.2" fill="#FF8DA0" opacity=".55"/>
+   <path d="M55 47q5 4.5 10 0" stroke="${eye}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+  const legs=`<rect x="48" y="112" width="9" height="18" rx="4" fill="${skin}"/><rect x="63" y="112" width="9" height="18" rx="4" fill="${skin}"/>
+   <ellipse cx="51" cy="131" rx="7" ry="4" fill="${shoe}"/><ellipse cx="69" cy="131" rx="7" ry="4" fill="${shoe}"/>`;
+  const shadow=`<ellipse cx="60" cy="135" rx="30" ry="4" fill="#000" opacity=".08"/>`;
+  const P={
+   pregnant:`${shadow}${legs}<path d="M44 56h32l10 60H34z" fill="${dress}"/>
+     <ellipse cx="64" cy="90" rx="21" ry="19" fill="${dress}"/><ellipse cx="64" cy="90" rx="21" ry="19" fill="#fff" opacity=".12"/>
+     <path d="M66 94s-7-4-7-8.5a3.5 3.5 0 017-1.4a3.5 3.5 0 017 1.4c0 4.5-7 8.5-7 8.5z" fill="${dress2}"/>
+     <path d="M45 64q-12 10-8 26" stroke="${dress}" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="38" cy="91" r="4.5" fill="${skin}"/>
+     <path d="M75 64q8 6 4 18" stroke="${dress}" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="79" cy="84" r="4.5" fill="${skin}"/>${head}`,
+   holding:`${shadow}${legs}<path d="M44 56h32l10 60H34z" fill="${dress}"/>
+     <ellipse cx="60" cy="84" rx="20" ry="12" fill="#B9A6FF" transform="rotate(-14 60 84)"/>
+     <path d="M44 88l32-10" stroke="#8B6CFF" stroke-width="2" opacity=".4"/>
+     <circle cx="47" cy="79" r="8" fill="#FFD9B8"/><circle cx="45" cy="78" r="1.1" fill="${eye}"/><circle cx="50" cy="77" r="1.1" fill="${eye}"/>
+     <path d="M46 82q2 1.5 4 0" stroke="${eye}" stroke-width="1" fill="none"/>
+     <path d="M45 64q-12 12 0 26q14 6 30-6" stroke="${dress}" stroke-width="8" stroke-linecap="round" fill="none"/>
+     <path d="M75 64q10 10 2 20" stroke="${dress}" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="76" cy="85" r="4.5" fill="${skin}"/>${head}`,
+   happy:`${shadow}${legs}<path d="M44 56h32l10 60H34z" fill="${dress}"/>
+     <path d="M45 62q-14-6-16-22M75 62q14-6 16-22" stroke="${dress}" stroke-width="8" stroke-linecap="round" fill="none"/>
+     <circle cx="29" cy="38" r="4.5" fill="${skin}"/><circle cx="91" cy="38" r="4.5" fill="${skin}"/>
+     <path d="M60 10s-9-5.5-9-11a4.5 4.5 0 019-2a4.5 4.5 0 019 2c0 5.5-9 11-9 11z" fill="${dress2}"/>${head}`
+  };
+  return `<svg viewBox="0 -12 120 152" role="img" aria-label="媽媽">${P[pose]||P.happy}</svg>`;
+}
+function momPose(id){return id==='pre'?'pregnant':['n0','n1','m1','m3'].includes(id)?'holding':'happy'}
 function momHTML(){
   const st=STAGES[stageIdx(age())],m=MOM[momKey(st.id)];
   const done=m.care.filter((_,i)=>s.tasks['mom-'+m.key+'-'+i]).length;
   const mv=s.feed.videos.filter(v=>v.topic==='mom');
   const mt=s.feed.threads.filter(t=>t.topic==='mom');
   return `<div class="bento">
-   <section class="hero span2" style="background:linear-gradient(140deg,#F0507F,#FF8A7A 55%,#FFB070)"><p class="k">照顧媽媽專區・${esc(st.title)}</p>
-    <div style="grid-column:span 2"><p class="big" style="font-size:24px">${esc(m.head)}</p></div>
-    <div class="stage"><span class="glasschip">本階段照顧 ${done}/${m.care.length}</span><span class="glasschip">每項 +10 點</span></div></section>
+   <section class="lvhero span2" style="background:linear-gradient(140deg,#F0507F,#FF8A7A 55%,#FFB070)"><div class="lvart">${momSVG(momPose(st.id))}</div>
+    <div class="lvinfo"><span class="lv">照顧媽媽專區・${esc(st.title)}</span><h2 style="font-size:21px">${esc(m.head)}</h2>
+     <div class="xpbar"><i style="width:${m.care.length?done/m.care.length*100:0}%"></i></div><span class="xptext">本階段照顧 ${done}/${m.care.length}・每項 +10 XP</span></div></section>
    <section class="momcard t-peach span2"><p class="k">她的身體</p><ul>${m.body.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></section>
    <section class="momcard t-lilac span2"><p class="k">她的心情</p><p style="margin:0">${esc(m.mood)}</p></section>
    <section class="tile span2"><div class="row between"><h2>今天照顧她</h2><span class="points">${points()} 點</span></div>
