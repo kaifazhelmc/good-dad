@@ -711,7 +711,8 @@ function shopRow(x,k){
 
 function stageOf(id){return STAGES.find(z=>z.id===id)||STAGES[0]}
 function feedFor(kind,stageId,n){
-  const l=s.feed[kind].filter(x=>!stageId||x.stage===stageId);
+  let l=s.feed[kind].filter(x=>!stageId||x.stage===stageId);
+  if(kind==='threads')l=l.slice().sort((a,b)=>(postedAt(b.url)||0)-(postedAt(a.url)||0));
   return n?l.slice(0,n):l;
 }
 const COVER_GRAD={peach:'linear-gradient(135deg,#FF9A5C,#FF6B6B)',lilac:'linear-gradient(135deg,#A774FF,#6C7BFF)',mint:'linear-gradient(135deg,#2FB386,#2AA7B8)',
@@ -723,9 +724,19 @@ function videoCard(v){const st=stageOf(v.stage);const c=v.topic==='mom'?'rose':s
    <span class="topline"><span class="badge">${esc(tag)}</span><span class="yt">YouTube</span></span>
    <span class="bigtxt">${esc(v.note||v.title)}</span><span class="play"></span></span>
    <span class="vinfo"><b>${esc(v.title)}</b><small>${esc(v.channel||'YouTube')}</small></span></a>`}
+const SC_A='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+function postCode(url){const m=String(url||'').match(/\/post\/([A-Za-z0-9_-]+)/);return m?m[1]:''}
+function postedAt(url){ // Threads 貼文代碼裡藏著發文時間
+  const c=postCode(url);if(!c||c.length>14)return null;
+  try{let n=0n;for(const ch of c){const i=SC_A.indexOf(ch);if(i<0)return null;n=n*64n+BigInt(i)}const ms=Number(n>>23n)+1314220021721;
+    return (ms>1.4e12&&ms<Date.now()+864e5)?ms:null}catch(_){return null}
+}
+function fmtPosted(ms){if(!ms)return '';const d=new Date(ms),p=x=>String(x).padStart(2,'0');
+  const days=Math.floor((Date.now()-ms)/864e5);const rel=days<1?'今天':days<7?days+' 天前':'';
+  return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}${rel?'・'+rel:''}`}
 function threadCard(t){const st=stageOf(t.stage);const h=String(t.author||'').replace(/^@/,'');
   return `<a class="tcard" href="${esc(t.url)}" target="_blank" rel="noopener"><span class="who"><span class="avatar" style="background:${dcol(st.color)}">${esc((h[0]||'T').toUpperCase())}</span>
-   <span><b>@${esc(h)}</b><small>${esc(st.title)}</small></span></span><p>${esc(t.summary)}</p>${t.why?`<span class="why2"><span class="lbl" style="background:var(--lemon-d)">爸爸看點</span>${esc(t.why)}</span>`:''}<span class="go">到 Threads 看原文 →</span></a>`}
+   <span><b>@${esc(h)}</b><small>${esc(st.title)}${postedAt(t.url)?'・發文 '+fmtPosted(postedAt(t.url)):''}</small></span></span><p>${esc(t.summary)}</p>${t.why?`<span class="why2"><span class="lbl" style="background:var(--lemon-d)">爸爸看點</span>${esc(t.why)}</span>`:''}<span class="go">到 Threads 看原文 →</span></a>`}
 function videoRows(vs,filt,cur){
   const groups=[];
   if(filt){
@@ -1436,22 +1447,63 @@ DB={
     delete:async()=>{const id=path.split('/')[1];s.growth=s.growth.filter(r=>r.id!==id);store.set('growth',s.growth);render()}
   }}
 };
+s.myThreads=store.get('myThreads',[]);
+function mergeThreads(feedList){
+  const seen=new Set(),out=[];
+  for(const t of [...s.myThreads,...feedList]){const c=postCode(t.url);if(!c||seen.has(c))continue;seen.add(c);out.push(t)}
+  return out;
+}
+let feedRaw=[];
 async function loadFeed(bust){
   try{
     const r=await fetch('feed.json'+(bust?'?t='+Date.now():''),{cache:bust?'no-store':'default'});if(!r.ok)throw 0;
     const j=await r.json(),before=s.feed.threads.length+s.feed.videos.length;
-    s.feed.threads=j.threads||[];s.feed.videos=j.videos||[];s.feed.meta={updatedAt:j.updatedAt};s.feed.state='ok';
+    feedRaw=j.threads||[];s.feed.threads=mergeThreads(feedRaw);s.feed.videos=j.videos||[];s.feed.meta={updatedAt:j.updatedAt};s.feed.state='ok';
     return before?(s.feed.threads.length+s.feed.videos.length)-before:0;
-  }catch(_){if(!s.feed.threads.length)s.feed.state='off';return null}
+  }catch(_){s.feed.threads=mergeThreads(feedRaw);if(!s.feed.threads.length)s.feed.state='off';return null}
 }
 function refreshBtn(dark){
-  if(s.refresh==='running')return `<p class="refreshing">正在載入最新精選…</p>`;
-  return `<div class="row"><button type="button" class="btn ${dark?'coral':''} sm" data-refresh="1">重新載入精選</button>${s.refreshMsg?`<span class="note" style="${dark?'color:inherit;opacity:.8':''}">${esc(s.refreshMsg)}</span>`:''}</div>`;
+  const st=dark?'color:inherit;opacity:.85':'';
+  if(s.refresh==='running')return `<p class="refreshing">正在 Threads 上搜尋新動態，大約 20 到 60 秒…</p>`;
+  const hasKey=!!store.get('apiKey','');
+  return `<div class="row"><button type="button" class="btn ${dark?'coral':''} sm" data-refresh="1">${hasKey?'立即搜尋新動態':'重新載入精選'}</button>${s.refreshMsg?`<span class="note" style="${st}">${esc(s.refreshMsg)}</span>`:''}</div>
+   ${hasKey?'':`<p class="note" style="${st}">精選每天早晚自動更新。想隨時搜尋新貼文，到設定填入 API 金鑰，這個按鈕就會直接上 Threads 找。</p>`}`;
+}
+async function searchThreads(){
+  const st=STAGES[stageIdx(age())],nx=STAGES[stageIdx(age())+1];
+  const topics=[st.kw,...(st.focus||[]).slice(0,2).map(f=>f.split(/[：:，,（(]/)[0]),nx?nx.kw:'','照顧老婆 '+(st.id==='pre'?'孕晚期':'產後')].filter(Boolean);
+  const have=s.feed.threads.map(t=>postCode(t.url)).filter(Boolean).slice(0,120);
+  const prompt=`你是「好爸爸」App 的 Threads 精選小編，讀者是台灣的新手爸爸，寶寶目前在「${st.title}」階段。
+請用 web_search 在 threads.com 上搜尋台灣爸媽最近的公開貼文，主題可以從這些挑：${topics.join('、')}。
+挑出 3 到 6 篇實用的（經驗分享、清單、問答都可以），排除：廣告業配、八卦、與育兒無關、情緒性或爭議內容、給危險醫療建議的貼文，以及這些已經收錄的貼文代碼：${have.join(',')}。
+只回傳一個 JSON 陣列，不要其他文字。每筆格式：{"url":"https://www.threads.com/@帳號/post/代碼","author":"帳號（不含@）","summary":"用你自己的話寫的摘要，40 字內","why":"給爸爸的一句實用看點，30 字內","topic":"照顧媽媽的內容填 mom，否則填 null"}`;
+  const key=store.get('apiKey','');
+  const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:API_MODEL,max_tokens:2500,tools:[{type:'web_search_20250305',name:'web_search',max_uses:4,allowed_domains:['threads.com','threads.net']}],messages:[{role:'user',content:prompt}]})});
+  if(!res.ok)throw {code:res.status===401||res.status===403?'bad_key':res.status===429?'rate_limited':'upstream_error'};
+  const j=await res.json();const text=(j.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+  const a=text.indexOf('['),b=text.lastIndexOf(']');if(a<0||b<a)return [];
+  let arr;try{arr=JSON.parse(text.slice(a,b+1))}catch(_){return []}
+  const now=new Date(),out=[];
+  for(const x of arr){const m=String(x&&x.url||'').match(/threads\.(?:com|net)\/@([A-Za-z0-9._]+)\/post\/([A-Za-z0-9_-]+)/);if(!m)continue;
+    if(have.includes(m[2])||out.some(o=>postCode(o.url)===m[2]))continue;
+    const t={stage:st.id,author:m[1],url:`https://www.threads.com/@${m[1]}/post/${m[2]}`,summary:String(x.summary||'').slice(0,80),why:String(x.why||'').slice(0,60),addedAt:now.toISOString(),mine:true};
+    if(x.topic==='mom')t.topic='mom';if(t.summary)out.push(t)}
+  return out;
 }
 async function doRefresh(){
   s.refresh='running';s.refreshMsg='';render();
-  const n=await loadFeed(true);s.refresh='idle';
-  s.refreshMsg=n===null?'載入失敗，檢查網路後再試一次':n>0?`新增了 ${n} 則`:'已經是最新的（每天早晚自動更新）';render();
+  if(store.get('apiKey','')){
+    try{const got=await searchThreads();
+      if(got.length){s.myThreads=[...got,...s.myThreads].slice(0,80);store.set('myThreads',s.myThreads);s.feed.threads=mergeThreads(feedRaw);s.refreshMsg=`找到 ${got.length} 篇新動態`;s.learnSeg='threads';s.learnStage='all'}
+      else s.refreshMsg='這次沒找到新的，晚點再試試';
+    }catch(e){s.refreshMsg=e&&e.code==='bad_key'?'API 金鑰不正確，請到設定重新貼上':e&&e.code==='rate_limited'?'搜尋太頻繁了，休息一下再試':'搜尋失敗，檢查網路後再試一次'}
+    await loadFeed(true);
+  }else{
+    const n=await loadFeed(true);
+    s.refreshMsg=n===null?'載入失敗，檢查網路後再試一次':n>0?`新增了 ${n} 則`:'已經是最新的（每天早晚自動更新）';
+  }
+  s.refresh='idle';render();
 }
 const API_MODEL='claude-sonnet-5-5';
 function setupAsk(){const k=store.get('apiKey','');sampleState=k?'ok':'nokey';sampleFn=k?apiSample:null}
@@ -1488,7 +1540,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v6';
+const APP_VERSION='v7';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
