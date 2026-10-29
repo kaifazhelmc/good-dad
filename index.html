@@ -169,6 +169,16 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .task .tdel{flex:none;border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;width:32px;height:32px;border-radius:50%;cursor:pointer}
 .task .when.late{color:var(--rose-d,#C2382A);font-weight:700}.task .when.soon{color:var(--coral-ink);font-weight:700}
 .donebox summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:700;padding:6px 0}
+.scanbox{background:linear-gradient(140deg,#FFF4E8,#ECE5FF)}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs .th{position:relative;width:72px;height:72px;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.thumbs .th img{width:100%;height:100%;object-fit:cover;display:block}
+.thumbs .th button{position:absolute;top:2px;right:2px;width:24px;height:24px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;font-size:15px;line-height:1}
+.scantext{font:inherit;width:100%;box-sizing:border-box;border:1.5px solid var(--line);background:#fff;border-radius:14px;padding:10px 12px;color:var(--ink);resize:vertical}
+.ncard{display:flex;gap:12px;align-items:center;text-align:left;border:0;background:var(--bg);border-radius:18px;padding:12px;color:var(--ink);width:100%}
+.ncard img{flex:none;width:56px;height:56px;border-radius:12px;object-fit:cover}
+.ncard b{display:block;font-size:15px;margin:4px 0 2px}.ncard small{display:block;color:var(--muted);font-size:12px;line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.nlist{margin:4px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 .store{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--bg)}
 .store b{font-size:15px}
 .store small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
@@ -276,6 +286,7 @@ details.article.alert summary::after{margin-left:auto}
 .gf{display:flex;flex-direction:column;gap:3px;min-width:0}
 .gf label{font-size:12px;color:var(--muted)}
 .gf input{border:0;border-radius:12px;background:var(--surface);color:var(--ink);padding:10px 12px;font:inherit;min-width:0;width:100%;box-sizing:border-box}
+.gf select{border:0;border-radius:12px;background:var(--surface);color:var(--ink);padding:10px 12px;font:inherit;min-width:0;width:100%;box-sizing:border-box;min-height:44px;-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 12px) 50%;background-size:6px 6px;background-repeat:no-repeat}
 .grow-row{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--bg)}
 .grow-row .gd{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
 .grow-row .gv{flex:1;min-width:0}
@@ -904,7 +915,7 @@ let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
   momlog:store.get('momlog',[]),games:store.get('games',[]),gameSeen:store.get('gameSeen',[]),game:null,clsInfo:null,checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
-  learnSeg:'ask',todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
+  learnSeg:'ask',notes:store.get('notes',[]),noteCat:'全部',noteQ:'',noteOpen:null,scan:{status:'idle',imgs:[],text:'',err:'',draft:null},todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -955,7 +966,87 @@ function todoHTML(){const all=todoSorted(),open=all.filter(t=>!t.done),done=all.
    ${done.length?`<details class="donebox"><summary>已完成 ${done.length} 項</summary><div class="tasks">${done.slice(0,30).map(todoRow).join('')}</div>${done.length?'<button type="button" class="btn light sm" data-tclear="1">清掉已完成</button>':''}</details>`:''}</section>`}
 function todoTile(){const open=todoSorted().filter(t=>!t.done);if(!open.length)return '';
   return `<section class="tile span2"><div class="row between"><h2>我的待辦</h2><button type="button" class="glasschip" style="border:0" data-go="lists">全部 ${open.length} 項 ›</button></div><div class="tasks">${open.slice(0,3).map(todoRow).join('')}</div></section>`}
+function confirmDel(el){if(el.dataset.armed){return true}el.dataset.armed='1';el.textContent='再按一次確認刪除';setTimeout(()=>{if(el.isConnected){delete el.dataset.armed;el.textContent='刪除'}},3000);return false}
 function saveTodos(){store.set('todos',s.todos)}
+// ---------- 掃描筆記 ----------
+const NOTE_CATS=['寶寶照護','產婦照護','產檢','餵奶','用品','其他'];
+const NOTE_MAX=50,NOTE_TEXT_MAX=2500;
+function noteCatCls(c){return {寶寶照護:'info',產婦照護:'crit',產檢:'warn',餵奶:'ok'}[c]||''}
+async function shrinkImage(file){
+  const url=URL.createObjectURL(file);
+  try{const img=await new Promise((ok,ng)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=ng;i.src=url});
+    const M=1568,sc=Math.min(1,M/Math.max(img.naturalWidth,img.naturalHeight)),w=Math.round(img.naturalWidth*sc),h=Math.round(img.naturalHeight*sc);
+    const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+    const data=c.toDataURL('image/jpeg',.82);return {data:data.split(',')[1],thumb:(()=>{const t=document.createElement('canvas'),ts=Math.min(1,160/Math.max(w,h));t.width=Math.round(w*ts);t.height=Math.round(h*ts);t.getContext('2d').drawImage(c,0,0,t.width,t.height);return t.toDataURL('image/jpeg',.7)})()}}
+  finally{URL.revokeObjectURL(url)}}
+async function addScanFiles(files){
+  const sc=s.scan;const list=[...files].filter(f=>/^image\//.test(f.type)||/\.(heic|heif|jpe?g|png|webp)$/i.test(f.name)).slice(0,4-sc.imgs.length);
+  if(!list.length){toast(sc.imgs.length>=4?'一次最多 4 張':'請選圖片檔');return}
+  sc.status='prep';render();
+  for(const f of list){try{sc.imgs.push(await shrinkImage(f))}catch(_){toast('有一張圖片讀不到，換一張試試')}}
+  sc.status='idle';render()}
+const SCAN_PROMPT=`這些是台灣新手爸媽拿到的育兒或孕產相關資料（衛教單張、媽媽手冊、醫院說明、筆記的照片，或貼上的文字）。請：
+1. 把圖片中的文字轉成繁體中文文字，保留原意，不要自己補內容；看不清楚的地方寫「〔看不清楚〕」。
+2. 整理成給新手爸爸看的筆記。重點、待辦、警訊都只能來自原文，不要加入原文沒有的醫療建議或藥物劑量。
+只回傳一個 JSON 物件，不要其他文字：
+{"title":"15 字內標題","category":"寶寶照護、產婦照護、產檢、餵奶、用品、其他 之一","summary":"兩句內的摘要","points":["重點，每點 30 字內，最多 8 點"],"todos":["爸爸可以做的具體待辦，最多 5 項；原文沒有就給空陣列"],"warnings":["原文提到要就醫或特別注意的警訊；沒有就給空陣列"],"text":"轉出來的完整原文"}`;
+async function runScan(){
+  const sc=s.scan,key=store.get('apiKey','');
+  if(!key){toast('要先在設定填 Anthropic API 金鑰');document.getElementById('openSettings').click();return}
+  const txt=(sc.text||'').trim();if(!sc.imgs.length&&!txt){toast('先拍照、選圖片，或貼上文字');return}
+  sc.status='loading';sc.err='';render();
+  const content=[...sc.imgs.map(i=>({type:'image',source:{type:'base64',media_type:'image/jpeg',data:i.data}})),{type:'text',text:SCAN_PROMPT+(txt?'\n\n貼上的文字：\n'+txt:'')}];
+  try{const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:API_MODEL,max_tokens:4000,messages:[{role:'user',content}]})});
+    const j=await res.json();if(!res.ok)throw new Error((j.error&&j.error.message)||('HTTP '+res.status));
+    const out=(j.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');const m=out.match(/\{[\s\S]*\}/);if(!m)throw new Error('整理結果看不懂');
+    const d=JSON.parse(m[0]),arr=x=>Array.isArray(x)?x.map(String).filter(Boolean):[];
+    sc.draft={title:String(d.title||'未命名筆記').slice(0,30),category:NOTE_CATS.includes(d.category)?d.category:'其他',summary:String(d.summary||'').slice(0,160),points:arr(d.points).slice(0,8),todos:arr(d.todos).slice(0,5),warnings:arr(d.warnings).slice(0,5),text:String(d.text||txt).slice(0,NOTE_TEXT_MAX),thumb:sc.imgs[0]?sc.imgs[0].thumb:''};
+    sc.status='draft';render();window.scrollTo({top:0,behavior:'smooth'})}
+  catch(e){sc.status='idle';sc.err=/401|authentication|x-api-key/i.test(String(e.message))?'API 金鑰不對，到設定檢查一下':'沒整理成功：'+e.message;render()}}
+function saveNote(){const d=s.scan.draft;if(!d)return;
+  const t=document.getElementById('ndTitle'),c=document.getElementById('ndCat');if(t&&t.value.trim())d.title=t.value.trim().slice(0,30);if(c)d.category=c.value;
+  const n={id:Date.now().toString(36),at:Date.now(),title:d.title,category:d.category,summary:d.summary,points:d.points,todos:d.todos,warnings:d.warnings,text:d.text,thumb:d.thumb||''};
+  s.notes=[n,...(s.notes||[])].slice(0,NOTE_MAX);store.set('notes',s.notes);s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};s.noteOpen=n.id;toast('已存進筆記');render()}
+function noteFull(n){return `${n.title}\n${n.summary||''}\n\n重點：\n${(n.points||[]).map(p=>'・'+p).join('\n')}${n.todos&&n.todos.length?'\n\n爸爸待辦：\n'+n.todos.map(p=>'・'+p).join('\n'):''}${n.warnings&&n.warnings.length?'\n\n注意：\n'+n.warnings.map(p=>'・'+p).join('\n'):''}`}
+function noteBody(n,draft){
+  return `${n.summary?`<p style="margin:0">${esc(n.summary)}</p>`:''}
+   ${n.points&&n.points.length?`<p class="k" style="margin-top:6px">重點</p><ul class="nlist">${n.points.map(p=>`<li>${esc(p)}</li>`).join('')}</ul>`:''}
+   ${n.warnings&&n.warnings.length?`<div class="warnlist" style="padding:12px 14px"><b>要注意</b><ul class="nlist">${n.warnings.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`:''}
+   ${n.todos&&n.todos.length?`<p class="k" style="margin-top:6px">爸爸待辦</p><div class="tasks">${n.todos.map((p,i)=>{const added=(s.todos||[]).some(t=>t.t===p);return `<div class="store"><span style="flex:1;min-width:0">${esc(p)}</span><button type="button" class="shopee" style="border:0${added?';background:var(--muted)':''}" data-nact="todo" data-ni="${i}" ${added?'disabled':''}>${added?'已加入':'加到待辦'}</button></div>`}).join('')}</div>`:''}
+   ${n.text?`<details class="article"><summary>${draft?'讀出來的原文（請對一下有沒有讀錯）':'原文'}</summary><p style="white-space:pre-wrap">${esc(n.text)}</p></details>`:''}`}
+function notesHTML(){
+  const sc=s.scan,busy=sc.status==='loading'||sc.status==='prep';
+  if(sc.status==='draft'&&sc.draft){const d=sc.draft;
+    return `<section class="tile span2"><p class="k">整理好了，確認後存起來</p>
+     <div class="growform" style="grid-template-columns:1fr"><div class="gf"><label for="ndTitle">標題</label><input id="ndTitle" type="text" maxlength="30" value="${esc(d.title)}"></div>
+      <div class="gf"><label for="ndCat">分類</label><select id="ndCat">${NOTE_CATS.map(c=>`<option${c===d.category?' selected':''}>${c}</option>`).join('')}</select></div></div>
+     ${noteBody(d,true)}
+     <div class="row"><button type="button" class="btn coral" data-nact="save">存進筆記</button><button type="button" class="btn light" data-nact="discard">不要了</button></div>
+     <p class="note">AI 整理可能會讀錯字，重要的劑量、日期請以原本的單張或醫師說明為準。</p></section>`}
+  if(s.noteOpen){const n=(s.notes||[]).find(x=>x.id===s.noteOpen);if(n){const d=new Date(n.at);
+    return `<button type="button" class="btn light sm" data-nact="close" style="align-self:flex-start">‹ 回筆記列表</button>
+     <section class="tile span2"><div class="row between"><span class="spill ${noteCatCls(n.category)}">${esc(n.category)}</span><span class="note">${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}</span></div><h2>${esc(n.title)}</h2>
+      ${noteBody(n,false)}
+      <div class="row"><button type="button" class="btn coral sm" data-copy="${esc(noteFull(n))}">複製重點</button><button type="button" class="btn light sm" data-nact="del">刪除</button></div></section>`}s.noteOpen=null}
+  const q=(s.noteQ||'').trim(),cat=s.noteCat||'全部';
+  const list=(s.notes||[]).filter(n=>(cat==='全部'||n.category===cat)&&(!q||(n.title+n.summary+(n.points||[]).join('')+(n.text||'')).includes(q)));
+  const keyOk=!!store.get('apiKey','');
+  return `<section class="tile span2 scanbox"><p class="k">掃描整理</p><h2>拍下衛教單張，整理成筆記</h2>
+    <p class="note" style="margin:0">媽媽手冊、醫院發的說明、月子中心的注意事項都可以。一次最多 4 張。</p>
+    ${sc.imgs.length?`<div class="thumbs">${sc.imgs.map((im,i)=>`<span class="th"><img src="${im.thumb}" alt="第 ${i+1} 張"><button type="button" data-nact="rmimg" data-ni="${i}" aria-label="移除第 ${i+1} 張">×</button></span>`).join('')}</div>`:''}
+    <div class="row"><label class="btn coral" for="scanFile" style="cursor:pointer">${sc.imgs.length?'再加一張':'拍照或選圖片'}</label><input id="scanFile" type="file" accept="image/*" multiple hidden></div>
+    <textarea id="scanText" class="scantext" rows="3" placeholder="或直接貼上文字（例如 LINE 收到的衛教說明）">${esc(sc.text||'')}</textarea>
+    <button type="button" class="btn ${busy?'light':'coral'}" data-nact="run" ${busy?'disabled':''} style="align-self:flex-start">${sc.status==='loading'?'AI 整理中，大約 10–30 秒…':sc.status==='prep'?'讀取圖片中…':'整理成筆記'}</button>
+    ${sc.err?`<p class="note" style="color:var(--coral-ink);margin:0">${esc(sc.err)}</p>`:''}
+    ${keyOk?'':'<p class="note" style="margin:0">需要先在「設定」填 Anthropic API 金鑰（跟爸爸攻略用的是同一把）。</p>'}
+    <p class="note" style="margin:0">圖片只送去 AI 讀字，不會存起來；存下來的是整理後的文字，會同步到老婆的手機。</p></section>
+   <section class="tile span2"><div class="row between"><h2>我的筆記</h2><span class="points">${(s.notes||[]).length} 則</span></div>
+    ${(s.notes||[]).length?`<input class="search" id="noteQ" type="search" placeholder="搜尋筆記" value="${esc(s.noteQ||'')}" aria-label="搜尋筆記">
+    <div class="tabs-mini" role="group" aria-label="筆記分類">${['全部',...NOTE_CATS].map(c=>`<button type="button" class="chip" data-ncat="${c}" aria-pressed="${cat===c}">${c}</button>`).join('')}</div>`:''}
+    ${list.length?`<div class="feed">${list.map(n=>`<button type="button" class="ncard" data-nopen="${n.id}">${n.thumb?`<img src="${n.thumb}" alt="">`:''}<span style="flex:1;min-width:0"><span class="spill ${noteCatCls(n.category)}">${esc(n.category)}</span><b>${esc(n.title)}</b><small>${esc((n.points||[]).slice(0,2).join('・')||n.summary||'')}</small></span></button>`).join('')}</div>`
+      :`<p class="note">${(s.notes||[]).length?'沒有符合的筆記。':'還沒有筆記。拍一張衛教單張試試看。'}</p>`}
+    <p class="note">最多保留 ${NOTE_MAX} 則。內容為資料整理，不能取代醫師的判斷。</p></section>`}
 function taskRows(id,limit){
   const list=(TASKS[id]||[]).map((t,i)=>({key:id+'-'+i,name:t[0],when:t[1]}));
   const rows=limit?list.filter(t=>!s.tasks[t.key]).slice(0,limit):list;
@@ -1939,10 +2030,10 @@ const V={
  },
  learn(){
   const cur=STAGES[stageIdx(age())],sid=s.learnStage===null?cur.id:s.learnStage;
-  const segs=[['ask','攻略'],['video','影片'],['threads','社群'],['read','文章']];
-  if(s.learnSeg==='ask')return `<div class="segtabs" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="學習分類">${segs.map(([k,n])=>`<button type="button" data-learn="${k}" aria-pressed="${s.learnSeg===k}">${n}</button>`).join('')}</div>`+askHTML(cur);
+  const segs=[['ask','攻略'],['video','影片'],['threads','社群'],['notes','筆記'],['read','文章']];
+  if(s.learnSeg==='ask')return `<div class="segtabs" style="grid-template-columns:repeat(5,1fr)" role="group" aria-label="學習分類">${segs.map(([k,n])=>`<button type="button" data-learn="${k}" aria-pressed="${s.learnSeg===k}">${n}</button>`).join('')}</div>`+askHTML(cur);
   const stageChips=`<div class="tabs-mini" role="group" aria-label="階段">${[['all','全部階段'],...STAGES.map(x=>[x.id,x.short])].map(([id,n])=>`<button type="button" class="chip" data-lstage="${id}" aria-pressed="${sid===id}">${n}${id===cur.id?'・現在':''}</button>`).join('')}</div>`;
-  const head=`<div class="segtabs" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="學習分類">${segs.map(([k,n])=>`<button type="button" data-learn="${k}" aria-pressed="${s.learnSeg===k}">${n}</button>`).join('')}</div>`;
+  const head=`<div class="segtabs" style="grid-template-columns:repeat(5,1fr)" role="group" aria-label="學習分類">${segs.map(([k,n])=>`<button type="button" data-learn="${k}" aria-pressed="${s.learnSeg===k}">${n}</button>`).join('')}</div>`;
   const filt=sid==='all'?null:sid;
   if(s.learnSeg==='video'){
     const vs=feedFor('videos',filt);const topics=YT_TOPICS[filt||cur.id]||[];
@@ -1951,6 +2042,7 @@ const V={
      <section class="tile t-sky"><p class="k">想看更多就搜尋</p><div class="ytsearch">${topics.map(q=>`<a href="${yt(q)}" target="_blank" rel="noopener">${esc(q)}</a>`).join('')}</div></section>
      <p class="note">影片會在 YouTube 開啟。內容來自各頻道，醫療問題仍以你們的醫師為準。</p>`;
   }
+  if(s.learnSeg==='notes')return head+notesHTML();
   if(s.learnSeg==='threads'){
     const ts=feedFor('threads',filt);const kw=(stageOf(filt||cur.id)).kw;
     const srcTabs=`<div class="tabs-mini" role="group" aria-label="來源">${[['threads','Threads'],['dcard','Dcard']].map(([k,n])=>`<button type="button" class="chip" data-src="${k}" aria-pressed="${(s.srcSeg||'threads')===k}">${n}</button>`).join('')}</div>`;
@@ -2305,7 +2397,7 @@ function render(){
   let sel=null;try{if(fid&&ae.selectionStart!=null)sel=[ae.selectionStart,ae.selectionEnd]}catch(_){}
   const vals={};view.querySelectorAll('input[id]').forEach(i=>{if(i.type!=='checkbox')vals[i.id]=i.value});
   view.innerHTML=V[s.tab]();
-  for(const id in vals){if(id==='askQ'||id==='knowQ')continue;const n=document.getElementById(id);if(n&&n.type!=='checkbox')n.value=vals[id]}
+  for(const id in vals){if(id==='askQ'||id==='knowQ'||id==='noteQ'||id==='scanFile')continue;const n=document.getElementById(id);if(n&&n.type!=='checkbox')n.value=vals[id]}
   if(fid){const n=document.getElementById(fid);if(n){n.focus({preventScroll:true});try{if(sel)n.setSelectionRange(sel[0],sel[1])}catch(_){}}}
   document.querySelectorAll('nav.tabbar button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===s.tab?'page':'false'));
   if(s.tab==='timeline'&&s.abuSeg==='weeks'){const c=document.querySelector('#weekChips [aria-pressed="true"]'),wc=document.getElementById('weekChips');if(c&&wc)wc.scrollLeft=c.offsetLeft-wc.clientWidth/2+c.clientWidth/2}
@@ -2325,7 +2417,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-nact],[data-ncat],[data-nopen],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -2350,6 +2442,15 @@ view.addEventListener('click',e=>{
   if(el.dataset.gowife){if(el.dataset.ckset)s.ckEdit=true;s.wifeSeg=el.dataset.gowife;go('lines');return}
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
+  if(el.dataset.nact){const a=el.dataset.nact,sc=s.scan;
+    if(a==='run')runScan();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
+    else if(a==='rmimg'){sc.imgs.splice(+el.dataset.ni,1);render()}else if(a==='close'){s.noteOpen=null;render()}
+    else if(a==='del'){if(confirmDel(el)){s.notes=s.notes.filter(n=>n.id!==s.noteOpen);store.set('notes',s.notes);s.noteOpen=null;toast('已刪除');render()}}
+    else if(a==='todo'){const n=sc.status==='draft'?sc.draft:(s.notes||[]).find(x=>x.id===s.noteOpen);const t=n&&n.todos[+el.dataset.ni];
+      if(t&&!(s.todos||[]).some(o=>o.t===t)){s.todos=[{id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),t,due:'',who:'me',done:false,at:Date.now()},...(s.todos||[])];saveTodos();toast('已加到我的待辦');render()}}
+    return}
+  if(el.dataset.ncat){s.noteCat=el.dataset.ncat;render();return}
+  if(el.dataset.nopen){s.noteOpen=el.dataset.nopen;render();window.scrollTo({top:0});return}
   if(el.dataset.tdel){s.todos=s.todos.filter(t=>t.id!==el.dataset.tdel);saveTodos();render();return}
   if(el.dataset.tclear){s.todos=s.todos.filter(t=>!t.done);saveTodos();toast('已清掉');render();return}
   if(el.dataset.ckact){const a=el.dataset.ckact;if(a==='edit'){s.ckEdit=true;render()}else if(a==='cancel'){s.ckEdit=false;render()}else if(a==='done'){s.ckEdit=true;render();const f=document.getElementById('momLogForm');if(f)f.scrollIntoView({behavior:'smooth',block:'start'})}return}
@@ -2369,6 +2470,7 @@ view.addEventListener('click',e=>{
 view.addEventListener('change',e=>{
   const t=e.target;
   if(t.dataset.quest){toggleQuest(t.dataset.quest,t);return}
+  if(t.id==='scanFile'){if(t.files&&t.files.length)addScanFiles(t.files);t.value='';return}
   if(t.dataset.todo){const x=s.todos.find(o=>o.id===t.dataset.todo);if(x){x.done=t.checked;x.doneAt=t.checked?Date.now():null;saveTodos();if(t.checked){confetti(t);toast('完成一項')}setTimeout(render,t.checked?350:0)}return}
   if(t.dataset.task){s.tasks[t.dataset.task]=t.checked;store.set('tasks',s.tasks);if(t.checked){confetti(t);toast('+10 點，好爸爸')}setTimeout(render,t.checked?350:0)}
   if(t.dataset.buy){s.bought[t.dataset.buy]=t.checked;store.set('bought',s.bought);if(t.checked)confetti(t);render()}
@@ -2389,7 +2491,7 @@ view.addEventListener('submit',e=>{
   if(e.target.id==='ckForm'){e.preventDefault();saveCheckup();return}
   if(e.target.id==='storeForm'){e.preventDefault();const v=document.getElementById('storeQ').value.trim();s.storeQ=v||'嬰兒用品';document.getElementById('storeQ').blur();render();return}
   if(e.target.id==='homeAsk'){e.preventDefault();const v=document.getElementById('homeQ').value;if(v.trim())ask(v);else{s.learnSeg='ask';go('learn')}return}if(e.target.id==='askForm'){e.preventDefault();const v=document.getElementById('askQ').value;document.getElementById('askQ').blur();ask(v)}});
-view.addEventListener('input',e=>{if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
+view.addEventListener('input',e=>{if(e.target.id==='scanText'){s.scan.text=e.target.value;return}if(e.target.id==='noteQ'){s.noteQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('noteQ');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
 
 const sheet=document.getElementById('sheet'),f=document.getElementById('settingsForm');
 let tmpBorn=s.born;
@@ -2515,7 +2617,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v25';
+const APP_VERSION='v26';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -2537,7 +2639,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
@@ -2563,7 +2665,7 @@ async function pushNow(keys){
 function reloadState(){
   s.born=store.get('born',true);s.date=store.get('date',todayStr());s.baby=store.get('baby','寶寶');
   s.tasks=store.get('tasks',{});s.bought=store.get('bought',{});s.fav=store.get('fav',{});
-  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.todos=store.get('todos',[]);s.growth=store.get('growth',[]);
+  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.todos=store.get('todos',[]);s.notes=store.get('notes',[]);s.growth=store.get('growth',[]);
   s.wife=store.get('wife',null);s.askHist=store.get('askHist',[]);s.myThreads=store.get('myThreads',[]);
   s.feed.threads=mergeThreads(feedRaw);s.isDemo=false;
 }
