@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>好爸爸</title>
 <meta name="description" content="新手爸爸的口袋提醒：依寶寶週數提醒該做的事、該買的東西、照顧老婆的方法。">
 <meta name="theme-color" content="#F5F2FA" media="(prefers-color-scheme: light)">
@@ -399,6 +399,9 @@ body{overflow-x:hidden;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom;
 @media (prefers-reduced-motion:reduce){.rays,.spark,.lvk,.morph .new,.morph .old,.morph .flash,.lvnum .to,.lvnum .from,.card2,.xpfloat{animation:none!important;opacity:1}.job .morph .old,.spark,.morph .flash{display:none}}
 .syncbox{background:var(--bg);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
 .syncbox .field input{background:var(--surface)}
+
+/* iPhone：輸入框小於 16px 會自動放大畫面，統一 16px 避免放大後左右晃 */
+input,select,textarea{font-size:16px!important}
 .hist{border:0;text-align:left;background:var(--bg);border-radius:14px;padding:10px 14px;font-size:14px}
 .vinfo b{font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .vinfo small{font-size:12px;color:var(--muted)}
@@ -1726,7 +1729,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v10';
+const APP_VERSION='v11';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
