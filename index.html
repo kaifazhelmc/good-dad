@@ -1241,7 +1241,6 @@ function heartAt(x,y,s,f,extra){return `<path d="${HEART_P}" transform="translat
 function starAt(x,y,r,f,extra){return `<path d="${starP(r)}" transform="translate(${x} ${y})" fill="${f}" ${extra||''}/>`}
 function gearAt(x,y,r,c){return `<g transform="translate(${x} ${y})"><circle r="${r}" fill="none" stroke="${c}" stroke-width="${r*.55}" stroke-dasharray="${(r*.42).toFixed(2)} ${(r*.36).toFixed(2)}"/><circle r="${r*.62}" fill="${c}"/><circle r="${r*.25}" fill="#fff" opacity=".8"/></g>`}
 function shade(h,f){if(!h||h[0]!=='#')return h;const n=parseInt(h.slice(1),16),m=x=>Math.round(f<0?x*(1+f):x+(255-x)*f);return '#'+[n>>16,n>>8&255,n&255].map(v=>m(v).toString(16).padStart(2,'0')).join('')}
-const CLASS_IMG={apprentice:'art/apprentice.webp'};
 function dadSVG(id,opt){
   opt=opt||{};const a=ART[id]||ART.apprentice,c=CLASSES[id]||CLASSES.apprentice,tier=c.tier,u='d'+(++svgUid),A=!!opt.anim,tc=TIER_COLOR[tier];
   const OC='#33222E',O=`stroke="${OC}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"`,O1=`stroke="${OC}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"`;
@@ -1273,7 +1272,6 @@ function dadSVG(id,opt){
   P.push(`<ellipse cx="60" cy="133" rx="30" ry="5" fill="#000" opacity=".16"/>`);
   // 整體呼吸
   P.push(`<g>${A?`<animateTransform attributeName="transform" type="translate" values="0 0;0 -1.6;0 0" dur="1.8s" repeatCount="indefinite"/>`:''}`);
-  if(CLASS_IMG[id]){P.push(`<image href="${CLASS_IMG[id]}" x="10" y="-18" width="100" height="152" preserveAspectRatio="xMidYMax meet"/>`)}else{
   // back
   const bk=a.back;
   if(bk&&bk.t==='cape')P.push(`<path d="M45 74L22 128Q60 138 98 128L75 74Z" fill="${bk.c}" ${O}/><path d="M48 78L32 124Q60 131 88 124L72 78Z" fill="${bk.lining||bk.c}" opacity=".4"/><path d="M80 80L94 126" stroke="#000" stroke-opacity=".18" stroke-width="5"/>`);
@@ -1359,7 +1357,6 @@ function dadSVG(id,opt){
   if(visor)P.push(`<g ${K}><path d="M33 44Q33 19 60 17Q87 19 87 44" stroke="#4A6CC8" stroke-width="5" fill="none"/><rect x="30" y="40" width="10" height="18" rx="4" fill="#4A6CC8"/><rect x="80" y="40" width="10" height="18" rx="4" fill="#4A6CC8"/><rect x="36" y="43" width="48" height="15" rx="7.5" fill="${h.c}"/><path d="M41 47h22" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></g>`);
   if(h.t==='halo')P.push(`<g>${bob(2.2,0,2)}<ellipse cx="60" cy="2" rx="22" ry="5.5" fill="none" stroke="#FFE08A" stroke-width="4.4" filter="url(#${u}f)"/></g>`);
   if(h.t==='tiara')P.push(`<g>${bob(2.2,0,2)}<ellipse cx="60" cy="-4" rx="21" ry="5" fill="none" stroke="#FFE08A" stroke-width="3.6" filter="url(#${u}f)"/></g>`);
-  }
   P.push('</g>');
   // floating fx
   const fx=a.fx||[];
@@ -2346,7 +2343,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v15';
+const APP_VERSION='v16';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
