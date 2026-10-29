@@ -1,6 +1,55 @@
 {
- "updatedAt": "2026-10-29 20:00",
+ "updatedAt": "2026-10-30 07:58",
  "threads": [
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "author": "ynsuper",
+   "stage": "pre",
+   "summary": "醫師說明減痛與無痛分娩其實是同一件事，「要痛才會用力」是過時觀念。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ynsuper/post/DZYttuHiSTm",
+   "why": "老婆想打減痛時，全力支持別勸忍。"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "author": "_ying_1019",
+   "stage": "pre",
+   "summary": "媽媽分享兩胎經驗：第一胎 39 週多沒產兆催生，第二胎 38 週自然發動。",
+   "url": "https://www.threads.com/@_ying_1019/post/DPiZwXUD7r5",
+   "why": "每胎時程都不同，計畫要保留彈性。"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "author": "mia_1101_",
+   "stage": "pre",
+   "summary": "倒數一個多月就要生，媽媽詢問哪些寶寶用品一定要先準備，留言很多實戰建議。",
+   "url": "https://www.threads.com/@mia_1101_/post/DDWMLdLPDyz",
+   "why": "跟阿布倒數時間差不多，直接抄作業。"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "author": "sirithtalwen",
+   "stage": "pre",
+   "summary": "過來人建議紗布衣可省，直接買包屁衣；滿月出月中大約穿 60 號。",
+   "url": "https://www.threads.com/@sirithtalwen/post/DWgiB1LEgos",
+   "why": "買寶寶衣服前看一眼，少花冤枉錢。"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "author": "mommy_babykidcare1",
+   "stage": "n0",
+   "summary": "圖解四種抱寶寶姿勢與常見錯誤，原則是托頭托背、不搖晃。",
+   "url": "https://www.threads.com/@mommy_babykidcare1/post/DItssZLyzg4",
+   "why": "第一次抱阿布前先練好，手才不會抖。"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "author": "ynsuper",
+   "stage": "pre",
+   "summary": "婦產科醫師解釋為何 39 週沒產兆就會討論催生，並引用 ARRIVE 研究說明利弊。",
+   "url": "https://www.threads.com/@ynsuper/post/DXTDPGdiYyj",
+   "why": "醫師提催生時，先懂背景再一起討論。"
+  },
   {
    "addedAt": "2026-10-29T20:00:00+08:00",
    "author": "ginnybaby.zzz",
@@ -419,7 +468,42 @@
    "why": "副食品時間點仍以小兒科醫師建議為準。"
   }
  ],
+ "dcard": [
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "stage": "pre",
+   "summary": "在台大生產，無產兆催生到吃全餐的 56 小時紀錄。",
+   "url": "https://www.dcard.tw/f/parentchild/p/261738593",
+   "why": "催生可能拉很久，爸爸要備好體力。"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "stage": "pre",
+   "summary": "38 週無產兆在新竹馬偕催生的經驗，附費用分享。",
+   "url": "https://www.dcard.tw/f/parentchild/p/257890645",
+   "why": "想先了解催生費用，可以參考。"
+  }
+ ],
  "videos": [
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "channel": "黃瑽寧",
+   "note": "減痛分娩全解析",
+   "stage": "pre",
+   "thumb": "thumbs/U70eqyW4nR8.jpg",
+   "title": "減痛分娩有用嗎？時機、副作用一次問",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=U70eqyW4nR8"
+  },
+  {
+   "addedAt": "2026-10-30T07:58:00+08:00",
+   "channel": "禾馨醫療",
+   "note": "出院回家必看",
+   "stage": "n0",
+   "thumb": "thumbs/tFXaWyt_MOs.jpg",
+   "title": "新生兒出院照護指南：臍帶、紅臀、黃疸",
+   "url": "https://www.youtube.com/watch?v=tFXaWyt_MOs"
+  },
   {
    "addedAt": "2026-10-29T20:00:00+08:00",
    "channel": "菡生婦幼診所",
