@@ -410,6 +410,70 @@ input,select,textarea{font-size:16px!important}
 .spill.crit{background:var(--rose-d);color:#fff}
 .spill.info{background:var(--sky);color:var(--sky-d)}
 .grow-row .gd small{display:block;font-size:11px}
+/* 職業系統 */
+.rar{color:#FFE08A;letter-spacing:2px;font-size:14px;text-shadow:0 1px 4px rgba(0,0,0,.2)}
+.skillcard h2{font-size:20px}
+.gstats{display:flex;gap:8px;flex-wrap:wrap}
+.gstats span{flex:1;min-width:64px;background:var(--bg);border-radius:14px;padding:8px 6px;text-align:center;font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
+.gstats b{font-size:20px;color:var(--ink);font-weight:900;font-variant-numeric:tabular-nums}
+.tier .sub{margin:4px 0 0;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.06em}
+.cls{cursor:pointer}
+.clsinfo{border-radius:20px;padding:14px;color:#fff;display:grid;grid-template-columns:minmax(0,96px) minmax(0,1fr);gap:12px;align-items:center}
+.clsinfo .ca{background:rgba(255,255,255,.92);border-radius:16px;padding:4px}
+.clsinfo .ca svg{width:100%;height:auto;display:block}
+.clsinfo h3{margin:2px 0;font-family:var(--font-display);font-weight:400;font-size:20px}
+.clsinfo p{margin:4px 0 0;font-size:13px}
+.clsinfo .lv{font-size:12px;font-weight:700;opacity:.9}
+/* 職業小遊戲 */
+.gtile{border:0;text-align:left;color:#fff;background:linear-gradient(140deg,#2A1E5A,#5A3AA8 60%,#E9579E);flex-direction:row;align-items:center;gap:12px}
+.gtile .k{color:rgba(255,255,255,.8)}
+.gtile b{display:block;font-family:var(--font-display);font-weight:400;font-size:18px;margin-top:2px}
+.gtile small{display:block;font-size:12px;opacity:.85}
+.gtile .momprog{color:#fff}
+.gt-art{flex:none;width:64px;height:78px;background:rgba(255,255,255,.12);border-radius:16px;padding:2px;box-sizing:border-box}
+.gt-art svg{width:100%;height:100%}
+.arena{position:relative;border-radius:28px;padding:16px 10px;background:radial-gradient(120% 80% at 50% 115%,#E9579E 0,#5A3AA8 45%,#1E1640 100%);color:#fff;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:end;gap:4px;overflow:hidden;min-height:220px}
+.arena::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(2px 2px at 18% 18%,#fff,transparent),radial-gradient(1.5px 1.5px at 70% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 88% 38%,#fff,transparent),radial-gradient(2px 2px at 42% 30%,#fff,transparent),radial-gradient(1.5px 1.5px at 8% 50%,#fff,transparent);opacity:.65}
+.arena .me,.arena .boss{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;text-align:center}
+.arena .fart{width:100%;max-width:140px}
+.arena .fart svg{width:100%;height:auto;display:block}
+.arena small{font-size:11px;opacity:.9}
+.arena b{font-size:14px}
+.vs{position:relative;font-weight:900;font-size:16px;align-self:center;opacity:.85;font-variant-numeric:tabular-nums}
+.hearts{font-size:18px;letter-spacing:1px}
+.hrt{color:#FF6B8B;text-shadow:0 0 6px rgba(255,107,139,.7)}
+.hrt.off{color:rgba(255,255,255,.25);text-shadow:none}
+.hpbar{width:90%;height:10px;border-radius:99px;background:rgba(255,255,255,.22);overflow:hidden}
+.hpbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#FF6B6B,#FFD45C);transition:width .6s}
+.buff{font-size:11px;font-weight:700;background:rgba(255,255,255,.2);border-radius:999px;padding:2px 8px}
+.dmg{position:absolute;right:16%;top:10%;font-weight:900;font-size:30px;color:#FFD45C;text-shadow:0 3px 0 #5A3AA8;animation:xpup 1.1s ease-out forwards;pointer-events:none}
+.dmg.blk{color:#9AE6C8;font-size:20px;left:8%;right:auto}
+@keyframes bhit{0%{transform:none}20%{transform:translateX(-10px) rotate(-8deg);filter:brightness(2.2)}45%{transform:translateX(9px) rotate(6deg)}70%{transform:translateX(-4px)}100%{transform:none}}
+@keyframes atk{0%,100%{transform:none}40%{transform:translateX(26px) scale(1.08)}}
+@keyframes hurtfx{0%,100%{transform:none}20%,60%{transform:translateX(-7px);filter:brightness(1.6) saturate(.4)}40%,80%{transform:translateX(7px)}}
+@keyframes castfx{0%{filter:none}40%{filter:drop-shadow(0 0 16px #FFE08A) brightness(1.3)}100%{filter:none}}
+@keyframes downfx{to{transform:translateY(16px) scale(.85) rotate(12deg);opacity:.35}}
+.boss.hit .fart{animation:bhit .55s}
+.me.atk .fart{animation:atk .5s}
+.me.hurt .fart{animation:hurtfx .5s}
+.me.cast .fart{animation:castfx .9s}
+.boss.down .fart{animation:downfx .8s .4s forwards}
+.qcard{background:var(--surface);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px}
+.qcard h2{font-family:var(--font-display);font-weight:400;font-size:20px;margin:0;line-height:1.45;text-wrap:pretty}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:16px;padding:12px 14px;text-align:left;font-size:15px;color:var(--ink);line-height:1.45;transition:transform .1s}
+.opt:not([disabled]):active{transform:scale(.98)}
+.opt.right{border-color:var(--mint-d);background:var(--mint);font-weight:700}
+.opt.wrong{border-color:var(--rose-d);background:var(--rose)}
+.opt.gone{opacity:.35;text-decoration:line-through}
+.opt[disabled]{cursor:default}
+.learn{border-radius:16px;padding:12px 14px;background:var(--lemon)}
+.learn.ok{background:var(--mint)}
+.learn.ng{background:var(--rose)}
+.learn p{margin:6px 0 0}
+.skillbtn{flex-direction:column;align-items:flex-start;gap:2px;background:linear-gradient(140deg,#5A3AA8,#E9579E);color:#fff;border-radius:18px;padding:12px 16px;text-align:left}
+.skillbtn small{font-weight:400;opacity:.9;font-size:12px}
+@media (prefers-reduced-motion:reduce){.arena .fart,.dmg{animation:none!important}}
 .hist{border:0;text-align:left;background:var(--bg);border-radius:14px;padding:10px 14px;font-size:14px}
 .vinfo b{font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .vinfo small{font-size:12px;color:var(--muted)}
@@ -725,7 +789,7 @@ const yt=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q
 let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.get('baby','寶寶'),
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
-  momlog:store.get('momlog',[]),checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
+  momlog:store.get('momlog',[]),games:store.get('games',[]),gameSeen:store.get('gameSeen',[]),game:null,clsInfo:null,checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
   learnSeg:'ask',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
@@ -1003,7 +1067,7 @@ function showLevelUp(pl,lv,pc,cid){
   const stars=Array.from({length:14},(_,i)=>`<span class="spark" style="left:${(i*37)%100}%;animation-delay:${(i%7)*.18}s;--d:${60+(i*23)%60}px">✦</span>`).join('');
   box.innerHTML=`<div class="lvfx${job?' job':''}"><div class="rays"></div>${stars}
    <div class="card2"><p class="lvk">${job?'轉職成功':'LEVEL UP'}</p>
-    <div class="morph">${job?`<div class="old">${dadSVG(pc)}</div>`:''}<div class="new">${dadSVG(cid)}</div><div class="flash"></div></div>
+    <div class="morph">${job?`<div class="old">${dadSVG(pc)}</div>`:''}<div class="new">${dadSVG(cid,{anim:1})}</div><div class="flash"></div></div>
     <div class="lvnum"><span class="from">Lv.${pl}</span><span class="arr">→</span><span class="to">Lv.${lv}</span></div>
     <h2>${esc(c.name)}</h2><p>${esc(job?c.line:'繼續加油，下一級在等你。')}</p>
     <button class="btn coral" type="button" id="lvClose">太好了</button></div></div>`;
@@ -1012,106 +1076,449 @@ function showLevelUp(pl,lv,pc,cid){
   setTimeout(()=>confetti(art),job?1000:450);setTimeout(()=>confetti(art),job?1500:900);
 }
 // ---------- 好爸爸等級與轉職 ----------
-const BRANCH={baby:{name:'寶寶系',color:'var(--sky-d)',how:'完成寶寶待辦'},mom:{name:'老婆系',color:'var(--rose-d)',how:'完成照顧老婆'},prep:{name:'準備系',color:'var(--mint-d)',how:'採買、成長紀錄、問攻略、填她的資料'}};
-const CLASSES={
- apprentice:{name:'見習爸爸',tier:0,line:'剛拿到新手村裝備，一切從零開始。'},
- knight_diaper:{name:'尿布騎士',tier:1,branch:'baby',line:'換尿布不再手忙腳亂，盾牌上別著安全別針。'},
- mage_love:{name:'寵妻魔法師',tier:1,branch:'mom',line:'學會第一個魔法：她一皺眉你就知道要做什麼。'},
- ranger_supply:{name:'補給遊俠',tier:1,branch:'prep',line:'背包裡永遠有她需要的東西。'},
- paladin_night:{name:'夜奶聖騎士',tier:2,branch:'baby',line:'凌晨三點依然閃閃發光，奶瓶就是你的聖劍。'},
- archmage_love:{name:'寵妻大法師',tier:2,branch:'mom',line:'一句話就能讓她從崩潰到微笑。'},
- craftsman:{name:'萬能工匠',tier:2,branch:'prep',line:'嬰兒床、汽座、安全門，沒有你裝不好的。'},
- hero_baby:{name:'育兒勇者',tier:3,branch:'baby',line:'揹著寶寶打怪，所向無敵。'},
- partner:{name:'傳說神隊友',tier:3,branch:'mom',line:'她逢人就說：嫁給你是對的。'},
- steward:{name:'家庭總管',tier:3,branch:'prep',line:'家裡大小事都在你的掌握之中。'},
- allround:{name:'全能好爸爸',tier:3,branch:null,hidden:true,line:'隱藏職業：寶寶、老婆、準備樣樣兼顧的傳說。'}
+const BRANCH={baby:{name:'寶寶系',short:'寶寶',color:'var(--sky-d)',hex:'#3C8CF0'},mom:{name:'老婆系',short:'老婆',color:'var(--rose-d)',hex:'#F0507F'},prep:{name:'準備系',short:'準備',color:'var(--mint-d)',hex:'#2FB386'}};
+const SKILL={
+ remove:{n:'刪去錯誤',d:'刪掉選項裡的錯誤答案'},
+ shield:{n:'守護',d:'下一次答錯不會扣心'},
+ retry:{n:'再想一次',d:'這一題答錯可以重選一次'},
+ heal:{n:'回復',d:'回復一顆心'},
+ double:{n:'連擊',d:'下一題答對，傷害加倍'},
+ ultimate:{n:'全能',d:'刪掉兩個錯誤答案，而且這題答錯不扣心'}
 };
-const TIER_CLASS={1:{baby:'knight_diaper',mom:'mage_love',prep:'ranger_supply'},2:{baby:'paladin_night',mom:'archmage_love',prep:'craftsman'},3:{baby:'hero_baby',mom:'partner',prep:'steward'}};
-const TIER_NAME=['新手村','一轉','二轉','三轉・傳說'];
-const LV=[0,30,70,120,200,300,420,560,720,900,1100,1350,1650,2000];
+const CLASSES={
+ apprentice:{name:'見習爸爸',tier:0,br:[],line:'剛拿到新手村裝備，一切從零開始。',sk:'奶瓶試煉',st:'remove'},
+ knight_diaper:{name:'尿布騎士',tier:1,br:['baby'],prev:'apprentice',line:'換尿布不再手忙腳亂，盾牌上別著安全別針。',sk:'尿布護盾',st:'remove'},
+ mage_love:{name:'寵妻魔法師',tier:1,br:['mom'],prev:'apprentice',line:'學會第一個魔法：她一皺眉你就知道要做什麼。',sk:'貼心結界',st:'shield'},
+ ranger_supply:{name:'補給遊俠',tier:1,br:['prep'],prev:'apprentice',line:'背包裡永遠有她需要的東西。',sk:'背包翻找',st:'retry'},
+ paladin_night:{name:'夜奶聖騎士',tier:2,br:['baby'],prev:'knight_diaper',line:'凌晨三點依然閃閃發光，奶瓶就是你的聖劍。',sk:'月光奶瓶斬',st:'remove'},
+ archmage_love:{name:'寵妻大法師',tier:2,br:['mom'],prev:'mage_love',line:'一句話就能讓她從崩潰到微笑。',sk:'溫柔大結界',st:'shield'},
+ craftsman:{name:'萬能工匠',tier:2,br:['prep'],prev:'ranger_supply',line:'嬰兒床、汽座、安全門，沒有你裝不好的。',sk:'重新組裝',st:'retry'},
+ warm_guardian:{name:'暖心守護者',tier:2,br:['baby','mom'],prev:'knight_diaper',line:'一手抱寶寶，一手牽老婆，誰都不放開。',sk:'暖心擁抱',st:'heal'},
+ love_strategist:{name:'浪漫軍師',tier:2,br:['mom','prep'],prev:'mage_love',line:'驚喜和計畫都安排得剛剛好。',sk:'浪漫連擊',st:'double'},
+ dad_engineer:{name:'奶爸工程師',tier:2,br:['baby','prep'],prev:'ranger_supply',line:'用工程師的腦袋解決育兒難題。',sk:'除錯模式',st:'remove'},
+ hero_baby:{name:'育兒勇者',tier:3,br:['baby'],prev:'paladin_night',line:'揹著寶寶打怪，所向無敵。',sk:'勇者揹巾斬',st:'remove'},
+ partner:{name:'傳說神隊友',tier:3,br:['mom'],prev:'archmage_love',line:'她逢人就說：嫁給你是對的。',sk:'天使之翼',st:'shield'},
+ steward:{name:'家庭總管',tier:3,br:['prep'],prev:'craftsman',line:'家裡大小事都在你的掌握之中。',sk:'萬全準備',st:'retry'},
+ sun_knight:{name:'日光聖騎',tier:3,br:['baby','mom'],prev:'warm_guardian',line:'像太陽一樣溫暖整個家。',sk:'日光治癒',st:'heal'},
+ star_sage:{name:'星辰謀士',tier:3,br:['mom','prep'],prev:'love_strategist',line:'讀懂星星，也讀懂她的心。',sk:'星辰連擊',st:'double'},
+ mech_dad:{name:'機甲奶爸',tier:3,br:['baby','prep'],prev:'dad_engineer',line:'全自動育兒系統，啟動。',sk:'奶瓶砲',st:'remove'},
+ allround:{name:'全能好爸爸',tier:3,br:['baby','mom','prep'],hidden:true,prev:'apprentice',line:'隱藏職業：寶寶、老婆、準備樣樣兼顧的傳說。',sk:'全能光輝',st:'ultimate'},
+ baby_god:{name:'育兒賢者',tier:4,br:['baby'],prev:'hero_baby',line:'寶寶一哭，你就知道他要什麼。',sk:'賢者之眼',st:'remove'},
+ home_guardian:{name:'家庭守護神',tier:4,br:['mom'],prev:'partner',line:'有你在，這個家什麼都不怕。',sk:'守護神之翼',st:'shield'},
+ omni_butler:{name:'全知大管家',tier:4,br:['prep'],prev:'steward',line:'未來三個月要做的事，你已經排好了。',sk:'全知之書',st:'retry'},
+ cosmic_dad:{name:'宇宙最強好爸爸',tier:4,br:['baby','mom','prep'],hidden:true,prev:'allround',line:'神話職業：全宇宙最好的爸爸，就是你。',sk:'宇宙之心',st:'ultimate'}
+};
+const TIER_CLASS={1:{baby:'knight_diaper',mom:'mage_love',prep:'ranger_supply'},2:{baby:'paladin_night',mom:'archmage_love',prep:'craftsman'},3:{baby:'hero_baby',mom:'partner',prep:'steward'},4:{baby:'baby_god',mom:'home_guardian',prep:'omni_butler'}};
+const HYBRID={2:{'baby+mom':'warm_guardian','mom+prep':'love_strategist','baby+prep':'dad_engineer'},3:{'baby+mom':'sun_knight','mom+prep':'star_sage','baby+prep':'mech_dad'}};
+const TIER_NAME=['新手村','一轉','二轉','三轉・傳說','四轉・神話'];
+const TIER_LV=[1,3,6,9,12];
+const TIER_COLOR=['#9AA6B6','#E39A5C','#9FC2EE','#FFC93C','#FF7AD9'];
+const LV=[0,30,70,120,200,300,420,560,720,900,1100,1350,1650,2000,2400,2850,3350,3900,4500,5150];
+function gameXP(){const r={baby:0,mom:0,prep:0,bonus:0};(s.games||[]).forEach(g=>{if(!g||!g.xp)return;r.baby+=g.xp.baby||0;r.mom+=g.xp.mom||0;r.prep+=g.xp.prep||0;r.bonus+=g.bonus||0});return r}
 function xpStats(){
   let baby=0,mom=0;for(const k in s.tasks){if(!s.tasks[k])continue;if(k.startsWith('mom-'))mom+=10;else baby+=10}
   const bought=Object.values(s.bought).filter(Boolean).length,wifeFilled=s.wife?Object.keys(s.wife).filter(k=>k!=='updatedAt'&&s.wife[k]).length:0;
-  const prep=bought*5+s.growth.length*5+Math.min(s.askHist.length,20)*3+(wifeFilled>=3?20:0);
-  const checkin=checkinInfo().xp,qx=questXP();baby+=qx.baby;mom+=qx.mom+Math.min((s.momlog||[]).length,60)*5;
-  const prep2=prep+qx.prep;
-  return {baby,mom,prep:prep2,checkin:checkin+qx.bonus,total:baby+mom+prep2+checkin+qx.bonus};
+  let prep=bought*5+s.growth.length*5+Math.min(s.askHist.length,20)*3+(wifeFilled>=3?20:0);
+  const qx=questXP(),gx=gameXP();
+  baby+=qx.baby+gx.baby;mom+=qx.mom+gx.mom+Math.min((s.momlog||[]).length,60)*5;prep+=qx.prep+gx.prep;
+  const checkin=checkinInfo().xp+qx.bonus+gx.bonus;
+  return {baby,mom,prep,checkin,total:baby+mom+prep+checkin};
 }
 function levelOf(xp){let lv=1;for(let i=1;i<LV.length;i++)if(xp>=LV[i])lv=i+1;return lv}
-function tierOf(lv){return lv<3?0:lv<6?1:lv<9?2:3}
+function tierOf(lv){return lv<3?0:lv<6?1:lv<9?2:lv<12?3:4}
 function classOf(st){
   const lv=levelOf(st.total),tier=tierOf(lv);
   if(tier===0)return 'apprentice';
   const arr=[['mom',st.mom],['baby',st.baby],['prep',st.prep]].sort((a,b)=>b[1]-a[1]);
-  if(tier===3){const mx=arr[0][1],mn=arr[2][1];if(mn>0&&mn/mx>=0.6)return 'allround'}
+  const mx=arr[0][1]||1,mn=arr[2][1];
+  if(tier>=3&&mn>0&&mn/mx>=0.6)return tier===4?'cosmic_dad':'allround';
+  if((tier===2||tier===3)&&arr[1][1]>0&&arr[1][1]/mx>=0.8)return HYBRID[tier][[arr[0][0],arr[1][0]].sort().join('+')];
   return TIER_CLASS[tier][arr[0][0]];
 }
-function points(){return xpStats().total}
-function dadSVG(id,size){
-  const skin='#F2C29B',hair='#3A2A2A',eye='#2A1E1E';
-  const S={
-   apprentice:{suit:'#8EC9FF',pants:'#4A5A7A',front:`<rect x="86" y="78" width="9" height="17" rx="3" fill="#fff" stroke="#9AB" stroke-width="1.5"/><rect x="88" y="73" width="5" height="6" rx="2" fill="#FFB070"/>`},
-   knight_diaper:{suit:'#AEB8C6',pants:'#5A6474',head:`<path d="M38 38a22 22 0 0144 0v3H38z" fill="#C9D2DC"/><rect x="38" y="33" width="44" height="5" fill="#8B98A8"/>`,
-     front:`<path d="M14 66h26v15q0 13-13 18q-13-5-13-18z" fill="#fff" stroke="#8B6CFF" stroke-width="3"/><path d="M20 76h14l-2 9h-10z" fill="#DCEBFF"/><circle cx="27" cy="74" r="2" fill="#8B6CFF"/>`},
-   mage_love:{suit:'#B9A6FF',pants:'#6C5AB8',head:`<path d="M34 26L60 -2l26 28z" fill="#8B6CFF"/><rect x="34" y="22" width="52" height="6" rx="3" fill="#FFD45C"/>`,
-     front:`<line x1="90" y1="96" x2="100" y2="60" stroke="#8a5a2b" stroke-width="3" stroke-linecap="round"/><path d="M101 60s-9-5-9-11a4.5 4.5 0 019-2a4.5 4.5 0 019 2c0 6-9 11-9 11z" fill="#F0507F"/>`},
-   ranger_supply:{suit:'#7FD6B9',pants:'#3D7A66',head:`<path d="M40 26q20-10 40 0v6H40z" fill="#2FB386"/><path d="M80 28l10 6-8 2z" fill="#2FB386"/>`,
-     back:`<rect x="72" y="58" width="22" height="30" rx="6" fill="#C98A4B"/>`,front:`<path d="M14 82h20l-2 22H16z" fill="#FFB070"/><path d="M19 82q5-8 10 0" stroke="#C47A3A" stroke-width="2" fill="none"/>`},
-   paladin_night:{suit:'#E3E8EF',pants:'#7A8698',head:`<path d="M38 38a22 22 0 0144 0v3H38z" fill="#F5D46A"/><path d="M60 12q8-14 20-8q-10 2-14 12z" fill="#FF6B6B"/>`,
-     front:`<path d="M60 70a9 9 0 1 0 6 15a7 7 0 1 1-6-15z" fill="#5A6CFF"/><rect x="90" y="52" width="7" height="34" rx="3" fill="#fff" stroke="#9AB" stroke-width="1.5"/><rect x="86" y="84" width="15" height="4" rx="2" fill="#F5D46A"/><rect x="91" y="46" width="5" height="7" rx="2" fill="#FFB070"/>`},
-   archmage_love:{suit:'#A774FF',pants:'#A774FF',robe:true,head:`<path d="M30 28L60 -8l30 36z" fill="#5A3AD8"/><rect x="30" y="24" width="60" height="6" rx="3" fill="#FFD45C"/><circle cx="56" cy="8" r="2.5" fill="#FFD45C"/><circle cx="66" cy="16" r="2" fill="#fff"/>`,
-     front:`<line x1="94" y1="128" x2="100" y2="52" stroke="#8a5a2b" stroke-width="3.5" stroke-linecap="round"/><circle cx="100" cy="48" r="9" fill="#FFB3C7" opacity=".6"/><path d="M100 54s-7-4-7-9a3.5 3.5 0 017-1.5a3.5 3.5 0 017 1.5c0 5-7 9-7 9z" fill="#F0507F"/>`},
-   craftsman:{suit:'#FFB070',pants:'#4A5A7A',head:`<path d="M38 34a22 20 0 0144 0z" fill="#FFD45C"/><rect x="34" y="32" width="52" height="5" rx="2" fill="#E0A800"/>`,
-     front:`<rect x="38" y="92" width="44" height="7" fill="#8a5a2b"/><rect x="44" y="90" width="6" height="11" rx="1" fill="#C9D2DC"/><path d="M92 92l8-26" stroke="#8B98A8" stroke-width="5" stroke-linecap="round"/><circle cx="101" cy="63" r="6" fill="none" stroke="#8B98A8" stroke-width="4"/>`},
-   hero_baby:{suit:'#FF6B6B',pants:'#3A3A5A',back:`<path d="M40 58L22 128h76L80 58z" fill="#C2382A"/>`,head:`<path d="M44 20l6 8 10-12 10 12 6-8v10H44z" fill="#FFD45C"/>`,
-     front:`<rect x="46" y="66" width="28" height="26" rx="10" fill="#7FD6B9"/><circle cx="60" cy="68" r="9" fill="#FFD9B8"/><circle cx="57" cy="68" r="1.3" fill="#3A2A2A"/><circle cx="63" cy="68" r="1.3" fill="#3A2A2A"/><path d="M58 71q2 2 4 0" stroke="#3A2A2A" stroke-width="1" fill="none"/>`},
-   partner:{suit:'#F0507F',pants:'#4A3A6A',back:`<path d="M38 64q-30-10-30 18q14-4 30 2z" fill="#fff" stroke="#F0B3C7"/><path d="M82 64q30-10 30 18q-14-4-30 2z" fill="#fff" stroke="#F0B3C7"/>`,head:`<ellipse cx="60" cy="12" rx="16" ry="4" fill="none" stroke="#FFD45C" stroke-width="3"/>`,
-     front:`<path d="M24 52s-6-4-6-8a3 3 0 016-1a3 3 0 016 1c0 4-6 8-6 8z" fill="#FF8DB0"/><path d="M98 44s-8-5-8-11a4 4 0 018-2a4 4 0 018 2c0 6-8 11-8 11z" fill="#F0507F"/>`},
-   steward:{suit:'#2F6F6A',pants:'#22332F',head:`<path d="M44 20l6 8 10-12 10 12 6-8v10H44z" fill="#FFD45C"/>`,
-     front:`<path d="M60 58l-4 6 4 22 4-22z" fill="#FF6B5A"/><rect x="12" y="72" width="22" height="28" rx="3" fill="#fff" stroke="#9AB" stroke-width="1.5"/><rect x="17" y="69" width="12" height="5" rx="2" fill="#8B98A8"/><path d="M16 82h14M16 88h14M16 94h9" stroke="#2FB386" stroke-width="2"/><circle cx="98" cy="70" r="5" fill="none" stroke="#FFD45C" stroke-width="3"/><path d="M98 75v16M98 86h5M98 90h4" stroke="#FFD45C" stroke-width="3"/>`},
-   allround:{suit:'#FFD45C',pants:'#8B6CFF',back:`<circle cx="60" cy="66" r="56" fill="#FFF1BF"/><path d="M40 58L24 128h72L80 58z" fill="#A774FF"/>`,head:`<path d="M42 20l6 9 12-14 12 14 6-9v11H42z" fill="#FF9A5C"/>`,
-     front:`<line x1="96" y1="128" x2="100" y2="56" stroke="#8a5a2b" stroke-width="3.5" stroke-linecap="round"/><path d="M100 40l3.5 7.5 8 1-6 5.5 1.7 8-7.2-4-7.2 4 1.7-8-6-5.5 8-1z" fill="#FFD45C" stroke="#E0A800"/><path d="M60 72l3 6 6 .8-4.4 4 1 6-5.6-3-5.6 3 1-6-4.4-4 6-.8z" fill="#fff"/>`}
-  };
-  const c=S[id]||S.apprentice;
-  return `<svg viewBox="0 -12 120 152" ${size?`width="${size}"`:''} role="img" aria-label="${esc((CLASSES[id]||{}).name||'')}">
-   ${c.back||''}<ellipse cx="60" cy="134" rx="30" ry="4" fill="#000" opacity=".08"/>
-   ${c.robe?`<path d="M38 66h44l8 64H30z" fill="${c.suit}"/>`:`<rect x="44" y="96" width="12" height="34" rx="6" fill="${c.pants}"/><rect x="64" y="96" width="12" height="34" rx="6" fill="${c.pants}"/>`}
-   <rect x="38" y="56" width="44" height="46" rx="16" fill="${c.suit}"/>
-   <path d="M41 66q-13 10-12 24M79 66q13 10 12 24" stroke="${c.suit}" stroke-width="9" stroke-linecap="round" fill="none"/>
-   <circle cx="29" cy="92" r="5" fill="${skin}"/><circle cx="91" cy="92" r="5" fill="${skin}"/>
-   <circle cx="60" cy="38" r="20" fill="${skin}"/><path d="M40 36q1-20 20-20t20 18q-7-8-20-8t-20 10z" fill="${hair}"/>
-   <circle cx="53" cy="40" r="2.2" fill="${eye}"/><circle cx="67" cy="40" r="2.2" fill="${eye}"/>
-   <circle cx="48" cy="46" r="3" fill="#FF9AA8" opacity=".5"/><circle cx="72" cy="46" r="3" fill="#FF9AA8" opacity=".5"/>
-   <path d="M54 47q6 5 12 0" stroke="${eye}" stroke-width="2" fill="none" stroke-linecap="round"/>
-   ${c.head||''}${c.front||''}</svg>`;
+function classGrad(id){
+  const c=CLASSES[id]||CLASSES.apprentice;
+  if(c.hidden)return 'linear-gradient(140deg,#FF9A5C,#E9579E 35%,#A774FF 65%,#3C8CF0)';
+  if(!c.br.length)return 'var(--hero)';
+  if(c.br.length===1)return {baby:'linear-gradient(140deg,#3C8CF0,#6C7BFF 60%,#A774FF)',mom:'linear-gradient(140deg,#F0507F,#FF8A7A 60%,#FFB070)',prep:'linear-gradient(140deg,#2FB386,#2AA7B8 60%,#3C8CF0)'}[c.br[0]];
+  return `linear-gradient(140deg,${BRANCH[c.br[0]].hex},${BRANCH[c.br[1]].hex})`;
+}
+function skillUses(tier){return [1,1,2,2,3][tier]||1}
+function gameHearts(tier){return tier>=3?4:3}
+function gameDmg(tier){return 25+5*Math.max(0,tier-1)}
+
+// ----- 角色繪圖 -----
+let svgUid=0;
+const ART={
+ apprentice:{suit:['#A8DBFF','#5FA8F0'],pants:'#4A5A7A',item:'bottle'},
+ knight_diaper:{suit:['#F2F5F9','#9AA6B6'],pants:'#5A6474',hat:{t:'helmet',c:'#D6DDE6',crest:'plume',cc:'#8B6CFF'},left:{t:'shield',c:'#FFFFFF',sym:'pin',sc:'#8B6CFF'},item:'rattle',emb:'star'},
+ mage_love:{suit:['#D2C4FF','#8B6CFF'],robe:1,hat:{t:'wizard',c:'#6C4CF0',band:'#FFD45C'},item:'staff',emb:'heart'},
+ ranger_supply:{suit:['#A8EED2','#2FB386'],pants:'#2F5E50',hat:{t:'cap',c:'#2FB386',feather:'#FFD45C'},back:{t:'pack',c:'#C98A4B'},item:'thermos',emb:'gear'},
+ paladin_night:{suit:['#FFFBE6','#E3C76A'],pants:'#6A7690',back:{t:'cape',c:'#2E3A8C',lining:'#5A6CFF'},hat:{t:'helmet',c:'#F5D46A',crest:'moon',cc:'#5A6CFF'},left:{t:'shield',c:'#2E3A8C',sym:'moon',sc:'#F5D46A'},item:'bottlesword',emb:'star'},
+ archmage_love:{suit:['#C3ABFF','#5A3AD8'],robe:1,hat:{t:'wizard',c:'#3E25B8',band:'#FFD45C',stars:1},item:'bigstaff',orb:'#FF8DB0',fx:['hearts'],emb:'heart'},
+ craftsman:{suit:['#FFCB94','#F08A3C'],pants:'#3C5A8C',hat:{t:'hardhat',c:'#FFD45C'},left:{t:'toolbox',c:'#E0503A'},item:'wrench',emb:'gear'},
+ warm_guardian:{suit:['#FFE0E8','#F0507F'],pants:'#7A3A5A',back:{t:'cape',c:'#FF8DB0',lining:'#FFE0E8'},hat:{t:'helmet',c:'#FFC2D1',crest:'heart',cc:'#F0507F'},left:{t:'shield',c:'#FFFFFF',sym:'heart',sc:'#F0507F'},item:'bottle',emb:'heart'},
+ love_strategist:{suit:['#A3AEFF','#3C4CC8'],pants:'#2A2F6A',hat:{t:'beret',c:'#E9579E'},item:'book',fx:['hearts'],emb:'heart'},
+ dad_engineer:{suit:['#FFE8A3','#E0A800'],pants:'#4A4A6A',hat:{t:'goggles',c:'#3C8CF0'},left:{t:'bottle'},item:'wrench',fx:['gears'],emb:'gear'},
+ hero_baby:{suit:['#FF9C93','#C2382A'],pants:'#3A3A5A',back:{t:'cape',c:'#C2382A',lining:'#FFB070'},hat:{t:'crown',c:'#FFD45C'},item:'bottlesword',fx:['carrier'],emb:'star'},
+ partner:{suit:['#FFC2D1','#F0507F'],pants:'#5A3A6A',back:{t:'wings',c:'#FFE0EA'},hat:{t:'halo'},item:'bouquet',fx:['hearts'],emb:'heart'},
+ steward:{suit:['#4FA39B','#1F4F4A'],pants:'#17302D',hat:{t:'tophat',c:'#1F2A30',band:'#FFD45C'},left:{t:'keys'},item:'clipboard',fx:['monocle'],emb:'gear'},
+ sun_knight:{suit:['#FFF0BF','#FF9A5C'],pants:'#7A4A2A',back:{t:'wings',c:'#FFE08A'},hat:{t:'helmet',c:'#FFD45C',crest:'sun',cc:'#FF7A3C'},left:{t:'shield',c:'#FFF4D6',sym:'sun',sc:'#FF7A3C'},item:'bottlesword',emb:'heart'},
+ star_sage:{suit:['#7684FF','#1F2A80'],robe:1,hat:{t:'wizard',c:'#1F2A80',band:'#FFD45C',stars:1},item:'bigstaff',orb:'#FFD45C',fx:['floatbook','stars'],emb:'star'},
+ mech_dad:{suit:['#D2E4FF','#4A6CC8'],pants:'#2A3A6A',back:{t:'mech',c:'#8FA8D8'},hat:{t:'visor',c:'#3CE0FF'},item:'cannon',fx:['drone'],emb:'gear'},
+ allround:{suit:['#FFE8A3','#FF9A5C'],pants:'#5A3AA8',back:{t:'cape',c:'#8B6CFF',lining:'#FFD45C'},hat:{t:'crown',c:'#FFD45C',gem:1},item:'scepter',fx:['stars'],emb:'star'},
+ baby_god:{suit:['#FFFFFF','#86BBFF'],robe:1,back:{t:'wings',c:'#E6F2FF'},hat:{t:'halo'},item:'scepter',fx:['carrier','stars'],emb:'star'},
+ home_guardian:{suit:['#FFEAF0','#E9579E'],pants:'#7A2A5A',back:{t:'wings',c:'#FFD1DC'},hat:{t:'tiara'},left:{t:'shield',c:'#FFFFFF',sym:'house',sc:'#E9579E'},item:'bigstaff',orb:'#FF8DB0',fx:['hearts'],emb:'heart'},
+ omni_butler:{suit:['#3B4A6A','#0B1220'],pants:'#0B1220',back:{t:'cape',c:'#141C30',lining:'#FFD45C'},hat:{t:'tophat',c:'#0B1220',band:'#FFD45C'},item:'book',fx:['gears','floatbook','monocle'],emb:'gear'},
+ cosmic_dad:{suit:'rainbow',pants:'#2A1E5A',back:{t:'wings',c:'#FFF1BF'},hat:{t:'starcrown'},item:'scepter',fx:['stars','carrier','hearts'],emb:'star'}
+};
+const HEART_P='M0 6C-6 2-6.5-4-3-5.2C-1.4-5.8 0-4.6 0-3.2C0-4.6 1.4-5.8 3-5.2C6.5-4 6 2 0 6Z';
+const SPARK_P='M0-6L1.5-1.5L6 0L1.5 1.5L0 6L-1.5 1.5L-6 0L-1.5-1.5Z';
+function starP(r){let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;d+=(i?'L':'M')+(Math.cos(a)*rr).toFixed(2)+' '+(Math.sin(a)*rr).toFixed(2)}return d+'Z'}
+function heartAt(x,y,s,f,extra){return `<path d="${HEART_P}" transform="translate(${x} ${y}) scale(${s})" fill="${f}" ${extra||''}/>`}
+function starAt(x,y,r,f,extra){return `<path d="${starP(r)}" transform="translate(${x} ${y})" fill="${f}" ${extra||''}/>`}
+function gearAt(x,y,r,c){return `<g transform="translate(${x} ${y})"><circle r="${r}" fill="none" stroke="${c}" stroke-width="${r*.55}" stroke-dasharray="${(r*.42).toFixed(2)} ${(r*.36).toFixed(2)}"/><circle r="${r*.62}" fill="${c}"/><circle r="${r*.25}" fill="#fff" opacity=".8"/></g>`}
+function dadSVG(id,opt){
+  opt=opt||{};const a=ART[id]||ART.apprentice,c=CLASSES[id]||CLASSES.apprentice,tier=c.tier,u='d'+(++svgUid),A=!!opt.anim,tc=TIER_COLOR[tier];
+  const skin='#F4C7A1',hair='#3A2A2A',eye='#2A1E1E',rb=a.suit==='rainbow';
+  const s1=rb?'#FFB3A8':a.suit[0],s2=rb?'#8B6CFF':a.suit[1];
+  const spin=(dur,rev)=>A?`<animateTransform attributeName="transform" type="rotate" from="${rev?360:0} 60 74" to="${rev?0:360} 60 74" dur="${dur}s" repeatCount="indefinite"/>`:'';
+  const tw=(d,b)=>A?`<animate attributeName="opacity" values="0;1;0" dur="${d}s" begin="${b}s" repeatCount="indefinite"/>`:'';
+  const bob=(d,b,dy)=>A?`<animateTransform attributeName="transform" type="translate" additive="sum" values="0 0;0 ${-dy};0 0" dur="${d}s" begin="${b}s" repeatCount="indefinite"/>`:'';
+  const P=[];
+  P.push(`<defs>
+   <linearGradient id="${u}s" x1="0" y1="0" x2="${rb?1:0}" y2="1">${rb?'<stop offset="0" stop-color="#FF8A80"/><stop offset=".3" stop-color="#FFD45C"/><stop offset=".55" stop-color="#7FD6B9"/><stop offset=".8" stop-color="#6C9BFF"/><stop offset="1" stop-color="#B07CFF"/>':`<stop offset="0" stop-color="${s1}"/><stop offset="1" stop-color="${s2}"/>`}</linearGradient>
+   <radialGradient id="${u}g"><stop offset="0" stop-color="${tc}" stop-opacity=".7"/><stop offset=".55" stop-color="${tc}" stop-opacity=".22"/><stop offset="1" stop-color="${tc}" stop-opacity="0"/></radialGradient>
+   <linearGradient id="${u}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A80"/><stop offset=".25" stop-color="#FFD45C"/><stop offset=".5" stop-color="#7FD6B9"/><stop offset=".75" stop-color="#6C9BFF"/><stop offset="1" stop-color="#E07CFF"/></linearGradient>
+   <linearGradient id="${u}m" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#DDE6F2"/><stop offset="1" stop-color="#9AA9C0"/></linearGradient>
+   <linearGradient id="${u}au" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4B8"/><stop offset=".5" stop-color="#FFD45C"/><stop offset="1" stop-color="#E09A00"/></linearGradient>
+   <radialGradient id="${u}o" cx=".35" cy=".35"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".45" stop-color="${a.orb||'#FFD45C'}"/><stop offset="1" stop-color="${a.orb||'#FFD45C'}" stop-opacity=".85"/></radialGradient>
+   <linearGradient id="${u}w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="${(a.back&&a.back.c)||'#FFFFFF'}"/></linearGradient>
+   <filter id="${u}f" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>`);
+  // aura
+  if(tier>=1)P.push(`<circle cx="60" cy="74" r="66" fill="url(#${u}g)"/>`);
+  if(tier>=3){let r='';for(let i=0;i<12;i++){const t=i*30*Math.PI/180,t2=t+.12;r+=`<path d="M60 74L${(60+80*Math.cos(t)).toFixed(1)} ${(74+80*Math.sin(t)).toFixed(1)}L${(60+80*Math.cos(t2)).toFixed(1)} ${(74+80*Math.sin(t2)).toFixed(1)}Z" fill="${tc}"/>`}P.push(`<g opacity=".2">${r}${spin(40)}</g>`)}
+  if(tier>=2)P.push(`<g><circle cx="60" cy="74" r="61" fill="none" stroke="${tc}" stroke-width="1.8" stroke-dasharray="2 7" stroke-linecap="round" opacity=".85"/>${spin(14)}</g>`);
+  if(tier>=4)P.push(`<g><circle cx="60" cy="74" r="66" fill="none" stroke="url(#${u}r)" stroke-width="3" opacity=".9"/>${starAt(60,8,4,'#FFF',`filter="url(#${u}f)"`)}${starAt(126,74,3,'#FFF')}${spin(9,1)}</g>`);
+  P.push(`<ellipse cx="60" cy="135" rx="32" ry="4.5" fill="#000" opacity=".12"/>`);
+  // back
+  const bk=a.back;
+  if(bk&&bk.t==='cape')P.push(`<path d="M41 60L20 134Q60 143 100 134L79 60Z" fill="${bk.c}"/><path d="M44 62L30 128Q60 134 90 128L76 62Z" fill="${bk.lining||bk.c}" opacity=".35"/>`);
+  if(bk&&bk.t==='wings')P.push(`<g>${bob(2.4,0,3)}<path d="M44 66C14 44-4 72 6 100C16 90 22 96 30 92C26 104 34 108 42 96Z" fill="url(#${u}w)" stroke="${bk.c}" stroke-width="1"/><path d="M76 66C106 44 124 72 114 100C104 90 98 96 90 92C94 104 86 108 78 96Z" fill="url(#${u}w)" stroke="${bk.c}" stroke-width="1"/><path d="M16 74Q26 70 36 76M12 86Q24 82 36 86M104 74Q94 70 84 76M108 86Q96 82 84 86" stroke="${bk.c}" stroke-width="1.4" fill="none" opacity=".9"/></g>`);
+  if(bk&&bk.t==='pack')P.push(`<rect x="70" y="56" width="26" height="34" rx="8" fill="${bk.c}"/><rect x="74" y="62" width="18" height="10" rx="3" fill="#000" opacity=".15"/>`);
+  if(bk&&bk.t==='mech')P.push(`<g>${bob(1.6,0,2)}<path d="M42 64L10 54L14 92L40 84Z" fill="url(#${u}m)" stroke="#6A7FA8"/><path d="M78 64L110 54L106 92L80 84Z" fill="url(#${u}m)" stroke="#6A7FA8"/><path d="M16 62L34 70M16 76L36 78M104 62L86 70M104 76L84 78" stroke="#3CE0FF" stroke-width="2" stroke-linecap="round" filter="url(#${u}f)"/></g>`);
+  // body
+  if(a.robe){P.push(`<path d="M38 60Q60 54 82 60L92 131Q60 139 28 131Z" fill="url(#${u}s)"/><path d="M60 58L60 133" stroke="#fff" stroke-opacity=".35" stroke-width="2"/><path d="M28 131Q60 139 92 131" stroke="${a.hat&&a.hat.band||'#FFD45C'}" stroke-width="3" fill="none"/>`)}
+  else{P.push(`<rect x="44" y="96" width="12" height="34" rx="6" fill="${a.pants}"/><rect x="64" y="96" width="12" height="34" rx="6" fill="${a.pants}"/><ellipse cx="49" cy="131" rx="8" ry="4.5" fill="#2A2238"/><ellipse cx="71" cy="131" rx="8" ry="4.5" fill="#2A2238"/>`);
+    P.push(`<rect x="37" y="56" width="46" height="46" rx="17" fill="url(#${u}s)"/><rect x="37" y="88" width="46" height="6" fill="#000" opacity=".16"/><rect x="56" y="87" width="8" height="8" rx="2" fill="url(#${u}au)"/>`)}
+  P.push(`<path d="M50 57L60 68L70 57" fill="#fff" opacity=".85"/><path d="M42 62Q40 76 44 86" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>`);
+  // emblem
+  if(a.emb==='heart')P.push(heartAt(60,77,1.05,'#FFF',`opacity=".95"`)+heartAt(60,77,.7,'#F0507F'));
+  if(a.emb==='star')P.push(starAt(60,77,6,'url(#'+u+'au)',`stroke="#fff" stroke-width=".8"`));
+  if(a.emb==='gear')P.push(gearAt(60,77,4.5,'#FFD45C'));
+  // carrier baby (front)
+  if((a.fx||[]).includes('carrier'))P.push(`<path d="M44 60Q60 92 76 60" stroke="#7FD6B9" stroke-width="5" fill="none"/><rect x="47" y="66" width="26" height="24" rx="10" fill="#7FD6B9"/><circle cx="60" cy="68" r="8.5" fill="#FFD9B8"/><circle cx="57" cy="68" r="1.2" fill="${eye}"/><circle cx="63" cy="68" r="1.2" fill="${eye}"/><path d="M58 71q2 1.6 4 0" stroke="${eye}" stroke-width="1" fill="none"/><path d="M58 60q2-3 4 0" stroke="#5A3A2A" stroke-width="1.4" fill="none"/>`);
+  // arms
+  P.push(`<path d="M41 65Q28 76 29 92" stroke="url(#${u}s)" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M79 65Q92 76 91 92" stroke="url(#${u}s)" stroke-width="10" stroke-linecap="round" fill="none"/><circle cx="29" cy="93" r="5.5" fill="${skin}"/><circle cx="91" cy="93" r="5.5" fill="${skin}"/>`);
+  // left hand
+  const L=a.left;
+  if(L&&L.t==='shield'){P.push(`<path d="M14 76H40V90Q40 102 27 108Q14 102 14 90Z" fill="${L.c}" stroke="${L.sc}" stroke-width="2.4"/>`);
+    if(L.sym==='heart')P.push(heartAt(27,90,1.3,L.sc));if(L.sym==='moon')P.push(`<path d="M30 84a7 7 0 1 0 2 11a5.5 5.5 0 1 1-2-11z" fill="${L.sc}"/>`);
+    if(L.sym==='sun')P.push(`<circle cx="27" cy="90" r="5" fill="${L.sc}"/><circle cx="27" cy="90" r="8.5" fill="none" stroke="${L.sc}" stroke-width="1.6" stroke-dasharray="2 2.5"/>`);
+    if(L.sym==='pin')P.push(`<path d="M20 92h14" stroke="${L.sc}" stroke-width="2.2" stroke-linecap="round"/><circle cx="33" cy="92" r="2.6" fill="none" stroke="${L.sc}" stroke-width="2"/><path d="M21 86l12 0" stroke="#E6EAF0" stroke-width="5" stroke-linecap="round"/>`);
+    if(L.sym==='house')P.push(`<path d="M20 92L27 85L34 92V99H20Z" fill="${L.sc}"/>`+heartAt(27,94,.6,'#fff'))}
+  if(L&&L.t==='toolbox')P.push(`<rect x="15" y="94" width="26" height="16" rx="3" fill="${L.c}"/><path d="M22 94v-4h12v4" stroke="${L.c}" stroke-width="2.4" fill="none"/><rect x="15" y="100" width="26" height="2.4" fill="#000" opacity=".2"/>`);
+  if(L&&L.t==='keys')P.push(`<circle cx="26" cy="100" r="5" fill="none" stroke="#FFD45C" stroke-width="2"/><path d="M24 104l-3 9M28 104l2 9" stroke="#FFD45C" stroke-width="2.2" stroke-linecap="round"/>`);
+  if(L&&L.t==='bottle')P.push(`<rect x="22" y="78" width="10" height="20" rx="4" fill="#fff" stroke="#9AB" stroke-width="1.4"/><rect x="22" y="88" width="10" height="10" rx="3" fill="#FFF3D6"/><rect x="24" y="72" width="6" height="7" rx="3" fill="#FFB070"/>`);
+  // right hand item
+  const it=a.item;
+  if(it==='bottle')P.push(`<g transform="rotate(-12 91 92)"><rect x="86" y="72" width="11" height="22" rx="4" fill="#fff" stroke="#9AB" stroke-width="1.4"/><rect x="86" y="83" width="11" height="11" rx="3" fill="#FFF3D6"/><rect x="88" y="65" width="7" height="8" rx="3.5" fill="#FFB070"/><path d="M89 76h5M89 80h5" stroke="#9AB" stroke-width="1"/></g>`);
+  if(it==='rattle')P.push(`<path d="M92 94L100 66" stroke="#FFB070" stroke-width="3.4" stroke-linecap="round"/><circle cx="101" cy="60" r="8" fill="#FF8DB0"/><path d="M94 60h14M101 53v14" stroke="#fff" stroke-width="2"/><circle cx="101" cy="60" r="8" fill="none" stroke="#F0507F" stroke-width="1.4"/>`);
+  if(it==='staff')P.push(`<path d="M93 128L100 52" stroke="#8a5a2b" stroke-width="3.4" stroke-linecap="round"/><circle cx="100" cy="46" r="8" fill="#FFB3C7" opacity=".55" filter="url(#${u}f)"/>`+heartAt(100,46,1.3,'#F0507F'));
+  if(it==='bigstaff')P.push(`<path d="M93 130L101 40" stroke="url(#${u}au)" stroke-width="4" stroke-linecap="round"/><path d="M92 46q9-14 18 0" stroke="url(#${u}au)" stroke-width="2.6" fill="none"/><g>${bob(2,0,3)}<circle cx="101" cy="34" r="10" fill="url(#${u}o)" filter="url(#${u}f)"/>${a.orb==='#FFD45C'?starAt(101,34,5,'#fff'):heartAt(101,34,.9,'#fff')}</g>`);
+  if(it==='thermos')P.push(`<rect x="86" y="74" width="12" height="24" rx="4" fill="#3C8CF0"/><rect x="85" y="70" width="14" height="6" rx="2" fill="#2A5FA8"/><rect x="86" y="82" width="12" height="3" fill="#fff" opacity=".6"/>`);
+  if(it==='bottlesword')P.push(`<g transform="rotate(14 91 92)"><path d="M89 82L91 22L95 22L97 82Z" fill="url(#${u}m)" stroke="#9AA9C0" stroke-width=".8" filter="url(#${u}f)"/><path d="M93 26V78" stroke="#fff" stroke-width="1.2" opacity=".9"/><rect x="83" y="80" width="20" height="5" rx="2.5" fill="url(#${u}au)"/><rect x="88" y="85" width="10" height="16" rx="4" fill="#fff" stroke="#9AB"/><rect x="88" y="92" width="10" height="9" rx="3" fill="#FFF3D6"/>${A?`<animate attributeName="opacity" values="1;.85;1" dur="1.6s" repeatCount="indefinite"/>`:''}</g>`);
+  if(it==='wrench')P.push(`<g transform="rotate(-25 91 92)"><rect x="88" y="62" width="7" height="34" rx="3" fill="url(#${u}m)" stroke="#8B98A8"/><path d="M84 56a9 9 0 1 0 15 0l-4 6h-7z" fill="url(#${u}m)" stroke="#8B98A8"/></g>`);
+  if(it==='book')P.push(`<g>${bob(2.2,.3,2)}<path d="M80 78L94 74L108 78V96L94 92L80 96Z" fill="#fff" stroke="#8B6CFF" stroke-width="1.6"/><path d="M94 74V92" stroke="#8B6CFF" stroke-width="1.4"/><path d="M84 82h7M84 86h7M97 82h7M97 86h7" stroke="#B9A6FF" stroke-width="1.2"/></g>`);
+  if(it==='clipboard')P.push(`<rect x="86" y="74" width="22" height="28" rx="3" fill="#fff" stroke="#8B98A8" stroke-width="1.4"/><rect x="91" y="71" width="12" height="5" rx="2" fill="#8B98A8"/><path d="M90 82l2 2 3-3M90 89l2 2 3-3M90 96l2 2 3-3" stroke="#2FB386" stroke-width="1.6" fill="none"/><path d="M97 83h8M97 90h8M97 97h6" stroke="#9AB" stroke-width="1.4"/>`);
+  if(it==='scepter')P.push(`<path d="M93 130L100 44" stroke="url(#${u}au)" stroke-width="4.2" stroke-linecap="round"/><g>${bob(2,0,2.5)}${starAt(100,36,10,'url(#'+u+'au)',`stroke="#fff" stroke-width="1.2" filter="url(#${u}f)"`)}<circle cx="100" cy="36" r="3" fill="#fff"/></g>`);
+  if(it==='cannon')P.push(`<g transform="rotate(-18 91 92)"><rect x="82" y="82" width="34" height="15" rx="7" fill="url(#${u}m)" stroke="#6A7FA8"/><rect x="113" y="84" width="7" height="11" rx="3" fill="#FFB070"/><circle cx="92" cy="89" r="3" fill="#3CE0FF" filter="url(#${u}f)"/><path d="M98 89h10" stroke="#3CE0FF" stroke-width="2" stroke-linecap="round" filter="url(#${u}f)"/></g>`);
+  if(it==='bouquet')P.push(`<path d="M91 96L96 72M91 96L102 76M91 96L88 74" stroke="#2FB386" stroke-width="2"/><circle cx="96" cy="70" r="5" fill="#FF8DB0"/><circle cx="103" cy="75" r="4.5" fill="#FFD45C"/><circle cx="88" cy="72" r="4.5" fill="#B9A6FF"/><path d="M86 94l10-4 0 8z" fill="#fff" stroke="#F0B3C7"/>`);
+  // head
+  P.push(`<rect x="55" y="52" width="10" height="7" fill="${skin}"/><circle cx="40.5" cy="40" r="4" fill="${skin}"/><circle cx="79.5" cy="40" r="4" fill="${skin}"/><circle cx="60" cy="38" r="20" fill="${skin}"/>
+   <path d="M40 37Q40 16 60 16Q80 16 80 35Q73 26 62 27Q58 31 50 31Q45 31 40 37Z" fill="${hair}"/><path d="M48 21Q55 17 63 18" stroke="#fff" stroke-opacity=".25" stroke-width="2" fill="none" stroke-linecap="round"/>
+   <path d="M49.5 34.5q3.5-2 7 0M63.5 34.5q3.5-2 7 0" stroke="${hair}" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+   <circle cx="53" cy="40" r="2.6" fill="${eye}"/><circle cx="67" cy="40" r="2.6" fill="${eye}"/><circle cx="53.9" cy="39.1" r=".9" fill="#fff"/><circle cx="67.9" cy="39.1" r=".9" fill="#fff"/>
+   <ellipse cx="47.5" cy="46" rx="3.6" ry="2.4" fill="#FF8DA0" opacity=".5"/><ellipse cx="72.5" cy="46" rx="3.6" ry="2.4" fill="#FF8DA0" opacity=".5"/>
+   <path d="M54 47q6 5.5 12 0" stroke="${eye}" stroke-width="2" fill="none" stroke-linecap="round"/>`);
+  if((a.fx||[]).includes('monocle'))P.push(`<circle cx="67" cy="40" r="5" fill="#fff" fill-opacity=".15" stroke="#FFD45C" stroke-width="1.4"/><path d="M71 44Q76 52 72 60" stroke="#FFD45C" stroke-width="1" fill="none"/>`);
+  // hat
+  const h=a.hat||{};
+  if(h.t==='helmet'){P.push(`<path d="M37 38A23 23 0 0 1 83 38V41H37Z" fill="${h.c}" stroke="#000" stroke-opacity=".15"/><path d="M42 30Q60 20 78 30" stroke="#fff" stroke-opacity=".5" stroke-width="2.4" fill="none"/><rect x="37" y="38" width="46" height="5" rx="2" fill="#000" opacity=".16"/>`);
+    if(h.crest==='plume')P.push(`<path d="M60 16C60 4 70-2 78 0C70 4 68 10 66 16Z" fill="${h.cc}"/>`);
+    if(h.crest==='moon')P.push(`<path d="M58 4a9 9 0 1 0 4 15a7 7 0 1 1-4-15z" fill="${h.cc}" filter="url(#${u}f)"/>`);
+    if(h.crest==='heart')P.push(heartAt(60,10,1.6,h.cc,`filter="url(#${u}f)"`));
+    if(h.crest==='sun')P.push(`<g>${spin(10)}<circle cx="60" cy="10" r="11" fill="none" stroke="${h.cc}" stroke-width="2.4" stroke-dasharray="2.5 3.5"/></g><circle cx="60" cy="10" r="6.5" fill="${h.cc}" filter="url(#${u}f)"/>`)}
+  if(h.t==='wizard'){P.push(`<path d="M30 31Q50 27 58-18Q66 22 92 31Z" fill="${h.c}"/><ellipse cx="61" cy="31" rx="33" ry="6" fill="${h.c}"/><path d="M33 30Q61 36 89 30" stroke="${h.band}" stroke-width="3.4" fill="none"/>${starAt(58,-18,5,h.band,`filter="url(#${u}f)"`)}`);
+    if(h.stars)P.push(`${starAt(52,8,2.4,'#FFF')}${starAt(66,16,2,'#FFD45C')}${starAt(60,-2,1.8,'#FFF')}`)}
+  if(h.t==='crown'){P.push(`<path d="M41 24L45 6L53 16L60 2L67 16L75 6L79 24Z" fill="url(#${u}au)" stroke="#E09A00" stroke-width="1"/><rect x="41" y="21" width="38" height="5" rx="2" fill="url(#${u}au)" stroke="#E09A00" stroke-width="1"/><circle cx="60" cy="14" r="2.6" fill="#F0507F"/>${h.gem?`<circle cx="49" cy="17" r="2" fill="#3C8CF0"/><circle cx="71" cy="17" r="2" fill="#2FB386"/>`:''}`)}
+  if(h.t==='halo')P.push(`<g>${bob(2.2,0,2)}<ellipse cx="60" cy="8" rx="19" ry="5" fill="none" stroke="#FFE08A" stroke-width="4" filter="url(#${u}f)"/></g>`);
+  if(h.t==='cap')P.push(`<path d="M39 30Q40 12 60 12Q80 12 81 30Z" fill="${h.c}"/><path d="M60 28Q84 26 92 32Q78 34 60 32Z" fill="${h.c}" opacity=".85"/><path d="M44 18Q40 4 30 0Q38 10 40 22Z" fill="${h.feather}"/>`);
+  if(h.t==='hardhat')P.push(`<path d="M38 30Q38 10 60 10Q82 10 82 30Z" fill="${h.c}"/><rect x="33" y="28" width="54" height="6" rx="3" fill="#E0A800"/><rect x="57" y="11" width="6" height="18" rx="2" fill="#fff" opacity=".45"/>`);
+  if(h.t==='beret')P.push(`<ellipse cx="57" cy="21" rx="23" ry="9" fill="${h.c}" transform="rotate(-10 57 21)"/><circle cx="56" cy="12" r="2.4" fill="${h.c}"/>`+heartAt(70,22,.7,'#FFD45C'));
+  if(h.t==='tophat')P.push(`<rect x="44" y="-4" width="32" height="26" rx="3" fill="${h.c}"/><rect x="44" y="14" width="32" height="5" fill="${h.band}"/><ellipse cx="60" cy="22" rx="24" ry="4.5" fill="${h.c}"/><path d="M48 0V12" stroke="#fff" stroke-opacity=".2" stroke-width="3"/>`);
+  if(h.t==='visor')P.push(`<rect x="41" y="35" width="38" height="10" rx="5" fill="${h.c}" opacity=".85" filter="url(#${u}f)"/><path d="M45 38h18" stroke="#fff" stroke-width="2" opacity=".9" stroke-linecap="round"/><path d="M38 30Q38 12 60 12Q82 12 82 30" stroke="#4A6CC8" stroke-width="4" fill="none"/><rect x="34" y="30" width="7" height="14" rx="3" fill="#4A6CC8"/><rect x="79" y="30" width="7" height="14" rx="3" fill="#4A6CC8"/>`);
+  if(h.t==='goggles')P.push(`<path d="M39 26Q60 20 81 26" stroke="#5A4A3A" stroke-width="4" fill="none"/><circle cx="51" cy="25" r="6.5" fill="${h.c}" stroke="#5A4A3A" stroke-width="2"/><circle cx="69" cy="25" r="6.5" fill="${h.c}" stroke="#5A4A3A" stroke-width="2"/><circle cx="49" cy="23" r="2" fill="#fff" opacity=".8"/><circle cx="67" cy="23" r="2" fill="#fff" opacity=".8"/>`);
+  if(h.t==='tiara')P.push(`<path d="M44 22Q60 8 76 22" stroke="url(#${u}au)" stroke-width="3.4" fill="none"/>${heartAt(60,12,1.1,'#F0507F',`filter="url(#${u}f)"`)}<circle cx="50" cy="17" r="1.8" fill="#fff"/><circle cx="70" cy="17" r="1.8" fill="#fff"/><g>${bob(2.2,0,2)}<ellipse cx="60" cy="0" rx="17" ry="4.5" fill="none" stroke="#FFE08A" stroke-width="3" filter="url(#${u}f)"/></g>`);
+  if(h.t==='starcrown')P.push(`<path d="M41 24L45 8L53 17L60 4L67 17L75 8L79 24Z" fill="url(#${u}r)" stroke="#fff" stroke-width="1"/><rect x="41" y="21" width="38" height="5" rx="2" fill="url(#${u}au)"/><g>${bob(1.8,0,3)}${starAt(60,-8,9,'url(#'+u+'au)',`stroke="#fff" stroke-width="1.2" filter="url(#${u}f)"`)}</g>`);
+  // floating fx
+  const fx=a.fx||[];
+  if(fx.includes('hearts'))P.push(`<g>${bob(2.6,0,5)}${heartAt(16,38,1.2,'#FF8DB0')}</g><g>${bob(3,.6,6)}${heartAt(108,22,.9,'#F0507F')}</g><g>${bob(2.8,1.2,4)}${heartAt(10,64,.7,'#FFB3C7')}</g>`);
+  if(fx.includes('stars'))P.push([[12,30,3,0],[110,48,2.4,.7],[18,112,2.2,1.4],[104,110,2.8,.3]].map(([x,y,r,b])=>`<g opacity="${A?0:1}">${tw(2.2,b)}<path d="${SPARK_P}" transform="translate(${x} ${y}) scale(${r/6*1.4})" fill="#FFF4B8"/></g>`).join(''));
+  if(fx.includes('drone'))P.push(`<g>${bob(1.4,0,4)}<ellipse cx="16" cy="28" rx="9" ry="4" fill="url(#${u}m)" stroke="#6A7FA8"/><path d="M6 22h6M20 22h6" stroke="#6A7FA8" stroke-width="2" stroke-linecap="round"/><path d="M9 24v-2M23 24v-2" stroke="#6A7FA8" stroke-width="1.4"/><circle cx="16" cy="29" r="1.8" fill="#3CE0FF" filter="url(#${u}f)">${A?'<animate attributeName="opacity" values="1;.2;1" dur="1s" repeatCount="indefinite"/>':''}</circle></g>`);
+  if(fx.includes('floatbook'))P.push(`<g>${bob(2.6,.4,4)}<path d="M4 30L14 27L24 30V44L14 41L4 44Z" fill="#FFF8E0" stroke="#FFD45C" stroke-width="1.4" filter="url(#${u}f)"/><path d="M14 27V41" stroke="#FFD45C"/></g>`);
+  if(fx.includes('gears'))P.push(`<g transform="translate(14 22)"><g>${A?'<animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="6s" repeatCount="indefinite"/>':''}${gearAt(0,0,6,'#FFD45C')}</g></g><g transform="translate(108 30)"><g>${A?'<animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="5s" repeatCount="indefinite"/>':''}${gearAt(0,0,4.5,'#9AA9C0')}</g></g>`);
+  // tier sparkles
+  const SP=[[10,20],[112,18],[4,96],[116,92],[24,4],[98,2],[60,148],[0,56]];
+  for(let i=0;i<Math.min(SP.length,tier*2);i++){const [x,y]=SP[i];P.push(`<g opacity="${A?0:.9}">${tw(2.4,i*.35)}<path d="${SPARK_P}" transform="translate(${x} ${y}) scale(.75)" fill="${tier>=4?'#FFF':tc}"/></g>`)}
+  return `<svg viewBox="-8 -24 136 168" role="img" aria-label="${esc(c.name)}">${P.join('')}</svg>`;
 }
 const BRANCH_GRAD={baby:'linear-gradient(140deg,#3C8CF0,#6C7BFF 60%,#A774FF)',mom:'linear-gradient(140deg,#F0507F,#FF8A7A 60%,#FFB070)',prep:'linear-gradient(140deg,#2FB386,#2AA7B8 60%,#3C8CF0)',none:'var(--hero)'};
+function brLabel(c){return c.hidden?'隱藏職業':c.br.length?c.br.map(b=>BRANCH[b].short).join('＋'):'起點'}
+function stars(n){return '★'.repeat(n)+'☆'.repeat(5-n)}
 function levelHTML(){
   const st=xpStats(),lv=levelOf(st.total),cid=classOf(st),c=CLASSES[cid],tier=tierOf(lv);
   const cur=LV[lv-1]||0,nxt=LV[lv]||null,pct=nxt?Math.round((st.total-cur)/(nxt-cur)*100):100;
-  const nextTierLv=tier<3?[3,6,9][tier]:null;
-  const maxB=Math.max(st.baby,st.mom,st.prep,1);
-  const clsCard=(id)=>{const k=CLASSES[id];const reached=k.tier<tier||(k.tier===tier&&id===cid);const lockedHidden=k.hidden&&cid!=='allround';
-    return `<div class="cls${id===cid?' mine':''}${k.tier>tier||(k.tier===tier&&id!==cid)?' locked':''}"><div class="ca">${lockedHidden?dadSVG('apprentice'):dadSVG(id)}</div><div><b>${lockedHidden?'？？？':esc(k.name)}</b><br><small>${k.branch?BRANCH[k.branch].name:k.hidden?'隱藏職業':'起點'}${id===cid?'・現在':''}</small></div></div>`};
+  const nextTierLv=tier<4?TIER_LV[tier+1]:null;
+  const maxB=Math.max(st.baby,st.mom,st.prep,1),sk=SKILL[c.st];
+  const plays=gamePlaysLeft();
+  const clsCard=(id)=>{const k=CLASSES[id];const hide=k.hidden&&cid!==id;const lock=k.tier>tier||(k.tier===tier&&id!==cid);
+    return `<div class="cls${id===cid?' mine':''}${lock?' locked':''}" data-clsinfo="${id}"><div class="ca">${hide?dadSVG('apprentice'):dadSVG(id)}</div><div><b>${hide?'？？？':esc(k.name)}</b><br><small>${brLabel(k)}${id===cid?'・現在':''}</small></div></div>`};
+  const row=(ids,cls)=>`<div class="clsrow${cls||''}">${ids.map(clsCard).join('')}</div>`;
+  const info=s.clsInfo&&CLASSES[s.clsInfo];
   return `<div class="bento">
-   <section class="lvhero span2" style="background:${BRANCH_GRAD[c.branch||'none']}"><div class="lvart">${dadSVG(cid)}</div>
-    <div class="lvinfo"><span class="lv">Lv.${lv}・${TIER_NAME[tier]}</span><h2>${esc(c.name)}</h2><p class="tagline">${esc(c.line)}</p>
+   <section class="lvhero span2" style="background:${classGrad(cid)}"><div class="lvart">${dadSVG(cid,{anim:1})}</div>
+    <div class="lvinfo"><span class="lv">Lv.${lv}・${TIER_NAME[tier]}</span><h2>${esc(c.name)}</h2><span class="rar">${stars(tier+1)}</span><p class="tagline">${esc(c.line)}</p>
      <div class="xpbar"><i style="width:${pct}%"></i></div><span class="xptext">${st.total} XP${nxt?`・再 ${nxt-st.total} XP 升到 Lv.${lv+1}`:'・已達最高等級'}</span>
      ${nextTierLv?`<span class="xptext">Lv.${nextTierLv} 可以${tier===0?'第一次轉職':'再次轉職'}</span>`:''}</div></section>
-   <section class="tile span2"><div class="row between"><h2>三大系統</h2><span class="note">最高的那一系決定轉職方向</span></div>
+   <section class="tile span2 skillcard"><div class="row between"><div><p class="k">職業技能</p><h2>${esc(c.sk)}</h2></div><span class="points">${sk.n}・每場 ${skillUses(tier)} 次</span></div>
+    <p style="margin:0">${sk.d}。在職業小遊戲裡使用。</p>
+    <div class="gstats"><span><b>${gameHearts(tier)}</b>生命</span><span><b>${gameDmg(tier)}</b>攻擊</span><span><b>${skillUses(tier)}</b>技能次數</span></div>
+    <button type="button" class="btn coral" data-go="game" style="align-self:flex-start">${plays?`開始職業小遊戲（今天還有 ${plays} 場）`:'今天的小遊戲玩完了，明天再來'}</button></section>
+   <section class="tile span2"><div class="row between"><h2>三大系統</h2><span class="note">決定轉職方向</span></div>
     ${['baby','mom','prep'].map(b=>`<div class="branch"><span>${BRANCH[b].name}</span><div class="bar"><i style="width:${st[b]/maxB*100}%;background:${BRANCH[b].color}"></i></div><b>${st[b]}</b></div>`).join('')}
-    <p class="note">三系都練到差不多，三轉時有機會解鎖隱藏職業。</p></section>
+    <p class="note">最高的一系決定職業。二轉、三轉時，前兩高的差不多（差距兩成內）會變成混合職業；三系都練到差不多，三轉和四轉會解鎖隱藏職業。</p></section>
    <section class="tile span2"><div class="row between"><h2>升等動畫</h2><button type="button" class="btn sm coral" data-lvdemo="1">預覽一次</button></div><p class="note">升級或轉職時會自動播放。</p></section>
    ${checkinCalendar()}
-   <section class="tile span2"><h2>進化路線</h2><div class="tree">
-    <div class="tier one"><p>新手村・Lv.1–2</p><div class="clsrow one">${clsCard('apprentice')}</div></div>
-    ${[1,2,3].map(t=>`<div class="tier"><p>${TIER_NAME[t]}・Lv.${[3,6,9][t-1]}${t<3?'–'+([5,8][t-1]):'+'}</p><div class="clsrow">${['baby','mom','prep'].map(b=>clsCard(TIER_CLASS[t][b])).join('')}</div></div>`).join('')}
-    <div class="tier one"><p>隱藏職業</p><div class="clsrow one">${clsCard('allround')}</div></div>
+   <section class="tile span2"><h2>進化路線</h2><p class="note">點任何一個職業可以看介紹。</p>
+    ${info?`<div class="clsinfo" style="background:${classGrad(s.clsInfo)}"><div class="ca">${info.hidden&&cid!==s.clsInfo?dadSVG('apprentice'):dadSVG(s.clsInfo,{anim:1})}</div><div><span class="lv">${TIER_NAME[info.tier]}・Lv.${TIER_LV[info.tier]} 起・${brLabel(info)}</span><h3>${info.hidden&&cid!==s.clsInfo?'？？？':esc(info.name)}</h3><p>${info.hidden&&cid!==s.clsInfo?'條件達成時才會揭曉。':esc(info.line)}</p><p><b>技能：</b>${esc(info.sk)}（${SKILL[info.st].d}）</p></div></div>`:''}
+    <div class="tree">
+    <div class="tier one"><p>新手村・Lv.1–2</p>${row(['apprentice'],' one')}</div>
+    <div class="tier"><p>一轉・Lv.3–5</p>${row(['knight_diaper','mage_love','ranger_supply'])}</div>
+    <div class="tier"><p>二轉・Lv.6–8</p>${row(['paladin_night','archmage_love','craftsman'])}<p class="sub">混合職業</p>${row(['warm_guardian','love_strategist','dad_engineer'])}</div>
+    <div class="tier"><p>三轉・傳說・Lv.9–11</p>${row(['hero_baby','partner','steward'])}<p class="sub">混合職業</p>${row(['sun_knight','star_sage','mech_dad'])}<p class="sub">隱藏職業</p>${row(['allround'],' one')}</div>
+    <div class="tier"><p>四轉・神話・Lv.12+</p>${row(['baby_god','home_guardian','omni_butler'])}<p class="sub">神話隱藏職業</p>${row(['cosmic_dad'],' one')}</div>
    </div></section>
    <section class="tile span2"><h2>怎麼賺經驗值</h2><div class="xpways">
     <span>完成一項寶寶待辦（寶寶系）</span><b>+10</b><span>完成一項照顧老婆（老婆系）</span><b>+10</b>
+    <span>職業小遊戲答對一題（依題目分系）</span><b>+3</b><span>小遊戲打倒魔王／全對</span><b>+6／+4</b>
     <span>買好一樣東西（準備系）</span><b>+5</b><span>記一筆成長紀錄（準備系）</span><b>+5</b>
     <span>問一次爸爸攻略（準備系，最多 20 次）</span><b>+3</b><span>填好她的資料三項以上（準備系）</span><b>+20</b><span>每日任務（依任務分到三系）</span><b>+10</b><span>每日任務全部完成</span><b>+20</b><span>記一筆產檢紀錄（老婆系）</span><b>+5</b><span>每日簽到</span><b>+5</b><span>連續簽到 7 天／30 天加碼</span><b>+20／+50</b></div></section>
+  </div>`;
+}
+// ---------- 職業小遊戲：知識問答對戰 ----------
+const GAME_PER_DAY=3,GAME_QN=5,GAME_XP_Q=3,GAME_WIN=6,GAME_PERFECT=4;
+// b：題目分系　st：最相關的階段（不填 = 每個階段都適用）　a：正確答案在 o 的第幾個（0 起算）
+const QBANK=[
+ {id:'m1',b:'mom',st:['pre'],q:'懷孕後期，比較建議她用哪種姿勢睡？',o:['側睡（常建議左側），用枕頭墊肚子和膝蓋','仰睡最好','趴睡','怎麼睡都一樣'],a:0,e:'孕晚期仰睡時子宮可能壓到大血管，所以常建議側睡。在肚子下和兩膝之間墊枕頭會舒服很多。'},
+ {id:'m2',b:'mom',st:['pre'],q:'懷孕時血壓量到多少以上，應該聯絡產檢醫院？',o:['140/90','120/80','100/60','180/120 才需要'],a:0,e:'孕期血壓 140/90 以上可能是妊娠高血壓或子癲前症的警訊，要盡快告訴醫師。160/110 以上要立即就醫。'},
+ {id:'m3',b:'mom',st:['pre'],q:'下面哪一個狀況，應該立刻帶她就醫？',o:['劇烈頭痛加上視力模糊','偶爾腰痠','晚上比較頻尿','有點胃食道逆流'],a:0,e:'劇烈頭痛、視力模糊、上腹痛、突然水腫，可能是子癲前症的症狀，不要等，直接就醫。'},
+ {id:'m4',b:'mom',st:['pre'],q:'如果她破水了，應該怎麼做？',o:['盡快聯絡醫院、準備去醫院','等陣痛規律再說','先慢慢洗澡吃飯','多喝水看會不會停'],a:0,e:'破水後保護寶寶的羊膜已經破了，不論流出多少，都要盡快聯絡醫院。'},
+ {id:'m5',b:'mom',st:['pre'],q:'真正的產兆陣痛，通常有什麼特徵？',o:['越來越規律、越來越密、越來越痛','休息一下就消失','久久才一次、沒有規律','肚子變硬但完全不痛'],a:0,e:'假性宮縮通常不規律、休息後會緩和。真陣痛會越來越規律、間隔越來越短，依醫院指示的間隔出發。'},
+ {id:'m6',b:'mom',st:['pre'],q:'她覺得今天胎動明顯變少，怎麼辦？',o:['聯絡產檢醫院或去急診確認','很正常，不用管','叫她多吃甜的就好','等到明天再看看'],a:0,e:'胎動明顯減少可能代表寶寶不舒服，應該盡快聯絡醫院確認，不要等。'},
+ {id:'m7',b:'mom',st:['pre'],q:'她半夜小腿抽筋，你可以怎麼幫她？',o:['把她的腳尖輕輕往身體方向扳、慢慢拉伸','用力捶小腿','叫她起來跳一跳','冰敷一整晚'],a:0,e:'輕輕把腳尖往小腿方向扳、拉伸小腿肚，再按摩放鬆。睡前拉伸也能減少抽筋。'},
+ {id:'m8',b:'mom',st:['pre'],q:'孕期腳水腫，哪個方法比較能舒緩？',o:['把腳抬高、側躺、避免久站','少喝水','一直站著','穿比較緊的鞋'],a:0,e:'抬高雙腳、側躺休息、避免久站久坐都有幫助。不要刻意少喝水。突然很腫或臉手也腫要告訴醫師。'},
+ {id:'m9',b:'mom',st:['pre'],q:'懷孕期間，生魚片、生蛋這類生食建議？',o:['建議避免，食物要煮熟','多吃補充營養','只要新鮮就沒關係','加芥末就安全'],a:0,e:'生食有感染細菌或寄生蟲的風險，孕期建議吃煮熟的食物。'},
+ {id:'m10',b:'mom',st:['pre'],q:'孕期喝咖啡，比較正確的觀念是？',o:['可以適量，但要限制每天的量','完全不用限制','越多越好，可以提神','一天五杯都沒問題'],a:0,e:'孕期咖啡因要限制份量，茶、可樂、巧克力也含咖啡因。每天上限可以問產檢醫師。'},
+ {id:'m11',b:'mom',st:['pre'],q:'陪產時她陣痛很痛，你怎麼做比較好？',o:['陪她呼吸、幫她壓腰薦部、遞水','一直說「再忍一下就好」','去外面等比較不尷尬','專心滑手機計時就好'],a:0,e:'陪她一起呼吸、按壓下背和薦骨、遞水擦汗、跟醫護溝通，都是很實際的支持。'},
+ {id:'m12',b:'mom',st:['n0','n1'],q:'產後情緒低落、莫名想哭，最常在什麼時候出現？',o:['產後幾天到兩週內','產後半年','只會在懷孕初期','不會發生'],a:0,e:'這叫「產後情緒低落」，很常見，通常在產後幾天出現、兩週內慢慢好轉。這時陪伴和肯定最重要。'},
+ {id:'m13',b:'mom',st:['n0','n1','m1'],q:'她情緒低落超過兩週，或說出想傷害自己或寶寶的話，怎麼辦？',o:['陪她就醫（婦產科或身心科）','叫她堅強一點','等它自己好','不要提起比較好'],a:0,e:'這可能是產後憂鬱，是需要治療的狀況，不是她不夠堅強。有傷害自己或寶寶的念頭時，要立刻陪她就醫。'},
+ {id:'m14',b:'mom',st:['n0','n1'],q:'產後出現哪個狀況要就醫？',o:['出血突然變多、有大血塊或發燒','惡露量慢慢變少','惡露顏色慢慢變淡','第一週出血比較多'],a:0,e:'惡露通常會慢慢變少變淡。如果出血突然變多、有大血塊、發燒或傷口紅腫流膿，要盡快就醫。'},
+ {id:'m15',b:'mom',st:['n0','n1'],q:'剖腹產後她要咳嗽時，你可以怎麼幫她？',o:['用枕頭或雙手輕輕壓住傷口','用力拍她的背','叫她憋住不要咳','讓她平躺不要動'],a:0,e:'咳嗽或起身時，用枕頭輕壓傷口可以減少拉扯的疼痛。'},
+ {id:'m16',b:'mom',st:['n0','n1','m1'],q:'哺乳中的她乳房紅腫熱痛，還發燒，可能是？',o:['可能是乳腺炎，要就醫','正常脹奶不用理','水喝太多','穿太多'],a:0,e:'乳房紅腫熱痛又發燒，可能是乳腺炎，要看醫師，不要硬撐。'},
+ {id:'m17',b:'mom',st:['n0','n1','m1'],q:'想支持她哺乳，爸爸最好的做法是？',o:['遞水、拿靠枕，包辦拍嗝和換尿布','評論奶量夠不夠','叫她直接改喝配方奶','在旁邊滑手機'],a:0,e:'哺乳很耗體力。幫她準備好水和靠枕，餵完由你拍嗝換尿布，不評論奶量，就是最好的支持。'},
+ {id:'m18',b:'mom',st:['n0','n1'],q:'長輩說「是不是奶不夠啊」，爸爸最好怎麼回應？',o:['出面說「我們有問過醫生了」支持她','跟著附和','叫她多喝湯','不說話讓她自己處理'],a:0,e:'新手媽媽很容易被這類話打擊。由你出面擋下來、站在她那一邊，比任何建議都有用。'},
+ {id:'m19',b:'mom',st:['n0','n1'],q:'產後訪客太多，她很累，你可以？',o:['幫忙擋訪客、縮短探視時間','多邀一點人來熱鬧','叫她起來招呼客人','不管她'],a:0,e:'產後休息最重要。幫她安排探視時間、替她擋掉訪客，是很實際的照顧。'},
+ {id:'m20',b:'mom',st:null,q:'她說「今天好累」，最好的回應是？',o:['先聽她說，說聲「辛苦了」，再問她需要什麼','「我上班也很累」','「誰不累啊」','直接給她一堆建議'],a:0,e:'先接住情緒，再問需要什麼。很多時候她需要的是被聽見，不是解決方案。'},
+ {id:'b1',b:'baby',st:['n0','n1','m1','m3'],q:'寶寶睡覺時，最安全的姿勢是？',o:['仰睡','趴睡','側睡','都可以'],a:0,e:'仰睡是降低嬰兒猝死風險最重要的原則之一。'},
+ {id:'b2',b:'baby',st:['n0','n1','m1','m3'],q:'嬰兒床上可以放什麼？',o:['什麼都不放','柔軟的枕頭','厚棉被','大玩偶'],a:0,e:'床上不放枕頭、厚棉被、玩偶和防撞墊，避免蓋住寶寶口鼻。'},
+ {id:'b3',b:'baby',st:['n0','n1','m1'],q:'3 個月以下的寶寶發燒到 38°C 以上，應該？',o:['立刻就醫','先觀察三天','多穿一點悶出汗','給他吃大人的退燒藥'],a:0,e:'小於 3 個月的寶寶發燒可能是嚴重感染，要立刻就醫。不要自己給大人的藥。'},
+ {id:'b4',b:'baby',st:['n0','n1','m1','m3'],q:'寶寶一直哭，你覺得快要受不了時，應該？',o:['先把寶寶放在安全的床上，離開幾分鐘冷靜','用力搖晃讓他停','大聲吼他','摀住他的嘴'],a:0,e:'先把寶寶放到安全的地方，自己深呼吸冷靜一下，再回來，或請另一半接手。'},
+ {id:'b5',b:'baby',st:['n0','n1','m1','m3'],q:'為什麼絕對不能用力搖晃寶寶？',o:['可能造成嚴重腦傷','會讓他更愛哭','會長不高','其實沒關係'],a:0,e:'寶寶頸部無力，用力搖晃可能造成「搖晃嬰兒症候群」，導致嚴重腦傷甚至死亡。'},
+ {id:'b6',b:'baby',st:['n0','n1','m1'],q:'下面哪一個是正確的拍嗝方式？',o:['讓寶寶直立靠在肩上，手掌弓起輕拍背','讓他平躺拍肚子','把他倒過來','用力捶背'],a:0,e:'直立靠肩或坐姿托住下巴都可以，手掌弓成杯狀，輕拍或由下往上輕撫背部。'},
+ {id:'b7',b:'baby',st:['n0','n1'],q:'新生兒黃疸，什麼狀況要就醫？',o:['皮膚變黃往肚子以下擴散，或大便顏色變淡','臉有一點點黃','曬曬太陽就好','黃疸一定會自己退'],a:0,e:'黃疸範圍擴大到肚子以下、手腳，或大便顏色變淡，都要盡快就醫。'},
+ {id:'b8',b:'baby',st:['n0','n1','m1'],q:'檢查寶寶大便顏色是否正常，可以對照？',o:['兒童健康手冊裡的嬰兒大便辨識卡','網路上的照片','長輩的經驗','不用看'],a:0,e:'兒童健康手冊有大便辨識卡。如果是灰白、淡黃等顏色，可能是膽道閉鎖的警訊，要盡快就醫。'},
+ {id:'b9',b:'baby',st:['n0','n1'],q:'臍帶護理的重點是？',o:['保持乾燥清潔，紅腫或有臭味要給醫師看','用力把它拔掉','用尿布包緊不透氣','塗爽身粉'],a:0,e:'臍帶通常一到兩週會自己脫落。保持乾燥、尿布折到臍帶下方，紅腫、有臭味或流血不止要就醫。'},
+ {id:'b10',b:'baby',st:['n0','n1','m1','m3'],q:'幫寶寶洗澡前，水溫怎麼測？',o:['用手肘或手腕內側測，微溫即可','用手指頭','越熱越好','用冷水'],a:0,e:'手肘或手腕內側比手指敏感，覺得溫溫的就好，太燙會燙傷寶寶。'},
+ {id:'b11',b:'baby',st:['n0','n1','m1','m3','m6'],q:'幫寶寶洗澡時，最重要的安全原則是？',o:['手不離開寶寶','可以離開去拿毛巾','讓他自己泡一下','水放滿一點'],a:0,e:'就算只離開幾秒，寶寶也可能滑倒嗆水。毛巾、衣服、尿布要先準備好。'},
+ {id:'b12',b:'baby',st:['n0','n1'],q:'新生兒大約多久喝一次奶？',o:['大約每 2 到 3 小時','一天兩次','一天一次','想到再餵'],a:0,e:'新生兒胃很小，大約 2 到 3 小時就要喝一次，夜裡也一樣，所以夜奶要輪班。'},
+ {id:'b13',b:'baby',st:['pre','n0','n1','m1'],q:'新生兒的汽車安全座椅，應該怎麼安裝？',o:['反向（面朝車尾）安裝在後座','面朝前方','讓大人抱著就好','裝在副駕駛座'],a:0,e:'新生兒要用反向安裝的汽座，裝在後座。有安全氣囊的副駕駛座不能放反向汽座。'},
+ {id:'b14',b:'baby',st:['n0','n1','m1'],q:'包巾什麼時候要停止使用？',o:['寶寶開始出現翻身動作時','滿一歲','永遠不用停','寶寶會走路時'],a:0,e:'寶寶開始會翻身時，包巾可能讓他翻成趴姿卻翻不回來，就要停用。'},
+ {id:'b15',b:'baby',st:['n0','n1','m1'],q:'包包巾時，寶寶的腿應該？',o:['能自然彎曲成 M 字型','綁得直直的','越緊越好','完全不能動'],a:0,e:'腿要保留活動空間、自然彎曲，避免髖關節發育不良。'},
+ {id:'b16',b:'baby',st:['m1','m3'],q:'讓寶寶趴著玩（俯臥練習）要注意？',o:['只在醒著、有大人看著的時候','睡覺時也可以','大人不在也沒關係','半夜最好'],a:0,e:'醒著、有人看著時趴著玩可以練習抬頭。睡覺時一定要仰睡。'},
+ {id:'b17',b:'baby',st:['n0','n1','m1','m3','m6'],q:'在尿布台上換尿布，最重要的是？',o:['一隻手始終扶著寶寶','轉身拿東西沒關係','讓他自己躺好','放一下下沒事'],a:0,e:'寶寶可能突然翻身摔落。東西先準備好放在手邊，手不離開寶寶。'},
+ {id:'b18',b:'baby',st:['m3','m6'],q:'開始吃副食品時，新食材要怎麼加？',o:['一次加一種，觀察幾天','一次加五種','越多種越好','不用觀察'],a:0,e:'一次只加一種新食材，觀察幾天有沒有過敏，比較容易找出原因。開始時間可以先問小兒科醫師。'},
+ {id:'b19',b:'baby',st:['m6','y1'],q:'寶寶開始會爬，家裡要先做什麼？',o:['裝插座蓋、安全門欄，包住桌角','不用改變','把東西放在地上給他玩','樓梯開著方便'],a:0,e:'蹲下來用寶寶的高度看家裡，危險的插座、樓梯、尖角、小東西都要先處理。'},
+ {id:'b20',b:'baby',st:['m3','m6','y1','y2'],q:'寶寶誤吞了鈕扣電池，應該？',o:['立刻就醫','等它自己排出來','給他喝水','叫他吐出來'],a:0,e:'鈕扣電池可能在短時間內灼傷食道，非常危險，要立刻就醫，不要自己催吐。'},
+ {id:'b21',b:'baby',st:['m6','y1','y2'],q:'哪一種食物，給小小孩吃前一定要切小？',o:['整顆葡萄','香蕉泥','稀飯','優格'],a:0,e:'葡萄、小番茄、堅果、整顆丸子等圓滾的食物容易噎住，要切小或避免。'},
+ {id:'b22',b:'baby',st:['n1','m1'],q:'寶寶腸絞痛常發生在一天的什麼時候？',o:['傍晚到晚上','早上','中午','不一定，但都在白天'],a:0,e:'腸絞痛常在傍晚到晚上大哭，通常幾個月大會改善。輪班安撫、包巾、白噪音、飛機抱都可以試。'},
+ {id:'b23',b:'baby',st:['n0','n1','m1','m3'],q:'寶寶打疫苗的時程，要以什麼為準？',o:['兒童健康手冊和醫師的安排','網路上的說法','鄰居的經驗','自己決定'],a:0,e:'兒童健康手冊有完整的疫苗時程，每次打完記下下一次的日期。'},
+ {id:'b24',b:'baby',st:['m1','m3','m6'],q:'寶寶打完疫苗有點發燒，怎麼看？',o:['短暫低燒常見，但精神很差或高燒不退要看醫師','一定是過敏','馬上用冰水擦全身','以後都不能打了'],a:0,e:'打完疫苗短暫發燒、局部紅腫常見。精神很差、一直哭不停、高燒不退要看醫師。'},
+ {id:'b25',b:'baby',st:['n0','n1'],q:'新生兒出生後幾天，體重通常會？',o:['先稍微下降，約一到兩週回到出生體重','一直往上升','完全不變','需要減重'],a:0,e:'出生後幾天體重先下降是正常的，之後會慢慢回升。'},
+ {id:'b26',b:'baby',st:['n0','n1','m1'],q:'想知道寶寶有沒有喝夠，可以看什麼？',o:['濕尿布的次數和體重成長','哭的次數','睡的時間','臉圓不圓'],a:0,e:'尿布夠濕、體重有在長，通常代表喝夠了。有疑慮就在回診時問醫師。'},
+ {id:'b27',b:'baby',st:['n0','n1','m1','m3'],q:'寶寶一哭，可以先檢查哪些原因？',o:['餓了、尿布濕、太熱太冷、想被抱','直接給他看手機','讓他哭到累','罵他'],a:0,e:'先檢查基本需求，再試安撫。新生兒的哭是在溝通，不會因為抱太多被寵壞。'},
+ {id:'b28',b:'baby',st:['n0','n1','m1','m3'],q:'「同房不同床」是什麼意思？',o:['嬰兒床放在爸媽房間，但分開睡','跟大人睡同一張床','寶寶自己睡一間','睡沙發'],a:0,e:'同房方便夜裡照顧，分床睡比較安全。不要讓寶寶和大人睡同一張床或沙發。'},
+ {id:'b29',b:'baby',st:['m3','m6'],q:'半歲前寶寶比較黏媽媽，爸爸應該？',o:['持續陪伴，一起洗澡、唸書、玩，慢慢建立感情','放棄','生氣','等他長大再說'],a:0,e:'每天固定的陪伴時間很重要。寶寶會慢慢認得你的聲音和味道，越來越黏你。'},
+ {id:'b30',b:'baby',st:['y1','y2'],q:'孩子在地上大哭大鬧時，比較好的做法是？',o:['先確保安全、接住情緒，等他冷靜再說道理','立刻大聲罵','直接給他想要的東西','不理他走掉'],a:0,e:'先陪他度過情緒，等冷靜下來再說清楚規則。爸媽的規則要一致。'},
+ {id:'p1',b:'prep',st:['pre','n0','n1'],q:'台灣寶寶出生後，出生登記要在多久內辦？',o:['60 天內','一年內','3 天內','不用辦'],a:0,e:'出生後 60 天內要到戶政事務所辦出生登記，可以順便處理健保。'},
+ {id:'p2',b:'prep',st:['pre','n0'],q:'辦出生登記，通常要準備什麼？',o:['出生證明書、父母身分證等（依戶政事務所規定）','只要帶寶寶去','什麼都不用帶','結婚照'],a:0,e:'出發前先查戶政事務所公告的應備文件，或打電話問，比較不會跑兩趟。'},
+ {id:'p3',b:'prep',st:['pre'],q:'想住月子中心，建議什麼時候預訂？',o:['提早預訂，熱門的常要排候補','生完再找','不用預訂，隨時都有','滿月後'],a:0,e:'熱門的月子中心常常很早就額滿，懷孕中期就可以開始參觀比較。'},
+ {id:'p4',b:'prep',st:['pre'],q:'分不清楚是不是產兆時，最好的做法是？',o:['直接打電話問醫院','上網爬文到天亮','等到明天早上','問鄰居'],a:0,e:'醫院的產房都有人接電話，描述狀況請他們判斷，比自己猜安心得多。'},
+ {id:'p5',b:'prep',st:['pre'],q:'待產包裡最重要的是什麼？',o:['證件：身分證、健保卡、媽媽手冊','零食','筆電','化妝品'],a:0,e:'證件和媽媽手冊一定要帶，其他東西可以晚點補。待產包預產期前幾週就放門口。'},
+ {id:'p6',b:'prep',st:['pre'],q:'汽車安全座椅最好什麼時候裝好？',o:['預產期前就裝好，先練習一次','出院當天再裝','寶寶一歲再說','不用裝'],a:0,e:'出院回家第一趟就要用。提早裝好、練習扣安全帶，當天才不會手忙腳亂。'},
+ {id:'p7',b:'prep',st:['pre'],q:'孕婦坐車，安全帶怎麼繫比較正確？',o:['腰帶繫在肚子下方的骨盆處，肩帶從胸前中間斜過','腰帶壓在肚子中間','孕婦不用繫','肩帶放在背後'],a:0,e:'腰帶要低低地繫在肚子下方、骨盆的位置，肩帶從兩胸之間斜過，不要壓在肚子上。'},
+ {id:'p8',b:'prep',st:null,q:'家務分工，哪個方法最有效？',o:['一起列出來、各自認領、寫下來','說「需要幫忙就說」','等她開口','一個人全包也不說'],a:0,e:'把家務寫下來各自認領，比口頭說「我會幫忙」可靠很多，也比較不會吵架。'},
+ {id:'p9',b:'prep',st:null,q:'新手爸爸也可能出現產後憂鬱嗎？',o:['會，累了要說出來、找人幫忙','不會','男人不能說累','只有媽媽會'],a:0,e:'研究顯示爸爸也可能產後憂鬱。睡不好、壓力大時要跟另一半或專業人員聊聊。'},
+ {id:'p10',b:'prep',st:['pre','n0'],q:'台灣的陪產檢及陪產假，總共有幾天？',o:['7 天','1 天','30 天','沒有'],a:0,e:'陪產檢及陪產假共 7 天，可以用在陪產檢和生產前後。實際怎麼請，先問公司或服務機關的人事單位。'},
+ {id:'p11',b:'prep',st:['n0','n1','m1'],q:'安撫寶寶的「5S 安撫法」，不包含下面哪一個？',o:['用力搖晃','包巾','噓聲','輕輕晃動'],a:0,e:'5S 是包巾、側抱或趴在你身上、噓聲、輕輕晃動、吸吮。晃動一定要輕柔，絕對不能用力搖。'},
+ {id:'p12',b:'prep',st:['y1','y2','m6'],q:'教養規則，爸媽怎麼做比較好？',o:['先私下討論好，在孩子面前一致執行','當著孩子的面爭論','各說各的','讓孩子自己選要聽誰'],a:0,e:'規則一致，孩子才知道界線在哪，也不會讓其中一方變成黑臉。'},
+ {id:'p13',b:'prep',st:['pre','n0'],q:'寶寶出生後，健保怎麼處理？',o:['辦出生登記時可以一起申請加保','滿一歲才能加','不用加保','只能自費'],a:0,e:'辦出生登記時通常可以一併辦理健保，詳細依戶政事務所和健保署規定。'},
+ {id:'p14',b:'prep',st:null,q:'吵架時，下面哪一句話最不要說？',o:['「妳就是想太多」','「我們等一下冷靜再聊」','「我知道妳很累」','「我哪裡可以做得更好？」'],a:0,e:'否定她的感受會讓她更受傷。先承認情緒，冷靜後再談事情。'},
+ {id:'p15',b:'prep',st:['pre'],q:'產前教室或爸爸課程，參加的好處是？',o:['先學會陪產、洗澡、換尿布，真的上場不慌','沒什麼用','只有媽媽要去','生完再學就好'],a:0,e:'很多醫院有免費或平價的產前課程，爸爸一起去，能先練習也能更了解她要經歷什麼。'}
+];
+const BOSSES={
+ anxiety:{name:'產前焦慮雲',c:['#C3CCFF','#7A8CE0'],shape:'cloud',line:'一直在耳邊說「萬一……怎麼辦」'},
+ forgot:{name:'待產包遺忘怪',c:['#FFDA9E','#F09A3C'],shape:'blob',acc:'bag',line:'專門讓人出門忘東忘西'},
+ contraction:{name:'陣痛計時魔',c:['#FFB3BE','#E0506A'],shape:'blob',acc:'clock',line:'讓你數不清間隔幾分鐘'},
+ nightcry:{name:'夜哭小魔王',c:['#A99BFF','#4A3AA8'],shape:'blob',acc:'moon',line:'凌晨三點準時出現'},
+ gas:{name:'脹氣泡泡怪',c:['#A8EED2','#2FB386'],shape:'blob',acc:'bubbles',line:'讓寶寶肚子咕嚕咕嚕'},
+ sleepless:{name:'睡眠剝奪龍',c:['#8E9BFF','#2A3A9A'],shape:'blob',acc:'horns',line:'吃掉你所有的睡眠'},
+ picky:{name:'挑食小惡魔',c:['#FFC08A','#E06A3C'],shape:'blob',acc:'horns',line:'看到青菜就跑'}
+};
+const STAGE_BOSS={pre:['anxiety','forgot','contraction'],n0:['nightcry','gas','sleepless'],n1:['nightcry','gas','sleepless'],m1:['gas','nightcry','sleepless'],m3:['sleepless','nightcry','picky'],m6:['picky','sleepless','nightcry'],y1:['picky','sleepless','nightcry'],y2:['picky','sleepless','nightcry']};
+function bossSVG(id){
+  const b=BOSSES[id],u='b'+(++svgUid);
+  const body=b.shape==='cloud'?`<path d="M30 96Q8 96 10 76Q10 58 30 58Q34 34 58 36Q78 26 92 44Q114 42 114 66Q124 82 108 96Z" fill="url(#${u}g)"/>`
+    :`<path d="M22 100Q14 60 40 42Q60 30 82 42Q108 58 100 100Q60 112 22 100Z" fill="url(#${u}g)"/>`;
+  const acc={bag:`<rect x="78" y="70" width="26" height="22" rx="5" fill="#C98A4B"/><path d="M84 70v-5h14v5" stroke="#C98A4B" stroke-width="3" fill="none"/><text x="91" y="86" font-size="10" text-anchor="middle" fill="#fff" font-weight="900">?</text>`,
+    clock:`<circle cx="92" cy="40" r="13" fill="#fff" stroke="#E0506A" stroke-width="3"/><path d="M92 32v8l6 4" stroke="#E0506A" stroke-width="2.4" stroke-linecap="round"/>`,
+    moon:`<path d="M84 22a12 12 0 1 0 6 20a9 9 0 1 1-6-20z" fill="#FFD45C"/><circle cx="104" cy="30" r="1.6" fill="#fff"/><circle cx="76" cy="16" r="1.2" fill="#fff"/>`,
+    bubbles:`<circle cx="98" cy="36" r="7" fill="#fff" opacity=".7"/><circle cx="108" cy="22" r="4.5" fill="#fff" opacity=".6"/><circle cx="86" cy="22" r="3" fill="#fff" opacity=".6"/>`,
+    horns:`<path d="M42 44L34 22L52 38Z" fill="#FFF4D6"/><path d="M82 44L90 22L72 38Z" fill="#FFF4D6"/>`}[b.acc]||'';
+  return `<svg viewBox="0 0 124 120" role="img" aria-label="${esc(b.name)}"><defs><radialGradient id="${u}g" cx=".4" cy=".35"><stop offset="0" stop-color="${b.c[0]}"/><stop offset="1" stop-color="${b.c[1]}"/></radialGradient></defs>
+   <ellipse cx="62" cy="108" rx="40" ry="5" fill="#000" opacity=".25"/>${body}${acc}
+   <ellipse cx="48" cy="70" rx="9" ry="10" fill="#fff"/><ellipse cx="76" cy="70" rx="9" ry="10" fill="#fff"/><circle cx="50" cy="72" r="4.5" fill="#2A1E3A"/><circle cx="74" cy="72" r="4.5" fill="#2A1E3A"/>
+   <path d="M38 58L56 64M86 58L68 64" stroke="#2A1E3A" stroke-width="3" stroke-linecap="round"/><path d="M50 90Q62 82 74 90" stroke="#2A1E3A" stroke-width="3" fill="none" stroke-linecap="round"/>
+   <path d="M55 89l3 4 3-4M63 89l3 4 3-4" fill="#fff"/></svg>`;
+}
+function gameToday(){return (s.games||[]).filter(g=>g&&g.d===todayStr())}
+function gamePlaysLeft(){return Math.max(0,GAME_PER_DAY-gameToday().length)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pickQuestions(){
+  const i=stageIdx(age()),st=STAGES[i].id,nx=(STAGES[i+1]||{}).id,seen=new Set(s.gameSeen||[]);
+  const score=q=>(seen.has(q.id)?0:4)+(!q.st?1:q.st.includes(st)?3:nx&&q.st.includes(nx)?2:0)+Math.random()*1.5;
+  const take=(b,n)=>QBANK.filter(q=>q.b===b).map(q=>({q,k:score(q)})).sort((x,y)=>y.k-x.k).slice(0,n).map(x=>x.q);
+  return shuffle([...take('mom',2),...take('baby',2),...take('prep',1)]);
+}
+function startGame(){
+  if(!gamePlaysLeft()){toast('今天的 3 場都玩完了，明天再來');return}
+  const x=xpStats(),cid=classOf(x),tier=CLASSES[cid].tier;
+  const stid=STAGES[stageIdx(age())].id,bl=STAGE_BOSS[stid]||STAGE_BOSS.pre,boss=bl[gameToday().length%bl.length];
+  const qs=pickQuestions().map(q=>({q,order:shuffle([0,1,2,3])}));
+  s.game={cid,tier,boss,qs,i:0,hp:gameHearts(tier),maxHp:gameHearts(tier),bossHp:100,uses:skillUses(tier),shield:false,double:false,retry:false,removed:[],wrongTry:[],picked:null,done:false,correct:0,xp:{baby:0,mom:0,prep:0},fx:null,dmg:0,log:[]};
+  go('game');
+}
+function useSkill(){
+  const g=s.game;if(!g||g.picked!==null||g.uses<=0||g.done)return;
+  const st=CLASSES[g.cid].st,cur=g.qs[g.i],wrongs=[0,1,2,3].filter(k=>k!==cur.q.a&&!g.removed.includes(k)&&!g.wrongTry.includes(k));
+  if(st==='remove'){const n=g.tier>=3?2:1;g.removed.push(...shuffle(wrongs).slice(0,n))}
+  else if(st==='shield'){if(g.shield)return;g.shield=true}
+  else if(st==='retry'){if(g.retry)return;g.retry=true}
+  else if(st==='heal'){if(g.hp>=g.maxHp){toast('生命已經是滿的');return}g.hp++}
+  else if(st==='double'){if(g.double)return;g.double=true}
+  else if(st==='ultimate'){g.removed.push(...shuffle(wrongs).slice(0,2));g.shield=true}
+  g.uses--;g.fx='skill';render();g.fx=null;
+}
+function answerQ(k){
+  const g=s.game;if(!g||g.picked!==null||g.done)return;
+  const cur=g.qs[g.i],ok=k===cur.q.a;
+  if(!ok&&g.retry){g.retry=false;g.wrongTry.push(k);g.fx='hurtsoft';toast('答錯了，再想一次');render();g.fx=null;return}
+  g.picked=k;
+  if(ok){let d=gameDmg(g.tier);if(g.double){d*=2;g.double=false}g.bossHp=Math.max(0,g.bossHp-d);g.correct++;g.xp[cur.q.b]+=GAME_XP_Q;g.dmg=d;g.fx='hit'}
+  else{if(g.shield){g.shield=false;g.fx='block';g.blocked=true}else{g.hp--;g.fx='hurt';g.blocked=false}}
+  g.log.push({id:cur.q.id,ok});
+  render();g.fx=null;
+}
+function nextQ(){
+  const g=s.game;if(!g)return;
+  if(g.bossHp<=0||g.hp<=0||g.i>=g.qs.length-1){endGame();return}
+  g.i++;g.picked=null;g.removed=[];g.wrongTry=[];g.retry=false;render();window.scrollTo({top:0,behavior:'smooth'});
+}
+function endGame(){
+  const g=s.game;if(!g||g.done)return;
+  g.done=true;g.win=g.bossHp<=0;g.perfect=g.correct===g.qs.length;
+  g.bonus=(g.win?GAME_WIN:0)+(g.perfect?GAME_PERFECT:0);
+  const rec={d:todayStr(),c:g.correct,n:g.log.length,win:g.win,xp:g.xp,bonus:g.bonus,boss:g.boss,cls:g.cid};
+  s.games=[...(s.games||[]),rec].slice(-120);store.set('games',s.games);
+  s.gameSeen=[...new Set([...(s.gameSeen||[]),...g.log.map(l=>l.id)])].slice(-200);store.set('gameSeen',s.gameSeen);
+  render();if(g.win)setTimeout(()=>{const el=document.querySelector('.result');if(el)confetti(el)},200);
+}
+function gameTile(){
+  const left=gamePlaysLeft(),x=xpStats(),cid=classOf(x);
+  return `<button type="button" class="tile span2 gtile" data-go="game"><span class="gt-art">${dadSVG(cid)}</span><span style="flex:1;min-width:0"><span class="k">職業小遊戲</span><b>${left?`今天還能挑戰 ${left} 場`:'今天的 3 場都完成了'}</b><small>${left?`以「${esc(CLASSES[cid].name)}」答題打魔王，一邊學育兒知識`:'明天再來，答對就有經驗值'}</small></span><span class="momprog">›</span></button>`;
+}
+function gameHTML(){
+  const g=s.game,left=gamePlaysLeft();
+  if(!g){
+    const x=xpStats(),cid=classOf(x),c=CLASSES[cid],tier=c.tier,stid=STAGES[stageIdx(age())].id,bl=STAGE_BOSS[stid]||STAGE_BOSS.pre,nb=bl[gameToday().length%bl.length];
+    const today=gameToday();
+    return `<div class="bento">
+     <section class="arena span2"><div class="me"><div class="fart">${dadSVG(cid,{anim:1})}</div><b>${esc(c.name)}</b></div><div class="vs">VS</div><div class="boss"><div class="fart">${bossSVG(nb)}</div><b>${esc(BOSSES[nb].name)}</b></div></section>
+     <section class="tile span2"><p class="k">職業小遊戲・知識對戰</p><h2>答對育兒知識，打倒「${esc(BOSSES[nb].name)}」</h2><p class="note" style="color:var(--ink)">${esc(BOSSES[nb].line)}</p>
+      <div class="gstats"><span><b>${GAME_QN}</b>題</span><span><b>${gameHearts(tier)}</b>生命</span><span><b>${gameDmg(tier)}</b>每題傷害</span><span><b>${skillUses(tier)}</b>技能「${esc(c.sk)}」</span></div>
+      <p class="note">每答對一題 +${GAME_XP_Q} XP（依題目算進寶寶、老婆或準備系），打倒魔王再加 ${GAME_WIN}，全對再加 ${GAME_PERFECT}。技能：${SKILL[c.st].d}。</p>
+      <button type="button" class="btn coral" data-gstart="1" ${left?'':'disabled'} style="align-self:flex-start">${left?`開始挑戰（今天還有 ${left} 場）`:'今天的 3 場都玩完了，明天再來'}</button></section>
+     ${today.length?`<section class="tile span2"><h2>今天的戰績</h2><div class="tasks">${today.map((r,i)=>`<div class="grow-row"><span class="gd">第 ${i+1} 場</span><span class="gv"><b>${r.win?'勝利':'惜敗'}</b>・答對 ${r.c}/${r.n}<small>${esc((BOSSES[r.boss]||{}).name||'')}・+${(r.xp.baby||0)+(r.xp.mom||0)+(r.xp.prep||0)+(r.bonus||0)} XP</small></span></div>`).join('')}</div></section>`:''}
+    </div>`;
+  }
+  const c=CLASSES[g.cid],B=BOSSES[g.boss],cur=g.qs[g.i];
+  const hearts='<span class="hrt">♥</span>'.repeat(g.hp)+'<span class="hrt off">♥</span>'.repeat(g.maxHp-g.hp);
+  const arena=`<section class="arena span2${g.fx==='hit'?' fx-hit':''}${g.fx==='hurt'?' fx-hurt':''}">
+    <div class="me${g.fx==='hit'?' atk':''}${g.fx==='hurt'||g.fx==='hurtsoft'?' hurt':''}${g.fx==='skill'?' cast':''}"><div class="fart">${dadSVG(g.cid,{anim:1})}</div><div class="hearts">${hearts}</div>${g.shield?'<span class="buff">守護中</span>':''}${g.double?'<span class="buff">連擊準備</span>':''}${g.retry?'<span class="buff">可重選</span>':''}</div>
+    <div class="vs">${g.done?'':`${g.i+1}/${g.qs.length}`}</div>
+    <div class="boss${g.fx==='hit'?' hit':''}${g.bossHp<=0?' down':''}"><div class="fart">${bossSVG(g.boss)}</div><div class="hpbar"><i style="width:${g.bossHp}%"></i></div><small>${esc(B.name)} ${g.bossHp}/100</small></div>
+    ${g.fx==='hit'?`<span class="dmg">-${g.dmg}</span>`:''}${g.fx==='block'?'<span class="dmg blk">擋下了！</span>':''}</section>`;
+  if(g.done){
+    const total=g.xp.baby+g.xp.mom+g.xp.prep+g.bonus;
+    return `<div class="bento">${arena}
+     <section class="tile span2 result"><p class="k">${g.win?'勝利':'這次惜敗'}</p><h2>${g.win?`打倒了${esc(B.name)}！`:`${esc(B.name)}逃走了，下次再來`}</h2>
+      <div class="gstats"><span><b>${g.correct}/${g.log.length}</b>答對</span><span><b>+${total}</b>XP</span><span><b>${gamePlaysLeft()}</b>今天剩下</span></div>
+      <p class="note">寶寶系 +${g.xp.baby}・老婆系 +${g.xp.mom}・準備系 +${g.xp.prep}${g.bonus?`・獎勵 +${g.bonus}`:''}</p>
+      <div class="row">${gamePlaysLeft()?'<button type="button" class="btn coral" data-gstart="1">再挑戰一場</button>':''}<button type="button" class="btn light" data-gquit="1">回首頁</button></div></section>
+     <section class="tile span2"><h2>這場學到的事</h2><div class="feed">${g.log.map(l=>{const q=QBANK.find(x=>x.id===l.id);return `<div class="learn ${l.ok?'ok':'ng'}"><b>${l.ok?'✓':'✗'} ${esc(q.q)}</b><p>答案：${esc(q.o[q.a])}</p><p class="note" style="color:var(--ink)">${esc(q.e)}</p></div>`}).join('')}</div>
+      <p class="note">內容為一般衛教，不能取代醫師的判斷。</p></section></div>`;
+  }
+  const ans=g.picked!==null,ok=ans&&g.picked===cur.q.a,sk=SKILL[c.st];
+  return `<div class="bento">${arena}
+   <section class="qcard span2"><div class="row between"><span class="spill ${cur.q.b==='mom'?'crit':cur.q.b==='baby'?'info':'ok'}">${BRANCH[cur.q.b].name}</span><span class="note">第 ${g.i+1} 題</span></div>
+    <h2>${esc(cur.q.q)}</h2>
+    <div class="opts">${cur.order.map(k=>{const gone=g.removed.includes(k)||g.wrongTry.includes(k);let cl='opt';if(ans&&k===cur.q.a)cl+=' right';else if(ans&&k===g.picked)cl+=' wrong';else if(gone)cl+=' gone';
+      return `<button type="button" class="${cl}" data-gans="${k}" ${ans||gone?'disabled':''}>${esc(cur.q.o[k])}</button>`}).join('')}</div>
+    ${ans?`<div class="learn ${ok?'ok':'ng'}"><b>${ok?`答對了！造成 ${g.dmg} 點傷害`:g.blocked?'答錯了，但守護擋下了這次傷害':g.hp<=0?'答錯了，生命歸零':'答錯了，失去一顆心'}</b><p>${esc(cur.q.e)}</p></div>
+      <button type="button" class="btn coral" data-gnext="1">${g.bossHp<=0||g.hp<=0||g.i>=g.qs.length-1?'看結果':'下一題'}</button>`
+      :`<button type="button" class="btn skillbtn" data-gskill="1" ${g.uses>0?'':'disabled'}>使用技能「${esc(c.sk)}」・剩 ${g.uses} 次<small>${sk.d}</small></button>`}
+   </section>
+   <div class="span2 row between"><button type="button" class="btn light sm" data-gquit="1">放棄這場</button><span class="note">放棄不會扣次數，但這場不算經驗值</span></div>
   </div>`;
 }
 let lvReady=false;
@@ -1251,7 +1658,7 @@ const V={
   const [dn,tot]=stageDone(st.id);
   const soon=SHOP.map((x,k)=>({x,k})).filter(o=>(o.x[0]===st.id||(nx&&o.x[0]===nx.id))&&!s.bought[o.k]).slice(0,4);
   const mk=MOM[momKey(st.id)],md=mk.care.filter((_,j)=>s.tasks['mom-'+mk.key+'-'+j]).length;
-  return `<div class="bento">`+heroHTML()+momAlertTile()+checkinTile()+questTile()+
+  return `<div class="bento">`+heroHTML()+momAlertTile()+checkinTile()+questTile()+gameTile()+
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
   (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true);
@@ -1346,6 +1753,7 @@ const V={
   return head+linesHTML();
  },
  level(){return levelHTML()},
+ game(){return gameHTML()},
  _unused(){return ''}
 };
 function momSVG(pose){
@@ -1632,7 +2040,7 @@ function render(){
   if(s.tab==='timeline'&&s.abuSeg==='weeks'){const c=document.querySelector('#weekChips [aria-pressed="true"]'),wc=document.getElementById('weekChips');if(c&&wc)wc.scrollLeft=c.offsetLeft-wc.clientWidth/2+c.clientWidth/2}
   try{const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);document.getElementById('lvTxt').textContent='Lv.'+lv;const m=document.getElementById('lvMini');if(m.dataset.c!==cid){m.innerHTML=dadSVG(cid);m.dataset.c=cid}checkLevel()}catch(_){}
 }
-function go(tab){s.tab=tab;store.set('tab',tab);if(tab!=='timeline')s.selStage=null;view.classList.remove('anim');void view.offsetWidth;view.classList.add('anim');render();setTimeout(()=>view.classList.remove('anim'),500);window.scrollTo(0,0)}
+function go(tab){if(tab==='game'&&s.game&&s.game.done)s.game=null;s.tab=tab;store.set('tab',tab);if(tab!=='timeline')s.selStage=null;view.classList.remove('anim');void view.offsetWidth;view.classList.add('anim');render();setTimeout(()=>view.classList.remove('anim'),500);window.scrollTo(0,0)}
 document.querySelector('nav.tabbar').addEventListener('click',e=>{const b=e.target.closest('button[data-tab]');if(b)go(b.dataset.tab)});
 
 function toast(m){document.querySelectorAll('.toast').forEach(x=>x.remove());const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1600)}
@@ -1646,7 +2054,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -1656,8 +2064,14 @@ view.addEventListener('click',e=>{
   if(el.dataset.refresh){doRefresh();return}
   if(el.dataset.golevel){go('level');return}
   if(el.dataset.checkin){doCheckin(el);return}
+  if(el.dataset.gstart){startGame();return}
+  if(el.dataset.gans!==undefined){answerQ(+el.dataset.gans);return}
+  if(el.dataset.gskill){useSkill();return}
+  if(el.dataset.gnext){nextQ();return}
+  if(el.dataset.gquit){s.game=null;go('today');return}
+  if(el.dataset.clsinfo){s.clsInfo=s.clsInfo===el.dataset.clsinfo?null:el.dataset.clsinfo;render();return}
   if(el.dataset.qact){questAct(el.dataset.qact);return}
-  if(el.dataset.lvdemo){const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);const prev={apprentice:'apprentice',knight_diaper:'apprentice',mage_love:'apprentice',ranger_supply:'apprentice',paladin_night:'knight_diaper',archmage_love:'mage_love',craftsman:'ranger_supply',hero_baby:'paladin_night',partner:'archmage_love',steward:'craftsman',allround:'partner'}[cid];showLevelUp(Math.max(1,lv-1),lv,cid==='apprentice'?'apprentice':prev,cid);return}
+  if(el.dataset.lvdemo){const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);showLevelUp(Math.max(1,lv-1),lv,CLASSES[cid].prev||'apprentice',cid);return}
   if(el.dataset.goabu){s.abuSeg='grow';go('timeline');return}
   if(el.dataset.mdel){const id=el.dataset.mdel;if(s.delArm!==id){s.delArm=id;render();return}s.delArm=null;s.momlog=(s.momlog||[]).filter(r=>r.id!==id);store.set('momlog',s.momlog);toast('已刪除');render();return}
   if(el.dataset.gdel){const id=el.dataset.gdel;if(s.delArm!==id){s.delArm=id;render();return}
@@ -1820,7 +2234,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v12';
+const APP_VERSION='v13';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -1842,7 +2256,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
@@ -1868,7 +2282,7 @@ async function pushNow(keys){
 function reloadState(){
   s.born=store.get('born',true);s.date=store.get('date',todayStr());s.baby=store.get('baby','寶寶');
   s.tasks=store.get('tasks',{});s.bought=store.get('bought',{});s.fav=store.get('fav',{});
-  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.growth=store.get('growth',[]);
+  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.growth=store.get('growth',[]);
   s.wife=store.get('wife',null);s.askHist=store.get('askHist',[]);s.myThreads=store.get('myThreads',[]);
   s.feed.threads=mergeThreads(feedRaw);s.isDemo=false;
 }
