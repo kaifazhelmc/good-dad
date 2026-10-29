@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" media="print" onload="this.media='all'">
 <style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}input,select,textarea{font-size:16px}html{-webkit-text-size-adjust:100%}</style>
 <style>
 /* Layout: phone app shell; bento grid of candy-colored tiles over soft color blobs; floating pill tab bar */
@@ -582,8 +582,37 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
   @keyframes rise{from{transform:translateY(10px)}to{transform:none}}}
 @media (prefers-reduced-motion:reduce){.confetti{display:none}}
 </style>
+<style id="splashCss">
+#splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#FF9A5C 0%,#FF6B6B 38%,#E9579E 68%,#A774FF 100%);color:#fff;font-family:"Huninn","Noto Sans TC",system-ui,sans-serif;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
+#splash.out{opacity:0;transform:scale(1.06);pointer-events:none}
+#splash .sp-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),rgba(255,255,255,0) 65%);animation:spPulse 2.4s ease-in-out infinite}
+#splash .sp-logo{position:relative;width:112px;height:112px;border-radius:30px;background:#fff;box-shadow:0 18px 40px rgba(90,20,80,.35);display:grid;place-items:center;animation:spPop .7s cubic-bezier(.2,1.6,.4,1) both}
+#splash .sp-logo img{width:96px;height:96px;border-radius:24px}
+#splash h1{position:relative;margin:4px 0 0;font-size:34px;font-weight:400;letter-spacing:.12em;text-shadow:0 3px 0 rgba(120,30,90,.35);animation:spUp .6s .25s both}
+#splash p{position:relative;margin:0;font-size:14px;opacity:.92;animation:spUp .6s .38s both}
+#splash .sp-team{position:relative;display:flex;gap:4px;align-items:flex-end;height:96px;margin-top:6px}
+#splash .sp-team img{height:88px;width:auto;filter:drop-shadow(0 6px 6px rgba(80,20,70,.35));animation:spHop .5s both,spBob 1.4s ease-in-out infinite}
+#splash .sp-team img:nth-child(1){animation-delay:.45s,1s}#splash .sp-team img:nth-child(2){height:96px;animation-delay:.55s,1.15s}#splash .sp-team img:nth-child(3){animation-delay:.65s,1.3s}
+#splash .sp-bar{position:relative;width:180px;height:12px;border-radius:99px;background:rgba(255,255,255,.3);overflow:hidden;margin-top:6px;animation:spUp .5s .5s both}
+#splash .sp-bar i{position:absolute;inset:0;width:0;border-radius:99px;background:linear-gradient(90deg,#FFF4D6,#fff);box-shadow:0 0 10px #fff;animation:spLoad 1.3s .55s cubic-bezier(.3,.6,.4,1) forwards}
+#splash .sp-heart{position:absolute;bottom:-30px;font-size:22px;color:rgba(255,255,255,.75);animation:spFloat 3.2s linear infinite}
+@keyframes spPop{0%{transform:scale(.2) rotate(-20deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes spUp{0%{transform:translateY(14px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes spHop{0%{transform:translateY(40px) scale(.6);opacity:0}70%{transform:translateY(-8px)}100%{transform:none;opacity:1}}
+@keyframes spBob{50%{translate:0 -5px}}
+@keyframes spLoad{0%{width:0}60%{width:72%}100%{width:100%}}
+@keyframes spPulse{50%{transform:scale(1.12);opacity:.7}}
+@keyframes spFloat{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:1}100%{transform:translateY(-110vh) rotate(40deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){#splash *{animation:none!important}#splash .sp-bar i{width:100%}}
+</style>
 </head>
 <body>
+<div id="splash" role="status" aria-label="好爸爸載入中"><div class="sp-glow"></div><span class="sp-heart" style="left:8%;animation-delay:0s;font-size:18px">♥</span><span class="sp-heart" style="left:22%;animation-delay:1.1s;font-size:26px">♥</span><span class="sp-heart" style="left:40%;animation-delay:0.5s;font-size:16px">♥</span><span class="sp-heart" style="left:63%;animation-delay:1.6s;font-size:22px">♥</span><span class="sp-heart" style="left:78%;animation-delay:0.3s;font-size:28px">♥</span><span class="sp-heart" style="left:90%;animation-delay:2s;font-size:18px">♥</span>
+ <div class="sp-logo"><img src="icons/icon-192.png" alt=""></div><h1>好爸爸</h1><p>新手爸爸的口袋提醒</p>
+ <div class="sp-team"><img src="art/knight_diaper.webp" alt=""><img src="art/apprentice.webp" alt=""><img src="art/mage_love.webp" alt=""></div>
+ <div class="sp-bar"><i></i></div></div>
+<script>(function(){var s=document.getElementById('splash'),t0=Date.now(),done=false;function hide(){if(done)return;done=true;s.classList.add('out');setTimeout(function(){s.remove();var c=document.getElementById('splashCss');if(c)c.remove()},500)}
+window.__hideSplash=function(){setTimeout(hide,Math.max(0,1500-(Date.now()-t0)))};s.addEventListener('click',hide);setTimeout(hide,6000)})();</script>
 <div class="app">
   <header class="top">
     <div class="brand"><span class="logo" style="overflow:hidden"><svg viewBox="0 0 1024 1024" style="width:40px;height:40px" aria-hidden="true"><circle cx="860" cy="150" r="300" fill="#fff" opacity=".12"/><circle cx="512" cy="560" r="330" fill="#FFD9B8"/><path d="M470 240q60 -90 120 -10" stroke="#5A3A2A" stroke-width="34" fill="none" stroke-linecap="round"/><circle cx="395" cy="545" r="34" fill="#3A2A2A"/><circle cx="629" cy="545" r="34" fill="#3A2A2A"/><circle cx="335" cy="650" r="55" fill="#FF9AA8" opacity=".75"/><circle cx="689" cy="650" r="55" fill="#FF9AA8" opacity=".75"/><path d="M455 670q57 60 114 0" stroke="#3A2A2A" stroke-width="26" fill="none" stroke-linecap="round"/><path d="M800 860s-110-68-110-150a62 62 0 01110-40a62 62 0 01110 40c0 82-110 150-110 150z" fill="#fff"/></svg></span>
@@ -2349,7 +2378,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v17';
+const APP_VERSION='v18';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -2481,7 +2510,7 @@ document.getElementById('sheet').addEventListener('click',e=>{
 document.getElementById('sheet').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='syncEmail'||e.target.id==='syncPass')){e.preventDefault();authDo('login')}});
 setupAsk();
 let firstRun=false;try{firstRun=localStorage.getItem('gd_date')===null}catch(_){}
-render();
+render();if(window.__hideSplash)window.__hideSplash();
 loadFeed(false).then(()=>render());
 initSync();
 if(firstRun){document.getElementById('openSettings').click();document.getElementById('modeDue').click();document.getElementById('dateInput').value='';document.getElementById('welcomeNote').hidden=false}
