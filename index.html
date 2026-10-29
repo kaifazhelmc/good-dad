@@ -162,6 +162,12 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .cktile .k{color:rgba(255,255,255,.85)}.cktile b{display:block;font-size:16px;margin-top:2px}.cktile small{display:block;font-size:12px;opacity:.9}.cktile .momprog{color:#fff}
 .ckday{flex:none;width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
 .ckday b{font-family:var(--font-display);font-weight:400;font-size:28px;margin:0}.ckday small{font-size:11px;margin-top:2px}
+.todoform{display:flex;flex-direction:column;gap:8px;margin:4px 0 6px}
+.todoform input,.todoform select{font:inherit;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);border-radius:14px;padding:10px 12px;min-height:44px;box-sizing:border-box;width:100%}
+.todoform select{width:auto}
+.task .tdel{flex:none;border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;width:32px;height:32px;border-radius:50%;cursor:pointer}
+.task .when.late{color:var(--rose-d,#C2382A);font-weight:700}.task .when.soon{color:var(--coral-ink);font-weight:700}
+.donebox summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:700;padding:6px 0}
 .store{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--bg)}
 .store b{font-size:15px}
 .store small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
@@ -897,7 +903,7 @@ let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
   momlog:store.get('momlog',[]),games:store.get('games',[]),gameSeen:store.get('gameSeen',[]),game:null,clsInfo:null,checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
-  learnSeg:'ask',ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
+  learnSeg:'ask',todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -932,6 +938,23 @@ function heroHTML(){
 }
 function tipHTML(t,c){return `<article class="tipcard t-${c}"><h3>${esc(t.t)}</h3><p class="why">${esc(t.why)}</p>
   <p class="do"><span class="lbl">爸爸做</span>${esc(t.act)}</p><p class="avoid"><span class="lbl">雷區</span>${esc(t.avoid)}</p></article>`}
+// ---------- 我的待辦 ----------
+const TODO_WHO={me:'我',wife:'老婆',both:'一起'};
+function todoSorted(){return (s.todos||[]).slice().sort((a,b)=>(a.done-b.done)||((a.due||'9999')<(b.due||'9999')?-1:(a.due||'9999')>(b.due||'9999')?1:0)||(b.at||0)-(a.at||0))}
+function todoDue(t){if(!t.due)return '';const n=dayDiff(todayStr(),t.due);
+  if(t.done)return `<span class="when">${t.due.slice(5).replace('-','/')}</span>`;
+  return `<span class="when${n<0?' late':n<=1?' soon':''}">${n<0?'逾期 '+(-n)+' 天':n===0?'今天':n===1?'明天':t.due.slice(5).replace('-','/')}</span>`}
+function todoRow(t){return `<div class="task${t.done?' done':''}"><input type="checkbox" id="td-${t.id}" data-todo="${t.id}"${t.done?' checked':''}>
+   <label for="td-${t.id}">${esc(t.t)}${t.who&&t.who!=='me'?` <span class="spill ${t.who==='wife'?'crit':'info'}">${TODO_WHO[t.who]}</span>`:''}</label>${todoDue(t)}<button type="button" class="tdel" data-tdel="${t.id}" aria-label="刪除「${esc(t.t)}」">×</button></div>`}
+function todoHTML(){const all=todoSorted(),open=all.filter(t=>!t.done),done=all.filter(t=>t.done);
+  return `<section class="tile span2" id="todoCard"><div class="row between"><h2>我的待辦</h2><span class="points">${open.length} 項未完成</span></div>
+   <form id="todoForm" class="todoform"><input id="todoT" type="text" maxlength="60" placeholder="新增待辦，例如：預約嬰兒汽座安裝" aria-label="待辦內容" required>
+    <div class="row" style="flex-wrap:nowrap"><input id="todoDue" type="date" aria-label="期限（可不填）" style="flex:1;min-width:0"><select id="todoWho" aria-label="誰負責" style="flex:none"><option value="me">我</option><option value="wife">老婆</option><option value="both">一起</option></select><button class="btn coral sm" type="submit">加入</button></div></form>
+   ${open.length?`<div class="tasks">${open.map(todoRow).join('')}</div>`:'<p class="note">目前沒有待辦。想到什麼就記下來，老婆交代的事也可以放這裡。</p>'}
+   ${done.length?`<details class="donebox"><summary>已完成 ${done.length} 項</summary><div class="tasks">${done.slice(0,30).map(todoRow).join('')}</div>${done.length?'<button type="button" class="btn light sm" data-tclear="1">清掉已完成</button>':''}</details>`:''}</section>`}
+function todoTile(){const open=todoSorted().filter(t=>!t.done);if(!open.length)return '';
+  return `<section class="tile span2"><div class="row between"><h2>我的待辦</h2><button type="button" class="glasschip" style="border:0" data-go="lists">全部 ${open.length} 項 ›</button></div><div class="tasks">${open.slice(0,3).map(todoRow).join('')}</div></section>`}
+function saveTodos(){store.set('todos',s.todos)}
 function taskRows(id,limit){
   const list=(TASKS[id]||[]).map((t,i)=>({key:id+'-'+i,name:t[0],when:t[1]}));
   const rows=limit?list.filter(t=>!s.tasks[t.key]).slice(0,limit):list;
@@ -1857,7 +1880,7 @@ const V={
   const [dn,tot]=stageDone(st.id);
   const soon=SHOP.map((x,k)=>({x,k})).filter(o=>(o.x[0]===st.id||(nx&&o.x[0]===nx.id))&&!s.bought[o.k]).slice(0,4);
   const mk=MOM[momKey(st.id)],md=mk.care.filter((_,j)=>s.tasks['mom-'+mk.key+'-'+j]).length;
-  return `<div class="bento">`+heroHTML()+momAlertTile()+checkupTile()+checkinTile()+questTile()+gameTile()+
+  return `<div class="bento">`+heroHTML()+momAlertTile()+checkupTile()+checkinTile()+todoTile()+questTile()+gameTile()+
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
   (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
@@ -1906,6 +1929,7 @@ const V={
   return `<div class="bento">
    <section class="tile t-peach stat"><p class="k">好爸爸點數</p><span class="n">${points()}<small>點</small></span></section>
    <section class="tile t-mint stat"><p class="k">已購入</p><span class="n">${bought}<small>/ ${SHOP.length}</small></span></section>
+   ${todoHTML()}
    <section class="tile span2"><h2>${esc(cur.title)}待辦</h2>${taskRows(cur.id,0)}</section>
    <section class="tile span2"><h2>購物清單</h2><div class="tabs-mini" role="group" aria-label="篩選">${filters.map(f=>`<button type="button" class="chip" style="background:var(--bg)" data-shopf="${f[0]}" aria-pressed="${s.shopFilter===f[0]}">${f[1]}</button>`).join('')}</div>
     <div class="tasks">${items.length?items.map(o=>shopRow(o.x,o.k)).join(''):'<p class="note">都買齊了。</p>'}</div>
@@ -2298,7 +2322,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -2323,6 +2347,8 @@ view.addEventListener('click',e=>{
   if(el.dataset.gowife){s.wifeSeg=el.dataset.gowife;go('lines');return}
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
+  if(el.dataset.tdel){s.todos=s.todos.filter(t=>t.id!==el.dataset.tdel);saveTodos();render();return}
+  if(el.dataset.tclear){s.todos=s.todos.filter(t=>!t.done);saveTodos();toast('已清掉');render();return}
   if(el.dataset.ckact){const a=el.dataset.ckact;if(a==='edit'){s.ckEdit=true;render()}else if(a==='cancel'){s.ckEdit=false;render()}else if(a==='done'){s.ckEdit=true;render();const f=document.getElementById('momLogForm');if(f)f.scrollIntoView({behavior:'smooth',block:'start'})}return}
   if(el.dataset.src){s.srcSeg=el.dataset.src;render();return}
   if(el.dataset.learn){s.learnSeg=el.dataset.learn;if(s.tab!=='learn')go('learn');else render();return}
@@ -2340,6 +2366,7 @@ view.addEventListener('click',e=>{
 view.addEventListener('change',e=>{
   const t=e.target;
   if(t.dataset.quest){toggleQuest(t.dataset.quest,t);return}
+  if(t.dataset.todo){const x=s.todos.find(o=>o.id===t.dataset.todo);if(x){x.done=t.checked;x.doneAt=t.checked?Date.now():null;saveTodos();if(t.checked){confetti(t);toast('完成一項')}setTimeout(render,t.checked?350:0)}return}
   if(t.dataset.task){s.tasks[t.dataset.task]=t.checked;store.set('tasks',s.tasks);if(t.checked){confetti(t);toast('+10 點，好爸爸')}setTimeout(render,t.checked?350:0)}
   if(t.dataset.buy){s.bought[t.dataset.buy]=t.checked;store.set('bought',s.bought);if(t.checked)confetti(t);render()}
 });
@@ -2353,6 +2380,9 @@ view.addEventListener('submit',e=>{
     const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
     const rec={date,weight:Math.round(w*100)/100,note:n,addedAt:new Date().toISOString()};if(h>0)rec.height=Math.round(h*10)/10;
     DB.collection('growth').add(rec).then(()=>{toast('記下來了');confetti(btn);['gW','gH','gN'].forEach(id=>{const x=document.getElementById(id);if(x)x.value=''});const b2=document.querySelector('#growForm button[type=submit]');if(b2)b2.disabled=false},err=>{btn.disabled=false;toast(err&&err.code==='quota_exceeded'?'紀錄已滿':'沒存成功，再試一次')});return}
+  if(e.target.id==='todoForm'){e.preventDefault();const v=document.getElementById('todoT').value.trim();if(!v)return;
+    s.todos=[{id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:v,due:document.getElementById('todoDue').value||'',who:document.getElementById('todoWho').value,done:false,at:Date.now()},...(s.todos||[])].slice(0,200);saveTodos();
+    document.getElementById('todoT').value='';document.getElementById('todoDue').value='';toast('已加入待辦');render();return}
   if(e.target.id==='ckForm'){e.preventDefault();saveCheckup();return}
   if(e.target.id==='storeForm'){e.preventDefault();const v=document.getElementById('storeQ').value.trim();s.storeQ=v||'嬰兒用品';document.getElementById('storeQ').blur();render();return}
   if(e.target.id==='homeAsk'){e.preventDefault();const v=document.getElementById('homeQ').value;if(v.trim())ask(v);else{s.learnSeg='ask';go('learn')}return}if(e.target.id==='askForm'){e.preventDefault();const v=document.getElementById('askQ').value;document.getElementById('askQ').blur();ask(v)}});
@@ -2482,7 +2512,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v22';
+const APP_VERSION='v23';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -2504,7 +2534,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
@@ -2530,7 +2560,7 @@ async function pushNow(keys){
 function reloadState(){
   s.born=store.get('born',true);s.date=store.get('date',todayStr());s.baby=store.get('baby','寶寶');
   s.tasks=store.get('tasks',{});s.bought=store.get('bought',{});s.fav=store.get('fav',{});
-  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.growth=store.get('growth',[]);
+  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.todos=store.get('todos',[]);s.growth=store.get('growth',[]);
   s.wife=store.get('wife',null);s.askHist=store.get('askHist',[]);s.myThreads=store.get('myThreads',[]);
   s.feed.threads=mergeThreads(feedRaw);s.isDemo=false;
 }
