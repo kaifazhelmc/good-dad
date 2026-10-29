@@ -142,6 +142,7 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .donetag{font-size:11px;color:var(--muted)}
 
 .tabs-mini{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.tile .chip{background:var(--bg)}
 .chip{border:0;background:var(--surface);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:500;white-space:nowrap}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 
@@ -644,6 +645,44 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
   .view.anim>*:nth-child(2){animation-delay:.03s}.view.anim>*:nth-child(3){animation-delay:.06s}.view.anim>*:nth-child(4){animation-delay:.09s}.view.anim>*:nth-child(n+5){animation-delay:.12s}
   @keyframes rise{from{transform:translateY(10px)}to{transform:none}}}
 @media (prefers-reduced-motion:reduce){.confetti{display:none}}
+
+/* ===== 可讀性修正 ===== */
+.hero,.lvhero,.cktile,.askbox{text-shadow:0 1px 2px rgba(70,10,50,.28)}
+.askbox{position:relative;overflow:hidden}
+.hero::after,.lvhero::after,.askbox::after,.cktile::after{content:"";position:absolute;inset:0;background:rgba(70,10,55,.16);pointer-events:none;border-radius:inherit;z-index:0}
+.hero>*,.lvhero>*,.askbox>*{position:relative;z-index:1}
+.cktile{position:relative;overflow:hidden}.cktile>*{position:relative;z-index:1}
+.btn.coral,.shopee{background:#E5533F}
+.do .lbl{background:#1F8A66}.avoid .lbl{background:#D23A69}
+.spill.info{background:var(--sky);color:#1F5FB8}.spill.ok{color:#17805C}
+.tile .chip[aria-pressed="true"]{background:var(--ink)!important;color:var(--bg)!important}
+.vthumb .badge{background:rgba(0,0,0,.5)}
+@media (prefers-color-scheme: dark){
+:root:not([data-theme="light"]) .cknext{background:linear-gradient(140deg,#1C2A45,#2A2346)}
+:root:not([data-theme="light"]) .frow.hot{background:linear-gradient(140deg,#43202E,#3D2A1E)}
+:root:not([data-theme="light"]) .ckprep span{background:rgba(255,255,255,.1)}
+:root:not([data-theme="light"]) .scanbox{background:linear-gradient(140deg,#2E2219,#2A2346)}
+:root:not([data-theme="light"]) .blogtile{background:linear-gradient(140deg,#3A271F,#2A2346)!important}
+:root:not([data-theme="light"]) .avatar,.shop .dot,.wic,.lbl,.quest .qtag,.spill.crit{color:#1A1222!important;text-shadow:none}
+:root:not([data-theme="light"]) .vthumb .badge{background:rgba(0,0,0,.6)}
+:root:not([data-theme="light"]) .btn.coral,.shopee:not([style]),label.btn.coral{background:#E5533F;color:#fff}
+:root:not([data-theme="light"]) .task .when.late{color:#FF9AB8}
+}
+:root[data-theme="dark"] .cknext{background:linear-gradient(140deg,#1C2A45,#2A2346)}
+:root[data-theme="dark"] .frow.hot{background:linear-gradient(140deg,#43202E,#3D2A1E)}
+:root[data-theme="dark"] .ckprep span{background:rgba(255,255,255,.1)}
+:root[data-theme="dark"] .scanbox{background:linear-gradient(140deg,#2E2219,#2A2346)}
+:root[data-theme="dark"] .blogtile{background:linear-gradient(140deg,#3A271F,#2A2346)!important}
+:root[data-theme="dark"] .avatar,.shop .dot,.wic,.lbl,.quest .qtag,.spill.crit{color:#1A1222!important;text-shadow:none}
+:root[data-theme="dark"] .vthumb .badge{background:rgba(0,0,0,.6)}
+:root[data-theme="dark"] .btn.coral,.shopee:not([style]),label.btn.coral{background:#E5533F;color:#fff}
+:root[data-theme="dark"] .task .when.late{color:#FF9AB8}
+
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .spill.info{color:var(--sky-d)}:root:not([data-theme="light"]) .spill.ok{color:var(--mint-d)}}
+:root[data-theme="dark"] .spill.info{color:var(--sky-d)}:root[data-theme="dark"] .spill.ok{color:var(--mint-d)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero::after,:root:not([data-theme="light"]) .lvhero::after,:root:not([data-theme="light"]) .askbox::after,:root:not([data-theme="light"]) .cktile::after{background:rgba(20,5,25,.32)}}
+:root[data-theme="dark"] .hero::after,:root[data-theme="dark"] .lvhero::after,:root[data-theme="dark"] .askbox::after,:root[data-theme="dark"] .cktile::after{background:rgba(20,5,25,.32)}
+.askbox .chip{background:rgba(255,255,255,.18);text-shadow:0 1px 2px rgba(0,0,0,.3)}
 </style>
 <script>try{if(sessionStorage.getItem("gd_splash"))document.documentElement.classList.add("nosplash");sessionStorage.setItem("gd_splash","1")}catch(e){}</script>
 <style id="splashCss">
@@ -1219,7 +1258,7 @@ function hubCard(){
 function dailyCarousel(){
   const st=STAGES[stageIdx(age())],l=dailyLine(),wk=WEEKS[weekIdx()],mk=MOM[momKey(st.id)],tp=st.tips[Math.floor(Date.parse(todayStr())/DAY)%st.tips.length];
   return `<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">今日推薦</h2><span class="note">左右滑動</span></div><div class="swipe">
-   <article class="tipcard t-rose daycard"><p class="k">今日話術・${esc(l[0])}</p><h3>${esc(personal(l[1]))}</h3><button type="button" class="btn sm" style="align-self:flex-start;background:#fff;color:var(--coral-ink)" data-copy="${esc(personal(l[1]))}">複製</button></article>
+   <article class="tipcard t-rose daycard"><p class="k">今日話術・${esc(l[0])}</p><h3>${esc(personal(l[1]))}</h3><button type="button" class="btn sm" style="align-self:flex-start;background:#fff;color:#B8322A" data-copy="${esc(personal(l[1]))}">複製</button></article>
    <button type="button" class="tipcard t-sky daycard" data-goweek="1"><p class="k">這週的${esc(s.baby)}・${esc(wk.label)}</p><h3>${esc(wk.baby)}</h3><span class="note">看這週注意事項 ›</span></button>
    <button type="button" class="tipcard t-peach daycard" data-gowife="care"><p class="k">照顧媽媽</p><h3>${esc(mk.head)}</h3><span class="note">今天可以幫她做什麼 ›</span></button>
    ${tp?`<article class="tipcard t-mint daycard"><p class="k">爸爸小撇步</p><h3>${esc(tp.t)}</h3><p class="do" style="margin:0"><span class="lbl">爸爸做</span>${esc(tp.act)}</p></article>`:''}
@@ -1240,7 +1279,7 @@ function laborHTML(){
   const rows=L.filter(c=>c.e).slice(-8).reverse();
   return `<div class="bento">
    <section class="lvhero span2" style="background:linear-gradient(140deg,#E0506A,#FF7A5C 60%,#FFB070)"><div class="lvinfo" style="grid-column:1/-1"><span class="lv">生產當天模式</span><h2 style="font-size:24px">先深呼吸，你做得到</h2>
-    <div class="row">${w.hospitalPhone?`<a class="btn" style="background:#fff;color:var(--coral-ink)" href="tel:${esc(w.hospitalPhone.replace(/[^\d+#]/g,''))}">打給${esc(w.hospital||'產檢醫院')}</a>`:`<button type="button" class="btn" style="background:#fff;color:var(--coral-ink)" data-gowife="info">先填醫院電話</button>`}<a class="btn" style="background:rgba(255,255,255,.2);color:#fff" href="tel:119">119</a></div></div></section>
+    <div class="row">${w.hospitalPhone?`<a class="btn" style="background:#fff;color:#B8322A;text-shadow:none" href="tel:${esc(w.hospitalPhone.replace(/[^\d+#]/g,''))}">打給${esc(w.hospital||'產檢醫院')}</a>`:`<button type="button" class="btn" style="background:#fff;color:#B8322A;text-shadow:none" data-gowife="info">先填醫院電話</button>`}<a class="btn" style="background:rgba(255,255,255,.2);color:#fff" href="tel:119">119</a></div></div></section>
    <section class="tile span2 ctbox"><div class="row between"><h2>陣痛計時</h2>${L.length?'<button type="button" class="btn light sm" data-labor="clear">清除</button>':''}</div>
     <button type="button" class="ctbtn${run?' on':''}" data-labor="ct">${run?'宮縮結束':'宮縮開始'}</button>
     <p class="note" id="ctLive" style="text-align:center;margin:0"></p>
@@ -1252,7 +1291,7 @@ function laborHTML(){
     <div class="tasks">${LABOR_BAG.map(([g,n],i)=>{const k='bag-'+i;return `<div class="task${s.tasks[k]?' done':''}"><input type="checkbox" id="t-${k}" data-task="${k}"${s.tasks[k]?' checked':''}><label for="t-${k}">${esc(n)}</label><span class="when">${g}</span></div>`}).join('')}</div></section>
    <section class="tile span2"><h2>要通知的人</h2>
     <form id="notifyForm" class="row" style="flex-wrap:nowrap"><input class="search" id="nfName" maxlength="12" placeholder="稱呼，例如：媽" aria-label="稱呼" style="flex:1;min-width:0"><input class="search" id="nfTel" type="tel" maxlength="20" placeholder="電話（可不填）" aria-label="電話" style="flex:1;min-width:0"><button class="btn coral sm" type="submit">加入</button></form>
-    ${(s.notify||[]).length?`<div class="tasks">${s.notify.map(p=>`<div class="store"><b style="flex:1;min-width:0">${esc(p.name)}</b>${p.tel?`<a class="shopee" style="background:var(--ink)" href="tel:${esc(p.tel.replace(/[^\d+#]/g,''))}">打電話</a>`:''}<a class="shopee" style="background:#06C755" href="https://line.me/R/msg/text/?${encodeURIComponent(msg)}" target="_blank" rel="noopener">LINE</a><button type="button" class="tdel" data-labor="nfdel" data-id="${p.id}" aria-label="刪除${esc(p.name)}">×</button></div>`).join('')}</div>`:'<p class="note">先把爸媽、公婆、主管加進來，生的時候一個一個點就好。</p>'}
+    ${(s.notify||[]).length?`<div class="tasks">${s.notify.map(p=>`<div class="store"><b style="flex:1;min-width:0">${esc(p.name)}</b>${p.tel?`<a class="shopee" style="background:#2B2238" href="tel:${esc(p.tel.replace(/[^\d+#]/g,''))}">打電話</a>`:''}<a class="shopee" style="background:#00A04A" href="https://line.me/R/msg/text/?${encodeURIComponent(msg)}" target="_blank" rel="noopener">LINE</a><button type="button" class="tdel" data-labor="nfdel" data-id="${p.id}" aria-label="刪除${esc(p.name)}">×</button></div>`).join('')}</div>`:'<p class="note">先把爸媽、公婆、主管加進來，生的時候一個一個點就好。</p>'}
     <button type="button" class="btn light sm" data-copy="${esc(msg)}" style="align-self:flex-start">複製通知訊息</button></section>
    <section class="tile span2 t-lilac"><h2>醫院資訊</h2>${w.hospital||w.hospitalPhone||w.doctor?`<div class="kv"><span>醫院</span><b>${esc(w.hospital||'–')}</b></div><div class="kv"><span>電話</span><b>${esc(w.hospitalPhone||'–')}</b></div><div class="kv"><span>醫師</span><b>${esc(w.doctor||'–')}</b></div>`:'<p class="note">到「老婆 → 她的資料」填醫院、電話和醫師，這裡就會顯示。</p>'}</section>
   </div>`}
@@ -1282,7 +1321,7 @@ function blogHTML(){
    <section class="tile span2"><h2>${s.blogDay==='y'?'昨天':'今天'}的紀錄</h2>${R.length?`<div class="tasks">${R.map(r=>`<div class="store"><b style="font-variant-numeric:tabular-nums">${fmtClock(r.t)}</b><span style="flex:1;min-width:0">${BLOG_K[r.k]}${r.ml?' '+r.ml+' ml':''}${r.k==='sleep'?(r.end?'・'+fmtDur(r.end-r.t):'・睡覺中'):''}</span><button type="button" class="tdel" data-blogdel="${r.id}" aria-label="刪除這筆">×</button></div>`).join('')}</div>`:'<p class="note">還沒有紀錄。</p>'}
     <p class="note">回診時醫師常問餵奶次數、尿布數和睡眠，這裡都有。紀錄會同步到老婆的手機。</p></section></div>`}
 function babyLogTile(){if(!s.born)return '';const sm=blogSummary(todayStr()),lf=lastFeed();
-  return `<button type="button" class="tile span2 momlink" data-goabu="log" style="background:linear-gradient(140deg,#FFE3CF,#ECE5FF)"><span style="flex:1;min-width:0"><span class="k">寶寶紀錄</span><b>${lf?'上次餵奶 '+agoTxt(lf.t):'開始記錄餵奶、尿布、睡眠'}</b><small class="note">今天 餵奶 ${sm.feeds} 次・尿布 ${sm.wet+sm.poo} 片</small></span><span class="momprog">›</span></button>`}
+  return `<button type="button" class="tile span2 momlink blogtile" data-goabu="log" style="background:linear-gradient(140deg,#FFE3CF,#ECE5FF)"><span style="flex:1;min-width:0"><span class="k">寶寶紀錄</span><b>${lf?'上次餵奶 '+agoTxt(lf.t):'開始記錄餵奶、尿布、睡眠'}</b><small class="note">今天 餵奶 ${sm.feeds} 次・尿布 ${sm.wet+sm.poo} 片</small></span><span class="momprog">›</span></button>`}
 
 // ========== 疫苗與兒童健檢 ==========
 const VAC=[[0,'出生 24 小時內',['B 型肝炎 第 1 劑']],[1,'滿 1 個月',['B 型肝炎 第 2 劑']],[2,'滿 2 個月',['五合一 第 1 劑','13 價肺炎鏈球菌 第 1 劑']],
@@ -1400,7 +1439,7 @@ function dcardCard(t){const st=stageOf(t.stage),b=(String(t.url).match(/\/f\/([a
 function storesHTML(){
   const q=s.storeQ||'嬰兒用品';
   return `<section class="tile span2"><h2>推薦商店</h2><p class="note">育嬰和孕產用品可以到這些地方買。大件先去門市試，消耗品再上網比價。</p>
-   <p class="k" style="margin-top:6px">實體門市</p><div class="tasks">${STORES.map(([n,tag,d,mq])=>`<div class="store"><div style="flex:1;min-width:0"><b>${esc(n)}</b> <span class="spill info">${esc(tag)}</span><small>${esc(d)}</small></div><a class="shopee" style="background:var(--ink)" href="${mapq(mq)}" target="_blank" rel="noopener">找門市</a></div>`).join('')}</div>
+   <p class="k" style="margin-top:6px">實體門市</p><div class="tasks">${STORES.map(([n,tag,d,mq])=>`<div class="store"><div style="flex:1;min-width:0"><b>${esc(n)}</b> <span class="spill info">${esc(tag)}</span><small>${esc(d)}</small></div><a class="shopee" style="background:#2B2238" href="${mapq(mq)}" target="_blank" rel="noopener">找門市</a></div>`).join('')}</div>
    <p class="k" style="margin-top:10px">網路商店</p>
    <form id="storeForm" class="row" style="flex-wrap:nowrap"><input class="search" id="storeQ" type="search" enterkeyhint="search" value="${esc(q)}" placeholder="想買什麼？例如：吸乳器" aria-label="要搜尋的商品" style="flex:1;min-width:0"><button class="btn coral sm" type="submit">換關鍵字</button></form>
    <div class="tasks">${SHOPS_ON.map(([n,d,f])=>`<div class="store"><div style="flex:1;min-width:0"><b>${esc(n)}</b><small>${esc(d)}</small></div><a class="shopee" href="${f(q)}" target="_blank" rel="noopener">搜「${esc(q.length>6?q.slice(0,6)+'…':q)}」</a></div>`).join('')}</div>
@@ -2304,7 +2343,7 @@ const V={
   if(seg==='store')return `<div class="bento">${head}${storesHTML()}</div>`;
   if(seg==='shop')return `<div class="bento">${head}
    <section class="tile t-mint stat span2"><p class="k">已購入</p><span class="n">${bought}<small>/ ${SHOP.length}</small></span></section>
-   <section class="tile span2"><h2>購物清單</h2><div class="tabs-mini" role="group" aria-label="篩選">${filters.map(f=>`<button type="button" class="chip" style="background:var(--bg)" data-shopf="${f[0]}" aria-pressed="${s.shopFilter===f[0]}">${f[1]}</button>`).join('')}</div>
+   <section class="tile span2"><h2>購物清單</h2><div class="tabs-mini" role="group" aria-label="篩選">${filters.map(f=>`<button type="button" class="chip" data-shopf="${f[0]}" aria-pressed="${s.shopFilter===f[0]}">${f[1]}</button>`).join('')}</div>
     <div class="tasks">${items.length?items.map(o=>shopRow(o.x,o.k)).join(''):'<p class="note">都買齊了。</p>'}</div>
     <p class="note">價格為參考區間。點「蝦皮」開啟搜尋結果，買好了按右邊圓圈。想去門市看，切到「商店」。</p></section></div>`;
   return `<div class="bento">${head}
@@ -2916,7 +2955,7 @@ document.getElementById('bkShare').addEventListener('click',async()=>{const name
 document.getElementById('bkCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(bkMake());toast('已複製備份碼，貼到記事本或 LINE 存起來')}catch(_){toast('這支手機不讓複製，改用「分享備份檔」')}});
 document.getElementById('bkImport').addEventListener('click',()=>{const v=document.getElementById('bkPaste').value.trim();if(!v){toast('先貼上備份碼');return}bkRestore(v)});
 document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;bkRestore(await file.text());e.target.value=''});
-const APP_VERSION='v31';
+const APP_VERSION='v32';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
