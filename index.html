@@ -1521,6 +1521,7 @@ function gameHTML(){
    <div class="span2 row between"><button type="button" class="btn light sm" data-gquit="1">放棄這場</button><span class="note">放棄不會扣次數，但這場不算經驗值</span></div>
   </div>`;
 }
+function points(){return xpStats().total}
 let lvReady=false;
 function checkLevel(){
   const st=xpStats(),lv=levelOf(st.total),cid=classOf(st);
