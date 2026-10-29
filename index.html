@@ -179,6 +179,8 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .ncard img{flex:none;width:56px;height:56px;border-radius:12px;object-fit:cover}
 .ncard b{display:block;font-size:15px;margin:4px 0 2px}.ncard small{display:block;color:var(--muted);font-size:12px;line-height:1.45;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .nlist{margin:4px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
+.copy,.star{min-width:40px;min-height:40px}
+[data-week].btn.sm{min-width:40px;min-height:40px}
 .store{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--bg)}
 .store b{font-size:15px}
 .store small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
@@ -915,12 +917,13 @@ let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
   momlog:store.get('momlog',[]),games:store.get('games',[]),gameSeen:store.get('gameSeen',[]),game:null,clsInfo:null,checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
-  learnSeg:'ask',notes:store.get('notes',[]),noteCat:'全部',noteQ:'',noteOpen:null,scan:{status:'idle',imgs:[],text:'',err:'',draft:null},todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
+  learnSeg:'ask',notes:store.get('notes',[]),noteThumbs:store.get('noteThumbs',{}),noteCat:'全部',noteQ:'',noteOpen:null,scan:{status:'idle',imgs:[],text:'',err:'',draft:null},todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function dayDiff(a,b){return Math.round((Date.parse(b)-Date.parse(a))/DAY)}
-function age(){const t=todayStr();if(!s.born){const left=dayDiff(t,s.date);return left>0?-left:0}return Math.max(0,dayDiff(s.date,t))}
+function overdue(){return s.born?-1:dayDiff(s.date,todayStr())}
+function age(){const t=todayStr();if(!s.born){const left=dayDiff(t,s.date);return left>0?-left:-1}return Math.max(0,dayDiff(s.date,t))}
 function stageIdx(d){for(let i=STAGES.length-1;i>=0;i--){if(d>=STAGES[i].from)return i}return 0}
 function esc(x){return String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function personal(t){return t.replace(/\{baby\}/g,s.baby||'寶寶')}
@@ -937,15 +940,18 @@ function heroHTML(){
   const span=st.to-st.from+1,prog=Math.min(1,Math.max(0,(d-st.from+1)/span));
   const C=2*Math.PI*42;
   let label,num,unit;
-  if(!s.born&&d<0){label=`${esc(s.baby)}預產期倒數`;num=-d;unit='天'}  else if(d<60){label=`${esc(s.baby)}出生第`;num=d+1;unit='天'}
+  const od=overdue();
+  if(!s.born&&od>=0){label=od===0?`${esc(s.baby)}預產期`:`${esc(s.baby)}已過預產期`;num=od===0?'就是今天':od;unit=od===0?'':'天'}
+  else if(!s.born&&d<0){label=`${esc(s.baby)}預產期倒數`;num=-d;unit='天'}  else if(d<60){label=`${esc(s.baby)}出生第`;num=d+1;unit='天'}
   else if(d<730){label=`${esc(s.baby)}已經`;num=Math.floor(d/30.44);unit='個月'}
   else{label=`${esc(s.baby)}已經`;num=Math.floor(d/365.25);unit='歲'}
-  const preg=(!s.born&&d<0)?`<span class="glasschip">懷孕 ${Math.floor((280+d)/7)} 週 ${(280+d)%7} 天</span>`:`<span class="glasschip">本階段 ${Math.round(prog*100)}%</span>`;
+  const preg=(!s.born&&od<0&&d<0)?`<span class="glasschip">懷孕 ${Math.floor((280+d)/7)} 週 ${(280+d)%7} 天</span>`:`<span class="glasschip">本階段 ${Math.round(prog*100)}%</span>`;
   return `<section class="hero span2"><p class="k">今天 ${todayStr().replace(/-/g,'.')}</p>
    <div><p class="big">${label}</p><span class="num">${num}<small style="font-size:20px;font-weight:700;margin-left:4px">${unit}</small></span></div>
    <div class="ring" aria-label="目前階段進度 ${Math.round(prog*100)}%"><svg viewBox="0 0 96 96"><circle cx="48" cy="48" r="42" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="8"/>
     <circle cx="48" cy="48" r="42" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-dasharray="${C*prog} ${C}"/></svg><div class="face">${FACE}</div></div>
    <div class="stage"><span class="glasschip">${st.title}</span>${preg}</div>
+   ${!s.born&&od>=0?`<button type="button" class="glasschip" style="border:0;color:#fff;font-weight:900" data-bornnow="1">${esc(s.baby)}出生了！點這裡切換 ›</button><p class="demo" style="margin:0">過了預產期還沒動靜很常見，照產檢醫師的安排定期回診。</p>`:''}
    ${s.isDemo?'<p class="demo">示範日期，點右上角齒輪改成實際日期。</p>':''}</section>`;
 }
 function tipHTML(t,c){return `<article class="tipcard t-${c}"><h3>${esc(t.t)}</h3><p class="why">${esc(t.why)}</p>
@@ -970,7 +976,8 @@ function confirmDel(el){if(el.dataset.armed){return true}el.dataset.armed='1';el
 function saveTodos(){store.set('todos',s.todos)}
 // ---------- 掃描筆記 ----------
 const NOTE_CATS=['寶寶照護','產婦照護','產檢','餵奶','用品','其他'];
-const NOTE_MAX=50,NOTE_TEXT_MAX=2500;
+const NOTE_MAX=40,NOTE_TEXT_MAX=2000;
+function noteThumb(n){return (s.noteThumbs||{})[n.id]||n.thumb||''}
 function noteCatCls(c){return {寶寶照護:'info',產婦照護:'crit',產檢:'warn',餵奶:'ok'}[c]||''}
 async function shrinkImage(file){
   const url=URL.createObjectURL(file);
@@ -1071,7 +1078,8 @@ function claudeHelp(){return `<details class="article"><summary>改用 Claude Ap
   <div class="row"><button type="button" class="btn coral sm" data-copy="${esc(CLAUDE_PROMPT)}">複製給 Claude 的指令</button><a class="btn light sm" href="https://claude.ai/new" target="_blank" rel="noopener">打開 Claude</a></div></details>`}
 function saveNote(){const d=s.scan.draft;if(!d)return;
   const t=document.getElementById('ndTitle'),c=document.getElementById('ndCat');if(t&&t.value.trim())d.title=t.value.trim().slice(0,30);if(c)d.category=c.value;
-  const n={id:Date.now().toString(36),at:Date.now(),title:d.title,category:d.category,summary:d.summary,points:d.points,todos:d.todos,warnings:d.warnings,text:d.text,thumb:d.thumb||''};
+  const n={id:Date.now().toString(36),at:Date.now(),title:d.title,category:d.category,summary:d.summary,points:d.points,todos:d.todos,warnings:d.warnings,text:d.text};
+  if(d.thumb){s.noteThumbs=Object.assign({},s.noteThumbs||{},{[n.id]:d.thumb});const keep=new Set([n.id,...(s.notes||[]).slice(0,NOTE_MAX-1).map(x=>x.id)]);for(const k in s.noteThumbs)if(!keep.has(k))delete s.noteThumbs[k];store.set('noteThumbs',s.noteThumbs)}
   s.notes=[n,...(s.notes||[])].slice(0,NOTE_MAX);store.set('notes',s.notes);s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};s.noteOpen=n.id;toast('已存進筆記');render()}
 function noteFull(n){return `${n.title}\n${n.summary||''}\n\n重點：\n${(n.points||[]).map(p=>'・'+p).join('\n')}${n.todos&&n.todos.length?'\n\n爸爸待辦：\n'+n.todos.map(p=>'・'+p).join('\n'):''}${n.warnings&&n.warnings.length?'\n\n注意：\n'+n.warnings.map(p=>'・'+p).join('\n'):''}`}
 function noteBody(n,draft){
@@ -1114,7 +1122,7 @@ function notesHTML(){
    <section class="tile span2"><div class="row between"><h2>我的筆記</h2><span class="points">${(s.notes||[]).length} 則</span></div>
     ${(s.notes||[]).length?`<input class="search" id="noteQ" type="search" placeholder="搜尋筆記" value="${esc(s.noteQ||'')}" aria-label="搜尋筆記">
     <div class="tabs-mini" role="group" aria-label="筆記分類">${['全部',...NOTE_CATS].map(c=>`<button type="button" class="chip" data-ncat="${c}" aria-pressed="${cat===c}">${c}</button>`).join('')}</div>`:''}
-    ${list.length?`<div class="feed">${list.map(n=>`<button type="button" class="ncard" data-nopen="${n.id}">${n.thumb?`<img src="${n.thumb}" alt="">`:''}<span style="flex:1;min-width:0"><span class="spill ${noteCatCls(n.category)}">${esc(n.category)}</span><b>${esc(n.title)}</b><small>${esc((n.points||[]).slice(0,2).join('・')||n.summary||'')}</small></span></button>`).join('')}</div>`
+    ${list.length?`<div class="feed">${list.map(n=>`<button type="button" class="ncard" data-nopen="${n.id}">${noteThumb(n)?`<img src="${noteThumb(n)}" alt="">`:''}<span style="flex:1;min-width:0"><span class="spill ${noteCatCls(n.category)}">${esc(n.category)}</span><b>${esc(n.title)}</b><small>${esc((n.points||[]).slice(0,2).join('・')||n.summary||'')}</small></span></button>`).join('')}</div>`
       :`<p class="note">${(s.notes||[]).length?'沒有符合的筆記。':'還沒有筆記。拍一張衛教單張試試看。'}</p>`}
     <p class="note">最多保留 ${NOTE_MAX} 則。內容為資料整理，不能取代醫師的判斷。</p></section>`}
 function taskRows(id,limit){
@@ -2487,7 +2495,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-nact],[data-ncat],[data-nopen],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-bornnow],[data-nact],[data-ncat],[data-nopen],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -2512,6 +2520,7 @@ view.addEventListener('click',e=>{
   if(el.dataset.gowife){if(el.dataset.ckset)s.ckEdit=true;s.wifeSeg=el.dataset.gowife;go('lines');return}
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
+  if(el.dataset.bornnow){document.getElementById('openSettings').click();document.getElementById('modeBorn').click();const di=document.getElementById('dateInput');if(di)di.value=todayStr();return}
   if(el.dataset.nact){const a=el.dataset.nact,sc=s.scan;
     if(a==='run')runScan();else if(a==='gem')runGemini();else if(a==='free')runFree();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
     else if(a==='rmimg'){sc.imgs.splice(+el.dataset.ni,1);render()}else if(a==='close'){s.noteOpen=null;render()}
@@ -2687,7 +2696,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v28';
+const APP_VERSION='v29';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -2728,6 +2737,7 @@ async function pushNow(keys){
   const ts=syncTs(),data={};
   for(const k of list){const v=rawGet(k);if(v===null)continue;data[k]={v,t:ts[k]||Date.now()}}
   if(!Object.keys(data).length)return;
+  try{const sz=new Blob([JSON.stringify(data)]).size+Object.values(syncTs()).length*20;if(sz>700000)toast('同步資料快滿了，刪掉一些舊筆記比較保險')}catch(_){}
   setSync('saving');
   try{await fbDb.collection('users').doc(syncUser.uid).set({data,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});syncAt=Date.now();setSync('ok')}
   catch(e){list.forEach(k=>pendingKeys.add(k));setSync('err')}
