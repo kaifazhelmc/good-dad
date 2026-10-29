@@ -1004,6 +1004,26 @@ async function runScan(){
     sc.draft={title:String(d.title||'未命名筆記').slice(0,30),category:NOTE_CATS.includes(d.category)?d.category:'其他',summary:String(d.summary||'').slice(0,160),points:arr(d.points).slice(0,8),todos:arr(d.todos).slice(0,5),warnings:arr(d.warnings).slice(0,5),text:String(d.text||txt).slice(0,NOTE_TEXT_MAX),thumb:sc.imgs[0]?sc.imgs[0].thumb:''};
     sc.status='draft';render();window.scrollTo({top:0,behavior:'smooth'})}
   catch(e){sc.status='idle';sc.err=/401|authentication|x-api-key/i.test(String(e.message))?'API 金鑰不對，到設定檢查一下':'沒整理成功：'+e.message;render()}}
+const NOTE_KW={寶寶照護:/寶寶|新生兒|嬰兒|洗澡|臍帶|黃疸|拍嗝|尿布|睡眠|疫苗|哭/,產婦照護:/產後|產婦|媽媽|傷口|惡露|坐月子|子宮|憂鬱|乳腺|會陰|剖腹/,產檢:/產檢|超音波|抽血|篩檢|孕週|胎兒|妊娠|羊膜|胎動/,餵奶:/母乳|哺乳|餵奶|奶量|配方奶|擠奶|吸乳|奶瓶|親餵/,用品:/購買|用品|清單|準備物品|待產包|尺寸|品牌/};
+const WARN_RE=/就醫|回診|急診|立即|馬上|盡快|119|發燒|出血|抽搐|呼吸困難|昏睡|黃疸加深|不要|禁止|切勿|避免/;
+const TODO_RE=/準備|記得|預約|購買|買|帶|安排|登記|申請|填寫|量|記錄/;
+function freeNote(text){
+  const clean=text.replace(/\r/g,'').replace(/[ \t　]+/g,' ').trim();
+  const lines=clean.split(/\n+|(?<=[。！？；])\s*/).map(x=>x.replace(/^[\s\d０-９一二三四五六七八九十]+[.、．)）]\s*|^[・•●○◆■\-*]\s*/,'').trim()).filter(x=>x.length>=4);
+  const scores=Object.entries(NOTE_KW).map(([k,re])=>[k,(clean.match(new RegExp(re.source,'g'))||[]).length]).sort((a,b)=>b[1]-a[1]);
+  const category=scores[0][1]?scores[0][0]:'其他';
+  const first=(clean.split('\n')[0]||'').trim();
+  const title=(first.length>=2&&first.length<=20?first:(lines[0]||'未命名筆記')).slice(0,20);
+  const short=x=>x.length>40?x.slice(0,39)+'…':x;
+  const body=lines.filter(x=>x!==first);
+  const warnings=body.filter(x=>WARN_RE.test(x)).slice(0,5).map(short);
+  const todos=body.filter(x=>TODO_RE.test(x)&&!WARN_RE.test(x)).slice(0,5).map(short);
+  const points=body.filter(x=>!warnings.includes(short(x))).slice(0,8).map(short);
+  return {title,category,summary:'',points,todos,warnings,text:clean.slice(0,NOTE_TEXT_MAX)};
+}
+function runFree(){const sc=s.scan,txt=(sc.text||'').trim();
+  if(!txt){toast(sc.imgs.length?'先用原況文字把照片裡的字拷貝，貼到文字框':'先貼上文字');const t=document.getElementById('scanText');if(t)t.focus();return}
+  sc.draft=Object.assign(freeNote(txt),{thumb:sc.imgs[0]?sc.imgs[0].thumb:'',free:true});sc.status='draft';sc.err='';render();window.scrollTo({top:0,behavior:'smooth'})}
 function saveNote(){const d=s.scan.draft;if(!d)return;
   const t=document.getElementById('ndTitle'),c=document.getElementById('ndCat');if(t&&t.value.trim())d.title=t.value.trim().slice(0,30);if(c)d.category=c.value;
   const n={id:Date.now().toString(36),at:Date.now(),title:d.title,category:d.category,summary:d.summary,points:d.points,todos:d.todos,warnings:d.warnings,text:d.text,thumb:d.thumb||''};
@@ -1018,12 +1038,12 @@ function noteBody(n,draft){
 function notesHTML(){
   const sc=s.scan,busy=sc.status==='loading'||sc.status==='prep';
   if(sc.status==='draft'&&sc.draft){const d=sc.draft;
-    return `<section class="tile span2"><p class="k">整理好了，確認後存起來</p>
+    return `<section class="tile span2"><p class="k">${d.free?'自動整理好了，可以改標題和分類再存':'整理好了，確認後存起來'}</p>
      <div class="growform" style="grid-template-columns:1fr"><div class="gf"><label for="ndTitle">標題</label><input id="ndTitle" type="text" maxlength="30" value="${esc(d.title)}"></div>
       <div class="gf"><label for="ndCat">分類</label><select id="ndCat">${NOTE_CATS.map(c=>`<option${c===d.category?' selected':''}>${c}</option>`).join('')}</select></div></div>
      ${noteBody(d,true)}
      <div class="row"><button type="button" class="btn coral" data-nact="save">存進筆記</button><button type="button" class="btn light" data-nact="discard">不要了</button></div>
-     <p class="note">AI 整理可能會讀錯字，重要的劑量、日期請以原本的單張或醫師說明為準。</p></section>`}
+     <p class="note">${d.free?'自動整理是依關鍵字挑重點，可能不完整，原文都有存起來。':'AI 整理可能會讀錯字'}，重要的劑量、日期請以原本的單張或醫師說明為準。</p></section>`}
   if(s.noteOpen){const n=(s.notes||[]).find(x=>x.id===s.noteOpen);if(n){const d=new Date(n.at);
     return `<button type="button" class="btn light sm" data-nact="close" style="align-self:flex-start">‹ 回筆記列表</button>
      <section class="tile span2"><div class="row between"><span class="spill ${noteCatCls(n.category)}">${esc(n.category)}</span><span class="note">${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}</span></div><h2>${esc(n.title)}</h2>
@@ -1036,11 +1056,16 @@ function notesHTML(){
     <p class="note" style="margin:0">媽媽手冊、醫院發的說明、月子中心的注意事項都可以。一次最多 4 張。</p>
     ${sc.imgs.length?`<div class="thumbs">${sc.imgs.map((im,i)=>`<span class="th"><img src="${im.thumb}" alt="第 ${i+1} 張"><button type="button" data-nact="rmimg" data-ni="${i}" aria-label="移除第 ${i+1} 張">×</button></span>`).join('')}</div>`:''}
     <div class="row"><label class="btn coral" for="scanFile" style="cursor:pointer">${sc.imgs.length?'再加一張':'拍照或選圖片'}</label><input id="scanFile" type="file" accept="image/*" multiple hidden></div>
-    <textarea id="scanText" class="scantext" rows="3" placeholder="或直接貼上文字（例如 LINE 收到的衛教說明）">${esc(sc.text||'')}</textarea>
-    <button type="button" class="btn ${busy?'light':'coral'}" data-nact="run" ${busy?'disabled':''} style="align-self:flex-start">${sc.status==='loading'?'AI 整理中，大約 10–30 秒…':sc.status==='prep'?'讀取圖片中…':'整理成筆記'}</button>
+    <textarea id="scanText" class="scantext" rows="3" placeholder="貼上文字：用 iPhone 原況文字拷貝照片裡的字，或 LINE 收到的衛教說明">${esc(sc.text||'')}</textarea>
+    <div class="row"><button type="button" class="btn ${busy?'light':'coral'}" data-nact="free" ${busy?'disabled':''}>整理成筆記</button>${keyOk?`<button type="button" class="btn light" data-nact="run" ${busy?'disabled':''}>${sc.status==='loading'?'AI 整理中，大約 10–30 秒…':'用 AI 讀圖整理'}</button>`:''}</div>
+    <details class="article"><summary>照片裡的字怎麼複製？（iPhone 原況文字，免費）</summary>
+     <p>1. 用相機拍下單張，或到「照片」App 打開那張照片。</p>
+     <p>2. 點右下角的「原況文字」圖示（方框裡有三條線），或直接長按照片上的字。</p>
+     <p>3. 選「全選」→「拷貝」，回到這裡在文字框長按「貼上」，再按「整理成筆記」。</p>
+     <p>照片也可以一起加進來，筆記會留一張小縮圖方便辨認。</p></details>
     ${sc.err?`<p class="note" style="color:var(--coral-ink);margin:0">${esc(sc.err)}</p>`:''}
-    ${keyOk?'':'<p class="note" style="margin:0">需要先在「設定」填 Anthropic API 金鑰（跟爸爸攻略用的是同一把）。</p>'}
-    <p class="note" style="margin:0">圖片只送去 AI 讀字，不會存起來；存下來的是整理後的文字，會同步到老婆的手機。</p></section>
+    ${keyOk?'<p class="note" style="margin:0">「整理成筆記」免費、在手機上完成；「用 AI 讀圖整理」會直接讀照片，整理得比較完整，但會用到 API 額度。</p>':'<p class="note" style="margin:0">「整理成筆記」免費、不需要 API 金鑰。想讓 AI 直接讀照片、整理得更完整，可以到設定填 Anthropic API 金鑰。</p>'}
+    <p class="note" style="margin:0">原本的照片不會存起來，只留小縮圖和整理後的文字，會同步到老婆的手機。</p></section>
    <section class="tile span2"><div class="row between"><h2>我的筆記</h2><span class="points">${(s.notes||[]).length} 則</span></div>
     ${(s.notes||[]).length?`<input class="search" id="noteQ" type="search" placeholder="搜尋筆記" value="${esc(s.noteQ||'')}" aria-label="搜尋筆記">
     <div class="tabs-mini" role="group" aria-label="筆記分類">${['全部',...NOTE_CATS].map(c=>`<button type="button" class="chip" data-ncat="${c}" aria-pressed="${cat===c}">${c}</button>`).join('')}</div>`:''}
@@ -2443,7 +2468,7 @@ view.addEventListener('click',e=>{
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
   if(el.dataset.nact){const a=el.dataset.nact,sc=s.scan;
-    if(a==='run')runScan();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
+    if(a==='run')runScan();else if(a==='free')runFree();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
     else if(a==='rmimg'){sc.imgs.splice(+el.dataset.ni,1);render()}else if(a==='close'){s.noteOpen=null;render()}
     else if(a==='del'){if(confirmDel(el)){s.notes=s.notes.filter(n=>n.id!==s.noteOpen);store.set('notes',s.notes);s.noteOpen=null;toast('已刪除');render()}}
     else if(a==='todo'){const n=sc.status==='draft'?sc.draft:(s.notes||[]).find(x=>x.id===s.noteOpen);const t=n&&n.todos[+el.dataset.ni];
@@ -2617,7 +2642,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v26';
+const APP_VERSION='v27';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
