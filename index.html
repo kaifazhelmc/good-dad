@@ -1013,7 +1013,7 @@ function methodsHTML(){
 
 // ---------- 老婆資料 ----------
 const WIFE_FIELDS=[
- ['基本',[['name','名字或暱稱','text'],['birthday','生日','date'],['anniversary','結婚紀念日','date'],['blood','血型','text']]],
+ ['基本',[['name','名字或暱稱','text'],['birthday','生日','date'],['anniversary','結婚紀念日','date'],['metday','認識紀念日','date'],['blood','血型','text']]],
  ['產檢與醫療',[['hospital','產檢醫院','text'],['doctor','醫師','text'],['hospitalPhone','醫院電話','tel'],['nextCheckup','下次產檢日期','date'],['checkupNote','下次產檢要做什麼','text'],['preWeight','孕前體重（kg）','number'],['allergies','過敏或不能吃的東西','text']]],
  ['她的喜好',[['foodLikes','最近想吃、愛吃的','text'],['foodAvoid','不喜歡或聞了會不舒服的','text'],['favorites','喜歡的店、花、顏色','text'],['sizes','衣服、鞋子尺寸','text']]],
  ['緊急聯絡',[['emergency','緊急聯絡人與電話','text']]]
@@ -1032,13 +1032,14 @@ function wifeHTML(){
      <p class="note">資料存在這個 App 裡，只有你看得到。</p></form>`;
   }
   const has=WIFE_FIELDS.some(([,fs])=>fs.some(([k])=>w[k]));
-  const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true);
-  const counters=[nc!=null&&nc>=0?['下次產檢',nc,w.checkupNote||'']:null,bd!=null?['她的生日',bd,'']:null,an!=null?['結婚紀念日',an,'']:null].filter(Boolean);
+  const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
+  const metN=w.metday?Math.floor((Date.parse(todayStr())-Date.parse(w.metday))/864e5)+1:null;
+  const counters=[nc!=null&&nc>=0?['下次產檢',nc,w.checkupNote||'']:null,bd!=null?['她的生日',bd,'']:null,an!=null?['結婚紀念日',an,'']:null,mt!=null?['認識紀念日',mt,metN>0?`今天是你們認識的第 ${metN.toLocaleString()} 天`:'']:null].filter(Boolean);
   return `<div class="bento">
    <section class="lvhero span2" style="background:linear-gradient(140deg,#A774FF,#E9579E 60%,#FF8A7A)"><div class="lvart">${momSVG(momPose(STAGES[stageIdx(age())].id))}</div>
     <div class="lvinfo"><span class="lv">她的資料</span><h2>${esc(w.name||'老婆')}</h2>
      <button type="button" class="glasschip" style="border:0;color:#fff;align-self:flex-start" data-wedit="1">${has?'編輯資料':'開始填寫'}</button></div></section>
-   ${counters.map(([l,n,sub])=>`<section class="tile t-${l==='下次產檢'?'sky':l==='她的生日'?'peach':'lilac'} stat"><p class="k">${l}</p><span class="n">${n===0?'今天':n}<small>${n===0?'':'天後'}</small></span>${sub?`<p class="note">${esc(sub)}</p>`:''}</section>`).join('')}
+   ${counters.map(([l,n,sub])=>`<section class="tile t-${l==='下次產檢'?'sky':l==='她的生日'?'peach':l==='認識紀念日'?'mint':'lilac'} stat"><p class="k">${l}</p><span class="n">${n===0?'今天':n}<small>${n===0?'':'天後'}</small></span>${sub?`<p class="note">${esc(sub)}</p>`:''}</section>`).join('')}
    ${counters.length%2?'<span></span>':''}
    ${has?WIFE_FIELDS.map(([sec,fs])=>{const rows=fs.filter(([k])=>w[k]);return rows.length?`<section class="tile span2"><p class="k">${sec}</p>${rows.map(([k,l,t])=>`<div class="kv"><span>${l}</span><b>${esc(t==='date'?w[k].replace(/-/g,'/'):w[k])}</b>${t==='tel'||k==='emergency'?`<button type="button" class="copy" data-copy="${esc(w[k])}">複製</button>`:''}</div>`).join('')}</section>`:''}).join(''):
     `<section class="tile span2"><h2>把她的重要資訊記下來</h2><p class="note">產檢醫院、下次產檢日期、她最近想吃什麼、衣服尺寸、紀念日…填好之後，首頁會幫你倒數提醒。</p><button class="btn coral" type="button" data-wedit="1" style="align-self:flex-start">開始填寫</button></section>`}
@@ -1805,8 +1806,8 @@ const V={
   return `<div class="bento">`+heroHTML()+momAlertTile()+checkinTile()+questTile()+gameTile()+
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
-  (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true);
-    const items=[nc!=null&&nc>=0&&nc<=30?`下次產檢 ${nc===0?'就是今天':nc+' 天後'}`:null,bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null].filter(Boolean);
+  (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
+    const items=[nc!=null&&nc>=0&&nc<=30?`下次產檢 ${nc===0?'就是今天':nc+' 天後'}`:null,bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null,mt!=null&&mt<=30?`認識紀念日 ${mt===0?'就是今天':mt+' 天後'}`:null].filter(Boolean);
     return items.length?`<button type="button" class="tile t-lemon span2 momlink" data-gowife="info"><span><span class="k">別忘了</span><b>${items.join('・')}</b></span><span class="momprog">›</span></button>`:''})()+
   (()=>{const w=WEEKS[weekIdx()];return `<button type="button" class="tile t-sky span2 momlink" data-goweek="1"><span><span class="k">這週的${esc(s.baby)}・${esc(w.label)}</span><b>${esc(w.baby)}</b></span><span class="momprog">›</span></button>`})()+
   `<button type="button" class="tile t-rose span2 momlink abulink" data-gowife="care"><span class="mini-abu">${momSVG(momPose(st.id))}</span><span style="flex:1;min-width:0"><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`+
@@ -2378,7 +2379,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v18';
+const APP_VERSION='v19';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
