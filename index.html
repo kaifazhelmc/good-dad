@@ -1023,7 +1023,52 @@ function freeNote(text){
 }
 function runFree(){const sc=s.scan,txt=(sc.text||'').trim();
   if(!txt){toast(sc.imgs.length?'先用原況文字把照片裡的字拷貝，貼到文字框':'先貼上文字');const t=document.getElementById('scanText');if(t)t.focus();return}
-  sc.draft=Object.assign(freeNote(txt),{thumb:sc.imgs[0]?sc.imgs[0].thumb:'',free:true});sc.status='draft';sc.err='';render();window.scrollTo({top:0,behavior:'smooth'})}
+  const cj=parseNoteJSON(txt,'');
+  sc.draft=cj?Object.assign(cj,{thumb:sc.imgs[0]?sc.imgs[0].thumb:''}):Object.assign(freeNote(txt),{thumb:sc.imgs[0]?sc.imgs[0].thumb:'',free:true});if(cj)toast('認出 Claude 整理好的筆記');sc.status='draft';sc.err='';render();window.scrollTo({top:0,behavior:'smooth'})}
+// ---- Gemini（Firebase AI Logic）讀圖 ----
+const GEMINI_MODELS=['gemini-3.8-flash','gemini-2.5-flash'];const FB_MOD='https://www.gstatic.com/firebasejs/12.0.0/';
+let gemModel=null;
+async function gemGet(name){
+  const appMod=await import(FB_MOD+'firebase-app.js'),aiMod=await import(FB_MOD+'firebase-ai.js');
+  const app=appMod.getApps().find(a=>a.name==='gd-ai')||appMod.initializeApp(FIREBASE_CONFIG,'gd-ai');
+  const ai=aiMod.getAI(app,{backend:new aiMod.GoogleAIBackend()});
+  return aiMod.getGenerativeModel(ai,{model:name,generationConfig:{responseMimeType:'application/json'}});
+}
+function parseNoteJSON(out,fallbackText){
+  const m=String(out).match(/\{[\s\S]*\}/);if(!m)return null;let d;try{d=JSON.parse(m[0])}catch(_){return null}
+  if(!d||typeof d!=='object'||!(d.title||d.points))return null;const arr=x=>Array.isArray(x)?x.map(String).filter(Boolean):[];
+  return {title:String(d.title||'未命名筆記').slice(0,30),category:NOTE_CATS.includes(d.category)?d.category:'其他',summary:String(d.summary||'').slice(0,160),points:arr(d.points).slice(0,8),todos:arr(d.todos).slice(0,5),warnings:arr(d.warnings).slice(0,5),text:String(d.text||fallbackText||'').slice(0,NOTE_TEXT_MAX)};
+}
+async function runGemini(){
+  const sc=s.scan,txt=(sc.text||'').trim();if(!sc.imgs.length&&!txt){toast('先拍照、選圖片，或貼上文字');return}
+  sc.status='loading';sc.err='';render();
+  const parts=[SCAN_PROMPT+(txt?'\n\n貼上的文字：\n'+txt:''),...sc.imgs.map(i=>({inlineData:{data:i.data,mimeType:'image/jpeg'}}))];
+  let lastErr=null;
+  for(const name of (gemModel?[gemModel]:GEMINI_MODELS)){
+    try{const model=await gemGet(name);const r=await model.generateContent(parts);const d=parseNoteJSON(r.response.text(),txt);
+      if(!d)throw new Error('整理結果看不懂，再試一次');gemModel=name;
+      sc.draft=Object.assign(d,{thumb:sc.imgs[0]?sc.imgs[0].thumb:''});sc.status='draft';render();window.scrollTo({top:0,behavior:'smooth'});return}
+    catch(e){lastErr=e;const msg=String(e&&e.message||e);if(!/not found|404|is not supported|unknown model/i.test(msg))break}
+  }
+  const msg=String(lastErr&&lastErr.message||lastErr);sc.status='idle';
+  sc.err=/app.?check/i.test(msg)?'Firebase 的 App Check 擋住了：到 Firebase 後台把 AI Logic 的 App Check「強制執行」關掉（步驟在下面）。'
+    :/api.*(not been used|disabled|not enabled)|PERMISSION_DENIED|403|firebasevertexai|generativelanguage/i.test(msg)?'Firebase 還沒開通 AI Logic：照下面「開通 Gemini」的步驟做一次就好。'
+    :/quota|429|RESOURCE_EXHAUSTED/i.test(msg)?'今天的免費額度用完了，明天再試，或先用「整理成筆記」。'
+    :/Failed to fetch|NetworkError|import/i.test(msg)?'連不上 Google 的 AI 服務，確認網路後再試。'
+    :'沒整理成功：'+msg.slice(0,120);
+  render()}
+const CLAUDE_PROMPT=SCAN_PROMPT.replace('這些是台灣新手爸媽拿到的','我傳給你的照片是台灣新手爸媽拿到的');
+function gemHelp(){return `<details class="article"><summary>開通 Gemini 讀圖（只要做一次，約 3 分鐘）</summary>
+  <p>1. 用電腦或手機打開 Firebase 後台（console.firebase.google.com），選你的「good-dad」專案。</p>
+  <p>2. 左邊選單找「AI 服務」→「AI Logic」，按「開始使用」。</p>
+  <p>3. 選 Gemini API 供應商時，選「<b>Gemini Developer API</b>」（有免費額度），一路照指示按下一步完成。</p>
+  <p>4. 完成後，到左邊「App Check」→「API」分頁，找到 AI Logic（Firebase AI Logic API），如果顯示「已強制執行」，按它把強制執行<b>關掉</b>。不關的話 App 會被擋。</p>
+  <p>5. 回到這裡，選好照片按「用 Gemini 讀圖整理」。用的是 Google 的免費額度，不需要填任何金鑰，你和老婆的手機都能用。</p></details>`}
+function claudeHelp(){return `<details class="article"><summary>改用 Claude App 讀圖（不用任何設定）</summary>
+  <p>1. 按下面「複製給 Claude 的指令」。</p>
+  <p>2. 打開 Claude App 開新對話，附上衛教單張的照片，貼上剛剛的指令送出。</p>
+  <p>3. Claude 回覆後，長按回覆整段「拷貝」，回到這裡貼進上面的文字框，按「整理成筆記」。App 會認得 Claude 的格式，直接變成完整的筆記。</p>
+  <div class="row"><button type="button" class="btn coral sm" data-copy="${esc(CLAUDE_PROMPT)}">複製給 Claude 的指令</button><a class="btn light sm" href="https://claude.ai/new" target="_blank" rel="noopener">打開 Claude</a></div></details>`}
 function saveNote(){const d=s.scan.draft;if(!d)return;
   const t=document.getElementById('ndTitle'),c=document.getElementById('ndCat');if(t&&t.value.trim())d.title=t.value.trim().slice(0,30);if(c)d.category=c.value;
   const n={id:Date.now().toString(36),at:Date.now(),title:d.title,category:d.category,summary:d.summary,points:d.points,todos:d.todos,warnings:d.warnings,text:d.text,thumb:d.thumb||''};
@@ -1057,14 +1102,14 @@ function notesHTML(){
     ${sc.imgs.length?`<div class="thumbs">${sc.imgs.map((im,i)=>`<span class="th"><img src="${im.thumb}" alt="第 ${i+1} 張"><button type="button" data-nact="rmimg" data-ni="${i}" aria-label="移除第 ${i+1} 張">×</button></span>`).join('')}</div>`:''}
     <div class="row"><label class="btn coral" for="scanFile" style="cursor:pointer">${sc.imgs.length?'再加一張':'拍照或選圖片'}</label><input id="scanFile" type="file" accept="image/*" multiple hidden></div>
     <textarea id="scanText" class="scantext" rows="3" placeholder="貼上文字：用 iPhone 原況文字拷貝照片裡的字，或 LINE 收到的衛教說明">${esc(sc.text||'')}</textarea>
-    <div class="row"><button type="button" class="btn ${busy?'light':'coral'}" data-nact="free" ${busy?'disabled':''}>整理成筆記</button>${keyOk?`<button type="button" class="btn light" data-nact="run" ${busy?'disabled':''}>${sc.status==='loading'?'AI 整理中，大約 10–30 秒…':'用 AI 讀圖整理'}</button>`:''}</div>
+    <div class="row"><button type="button" class="btn ${busy?'light':'coral'}" data-nact="free" ${busy?'disabled':''}>整理成筆記</button><button type="button" class="btn light" data-nact="gem" ${busy?'disabled':''}>${sc.status==='loading'?'AI 整理中，大約 10–30 秒…':'用 Gemini 讀圖整理'}</button>${keyOk?`<button type="button" class="btn light" data-nact="run" ${busy?'disabled':''}>用 Claude API 讀圖</button>`:''}</div>
     <details class="article"><summary>照片裡的字怎麼複製？（iPhone 原況文字，免費）</summary>
      <p>1. 用相機拍下單張，或到「照片」App 打開那張照片。</p>
      <p>2. 點右下角的「原況文字」圖示（方框裡有三條線），或直接長按照片上的字。</p>
      <p>3. 選「全選」→「拷貝」，回到這裡在文字框長按「貼上」，再按「整理成筆記」。</p>
-     <p>照片也可以一起加進來，筆記會留一張小縮圖方便辨認。</p></details>
+     <p>照片也可以一起加進來，筆記會留一張小縮圖方便辨認。</p></details>${gemHelp()}${claudeHelp()}
     ${sc.err?`<p class="note" style="color:var(--coral-ink);margin:0">${esc(sc.err)}</p>`:''}
-    ${keyOk?'<p class="note" style="margin:0">「整理成筆記」免費、在手機上完成；「用 AI 讀圖整理」會直接讀照片，整理得比較完整，但會用到 API 額度。</p>':'<p class="note" style="margin:0">「整理成筆記」免費、不需要 API 金鑰。想讓 AI 直接讀照片、整理得更完整，可以到設定填 Anthropic API 金鑰。</p>'}
+    <p class="note" style="margin:0">「整理成筆記」在手機上完成、免費；「用 Gemini 讀圖整理」直接讀照片、整理得比較完整，用 Google 的免費額度（第一次要先開通，步驟在下面）。也可以先到 Claude App 讀好再貼回來。</p>
     <p class="note" style="margin:0">原本的照片不會存起來，只留小縮圖和整理後的文字，會同步到老婆的手機。</p></section>
    <section class="tile span2"><div class="row between"><h2>我的筆記</h2><span class="points">${(s.notes||[]).length} 則</span></div>
     ${(s.notes||[]).length?`<input class="search" id="noteQ" type="search" placeholder="搜尋筆記" value="${esc(s.noteQ||'')}" aria-label="搜尋筆記">
@@ -2468,7 +2513,7 @@ view.addEventListener('click',e=>{
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
   if(el.dataset.nact){const a=el.dataset.nact,sc=s.scan;
-    if(a==='run')runScan();else if(a==='free')runFree();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
+    if(a==='run')runScan();else if(a==='gem')runGemini();else if(a==='free')runFree();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
     else if(a==='rmimg'){sc.imgs.splice(+el.dataset.ni,1);render()}else if(a==='close'){s.noteOpen=null;render()}
     else if(a==='del'){if(confirmDel(el)){s.notes=s.notes.filter(n=>n.id!==s.noteOpen);store.set('notes',s.notes);s.noteOpen=null;toast('已刪除');render()}}
     else if(a==='todo'){const n=sc.status==='draft'?sc.draft:(s.notes||[]).find(x=>x.id===s.noteOpen);const t=n&&n.todos[+el.dataset.ni];
@@ -2642,7 +2687,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v27';
+const APP_VERSION='v28';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
