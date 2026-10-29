@@ -595,7 +595,9 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
   @keyframes rise{from{transform:translateY(10px)}to{transform:none}}}
 @media (prefers-reduced-motion:reduce){.confetti{display:none}}
 </style>
+<script>try{if(sessionStorage.getItem("gd_splash"))document.documentElement.classList.add("nosplash");sessionStorage.setItem("gd_splash","1")}catch(e){}</script>
 <style id="splashCss">
+.nosplash #splash{display:none!important}
 #splash{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:linear-gradient(160deg,#FF9A5C 0%,#FF6B6B 38%,#E9579E 68%,#A774FF 100%);color:#fff;font-family:"Huninn","Noto Sans TC",system-ui,sans-serif;overflow:hidden;transition:opacity .45s ease,transform .45s ease}
 #splash.out{opacity:0;transform:scale(1.06);pointer-events:none}
 #splash .sp-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),rgba(255,255,255,0) 65%);animation:spPulse 2.4s ease-in-out infinite}
@@ -624,7 +626,7 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
  <div class="sp-logo"><img src="icons/icon-192.png" alt=""></div><h1>好爸爸</h1><p>新手爸爸的口袋提醒</p>
  <div class="sp-team"><img src="art/knight_diaper.webp" alt=""><img src="art/apprentice.webp" alt=""><img src="art/mage_love.webp" alt=""></div>
  <div class="sp-bar"><i></i></div></div>
-<script>(function(){var s=document.getElementById('splash'),t0=Date.now(),done=false;function hide(){if(done)return;done=true;s.classList.add('out');setTimeout(function(){s.remove();var c=document.getElementById('splashCss');if(c)c.remove()},500)}
+<script>(function(){var s=document.getElementById('splash'),t0=Date.now(),done=false;if(document.documentElement.classList.contains('nosplash')){s.remove();window.__hideSplash=function(){};return}function hide(){if(done)return;done=true;s.classList.add('out');setTimeout(function(){s.remove();var c=document.getElementById('splashCss');if(c)c.remove()},500)}
 window.__hideSplash=function(){setTimeout(hide,Math.max(0,1500-(Date.now()-t0)))};s.addEventListener('click',hide);setTimeout(hide,6000)})();</script>
 <div class="app">
   <header class="top">
@@ -2479,7 +2481,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v20';
+const APP_VERSION='v21';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
