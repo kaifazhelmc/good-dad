@@ -537,7 +537,7 @@ input,select,textarea{font-size:16px!important}
 @keyframes dmgpop{0%{transform:translateY(10px) scale(.3);opacity:0}25%{transform:translateY(-6px) scale(1.3);opacity:1}45%{transform:scale(1)}80%{opacity:1}100%{transform:translateY(-26px);opacity:0}}
 .vign{position:absolute;inset:0;box-shadow:inset 0 0 60px 10px rgba(255,40,80,.75);opacity:0;animation:vign .6s .45s both}
 @keyframes vign{30%{opacity:1}100%{opacity:0}}
-.bubble{position:absolute;left:22%;top:48%;width:120px;height:120px;margin:-60px;border-radius:50%;border:3px solid #9AE6C8;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(154,230,200,.18) 55%,rgba(154,230,200,.05));box-shadow:0 0 20px #9AE6C8;animation:bubble 1s both}
+.fxbubble{position:absolute;left:22%;top:48%;width:120px;height:120px;margin:-60px;border-radius:50%;border:3px solid #9AE6C8;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(154,230,200,.18) 55%,rgba(154,230,200,.05));box-shadow:0 0 20px #9AE6C8;animation:bubble 1s both}
 @keyframes bubble{0%{transform:scale(.2);opacity:0}25%{transform:scale(1);opacity:1}45%{transform:scale(1.08)}50%{transform:scale(.96)}75%{opacity:1}100%{transform:scale(1.5);opacity:0}}
 .mcircle{position:absolute;left:22%;top:82%;width:150px;height:150px;margin:-75px;transform:scaleY(.35);animation:mc 1.2s both}
 .mcircle svg{width:100%;height:100%;overflow:visible;animation:spinp 2.4s linear infinite}
@@ -1634,7 +1634,7 @@ function fxLayer(g){
     h+=fxBurst(76,44,tc,d)+`<span class="dmg${g.crit?' crit':''}" style="--d:${d}s">${g.crit?'<small>CRITICAL</small>':''}-${g.dmg}</span>`;
     if(g.bossHp<=0)h+=fxBurst(70,34,'#FFD45C',d+.25)+fxBurst(84,56,'#FF7AD9',d+.4)}
   if(f==='hurt'||f==='block'||f==='hurtsoft'){h+=`<div class="proj evil"><i></i></div>`;
-    if(f==='block')h+=`<div class="bubble"></div><span class="dmg blk" style="--d:.45s">擋下了！</span>`;
+    if(f==='block')h+=`<div class="fxbubble"></div><span class="dmg blk" style="--d:.45s">擋下了！</span>`;
     else h+=fxBurst(22,48,'#B07CFF',.45)+`<div class="vign"></div>`+(f==='hurt'?`<span class="dmg hurtn" style="--d:.45s">-1 ♥</span>`:`<span class="dmg blk" style="--d:.45s">再想一次</span>`)}
   if(f==='skill'){const col={remove:'#7FD6FF',shield:'#9AE6C8',retry:'#FFD45C',heal:'#FF9CC0',double:'#FFB070',ultimate:'#FF7AD9'}[c.st]||tc;
     h+=`<div class="mcircle" style="--c:${col}"><svg viewBox="-50 -50 100 100"><circle r="45"/><circle r="35" class="in"/><path d="${starP(34)}" class="in"/></svg></div><div class="pillar" style="--c:${col}"></div><div class="banner sk" style="--c:${col}"><small>技能發動</small>${esc(c.sk)}</div>`}
@@ -2515,7 +2515,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v24';
+const APP_VERSION='v25';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
