@@ -402,6 +402,14 @@ body{overflow-x:hidden;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom;
 
 /* iPhone：輸入框小於 16px 會自動放大畫面，統一 16px 避免放大後左右晃 */
 input,select,textarea{font-size:16px!important}
+
+/* 產檢紀錄 */
+.spill{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;vertical-align:1px;white-space:nowrap}
+.spill.ok{background:var(--mint);color:var(--mint-d)}
+.spill.warn{background:var(--lemon);color:#9A6A00}
+.spill.crit{background:var(--rose-d);color:#fff}
+.spill.info{background:var(--sky);color:var(--sky-d)}
+.grow-row .gd small{display:block;font-size:11px}
 .hist{border:0;text-align:left;background:var(--bg);border-radius:14px;padding:10px 14px;font-size:14px}
 .vinfo b{font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .vinfo small{font-size:12px;color:var(--muted)}
@@ -717,7 +725,7 @@ const yt=q=>'https://www.youtube.com/results?search_query='+encodeURIComponent(q
 let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.get('baby','寶寶'),
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
-  checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
+  momlog:store.get('momlog',[]),checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
   learnSeg:'ask',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
@@ -850,7 +858,7 @@ function methodsHTML(){
 // ---------- 老婆資料 ----------
 const WIFE_FIELDS=[
  ['基本',[['name','名字或暱稱','text'],['birthday','生日','date'],['anniversary','結婚紀念日','date'],['blood','血型','text']]],
- ['產檢與醫療',[['hospital','產檢醫院','text'],['doctor','醫師','text'],['hospitalPhone','醫院電話','tel'],['nextCheckup','下次產檢日期','date'],['checkupNote','下次產檢要做什麼','text'],['allergies','過敏或不能吃的東西','text']]],
+ ['產檢與醫療',[['hospital','產檢醫院','text'],['doctor','醫師','text'],['hospitalPhone','醫院電話','tel'],['nextCheckup','下次產檢日期','date'],['checkupNote','下次產檢要做什麼','text'],['preWeight','孕前體重（kg）','number'],['allergies','過敏或不能吃的東西','text']]],
  ['她的喜好',[['foodLikes','最近想吃、愛吃的','text'],['foodAvoid','不喜歡或聞了會不舒服的','text'],['favorites','喜歡的店、花、顏色','text'],['sizes','衣服、鞋子尺寸','text']]],
  ['緊急聯絡',[['emergency','緊急聯絡人與電話','text']]]
 ];
@@ -1025,7 +1033,7 @@ function xpStats(){
   let baby=0,mom=0;for(const k in s.tasks){if(!s.tasks[k])continue;if(k.startsWith('mom-'))mom+=10;else baby+=10}
   const bought=Object.values(s.bought).filter(Boolean).length,wifeFilled=s.wife?Object.keys(s.wife).filter(k=>k!=='updatedAt'&&s.wife[k]).length:0;
   const prep=bought*5+s.growth.length*5+Math.min(s.askHist.length,20)*3+(wifeFilled>=3?20:0);
-  const checkin=checkinInfo().xp,qx=questXP();baby+=qx.baby;mom+=qx.mom;
+  const checkin=checkinInfo().xp,qx=questXP();baby+=qx.baby;mom+=qx.mom+Math.min((s.momlog||[]).length,60)*5;
   const prep2=prep+qx.prep;
   return {baby,mom,prep:prep2,checkin:checkin+qx.bonus,total:baby+mom+prep2+checkin+qx.bonus};
 }
@@ -1103,7 +1111,7 @@ function levelHTML(){
    <section class="tile span2"><h2>怎麼賺經驗值</h2><div class="xpways">
     <span>完成一項寶寶待辦（寶寶系）</span><b>+10</b><span>完成一項照顧老婆（老婆系）</span><b>+10</b>
     <span>買好一樣東西（準備系）</span><b>+5</b><span>記一筆成長紀錄（準備系）</span><b>+5</b>
-    <span>問一次爸爸攻略（準備系，最多 20 次）</span><b>+3</b><span>填好她的資料三項以上（準備系）</span><b>+20</b><span>每日任務（依任務分到三系）</span><b>+10</b><span>每日任務全部完成</span><b>+20</b><span>每日簽到</span><b>+5</b><span>連續簽到 7 天／30 天加碼</span><b>+20／+50</b></div></section>
+    <span>問一次爸爸攻略（準備系，最多 20 次）</span><b>+3</b><span>填好她的資料三項以上（準備系）</span><b>+20</b><span>每日任務（依任務分到三系）</span><b>+10</b><span>每日任務全部完成</span><b>+20</b><span>記一筆產檢紀錄（老婆系）</span><b>+5</b><span>每日簽到</span><b>+5</b><span>連續簽到 7 天／30 天加碼</span><b>+20／+50</b></div></section>
   </div>`;
 }
 let lvReady=false;
@@ -1243,7 +1251,7 @@ const V={
   const [dn,tot]=stageDone(st.id);
   const soon=SHOP.map((x,k)=>({x,k})).filter(o=>(o.x[0]===st.id||(nx&&o.x[0]===nx.id))&&!s.bought[o.k]).slice(0,4);
   const mk=MOM[momKey(st.id)],md=mk.care.filter((_,j)=>s.tasks['mom-'+mk.key+'-'+j]).length;
-  return `<div class="bento">`+heroHTML()+checkinTile()+questTile()+
+  return `<div class="bento">`+heroHTML()+momAlertTile()+checkinTile()+questTile()+
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
   (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true);
@@ -1331,9 +1339,10 @@ const V={
    <p class="note">內容為一般性提醒，不能取代醫師診斷。有疑慮就問小兒科醫師。</p>`;
  },
  lines(){
-  const head=`<div class="segtabs" style="grid-template-columns:repeat(3,1fr)" role="group" aria-label="老婆專區">${[['care','照顧她'],['info','她的資料'],['lines','話術']].map(([k,n])=>`<button type="button" data-wseg="${k}" aria-pressed="${s.wifeSeg===k}">${n}</button>`).join('')}</div>`;
+  const head=`<div class="segtabs" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="老婆專區">${[['care','照顧她'],['log','產檢'],['info','她的資料'],['lines','話術']].map(([k,n])=>`<button type="button" data-wseg="${k}" aria-pressed="${s.wifeSeg===k}">${n}</button>`).join('')}</div>`;
   if(s.wifeSeg==='care')return head+momHTML();
   if(s.wifeSeg==='info')return head+wifeHTML();
+  if(s.wifeSeg==='log')return head+momLogHTML();
   return head+linesHTML();
  },
  level(){return levelHTML()},
@@ -1398,6 +1407,86 @@ function momHTML(){
    <section class="tile t-mint span2"><p class="k">想知道更多</p><div class="ytsearch">${m.yt.map(q=>`<a href="${yt(q)}" target="_blank" rel="noopener">${esc(q)}</a>`).join('')}</div>
     <button class="btn" type="button" data-askq="${esc(m.ask)}" style="align-self:flex-start">問爸爸攻略：${esc(m.ask)}</button></section>
   </div>`;
+}
+// ---------- 媽媽產檢紀錄 ----------
+function momWeekOf(ds){if(s.born)return null;const d=dayDiff(s.date,ds);if(d>=0||d<-280)return null;const g=280+d;return `${Math.floor(g/7)} 週 ${g%7} 天`}
+function bpStatus(sys,dia){
+  if(!sys&&!dia)return null;
+  if(sys>=160||dia>=110)return {lv:'crit',t:'過高'};
+  if(sys>=140||dia>=90)return {lv:'warn',t:'偏高'};
+  if((sys&&sys<90)||(dia&&dia<60))return {lv:'info',t:'偏低'};
+  return {lv:'ok',t:'正常範圍'};
+}
+function pulseStatus(p){if(!p)return null;if(p>100)return {lv:'warn',t:'偏快'};if(p<50)return {lv:'info',t:'偏慢'};return {lv:'ok',t:'正常範圍'}}
+function pill(st){return st?`<span class="spill ${st.lv}">${st.t}</span>`:''}
+function momLogSorted(){return (s.momlog||[]).slice().sort((a,b)=>b.date.localeCompare(a.date)||String(b.addedAt).localeCompare(String(a.addedAt)))}
+function miniChart(rows,series,refs,unit){
+  const pts=rows.slice().reverse();if(pts.length<1)return '';
+  const W=320,H=150,L=34,R=10,T=12,B=24;
+  const t0=Date.parse(pts[0].date),t1=Math.max(Date.parse(pts.at(-1).date),t0+7*864e5);
+  const vals=pts.flatMap(p=>series.map(s=>p[s.k]).filter(v=>v>0)).concat(refs.map(r=>r.v));
+  let lo=Math.min(...vals),hi=Math.max(...vals);const pad=Math.max(2,(hi-lo)*.15);lo=Math.floor(lo-pad);hi=Math.ceil(hi+pad);
+  const X=t=>L+(t-t0)/(t1-t0||1)*(W-L-R),Y=v=>T+(hi-v)/(hi-lo||1)*(H-T-B);
+  const grid=[lo,Math.round((lo+hi)/2),hi].map(v=>`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="10" fill="var(--muted)">${v}</text>`).join('');
+  const ref=refs.map(r=>`<line x1="${L}" x2="${W-R}" y1="${Y(r.v)}" y2="${Y(r.v)}" stroke="var(--coral)" stroke-dasharray="4 4" stroke-width="1.2"/><text x="${W-R}" y="${Y(r.v)-4}" text-anchor="end" font-size="10" fill="var(--coral-ink)">${r.label}</text>`).join('');
+  const lines=series.map(sr=>{const p=pts.filter(x=>x[sr.k]>0);if(!p.length)return '';
+    return `<polyline points="${p.map(x=>X(Date.parse(x.date))+','+Y(x[sr.k])).join(' ')}" fill="none" stroke="${sr.c}" stroke-width="2.5" stroke-linejoin="round"/>${p.map(x=>`<circle cx="${X(Date.parse(x.date))}" cy="${Y(x[sr.k])}" r="3.5" fill="${sr.c}"/>`).join('')}`}).join('');
+  const md=d=>d.slice(5).replace('-','/');
+  return `<svg viewBox="0 0 ${W} ${H}" class="gchart" role="img" aria-label="紀錄曲線">${grid}${ref}${lines}
+   <text x="${L}" y="${H-6}" font-size="10" fill="var(--muted)">${md(pts[0].date)}</text><text x="${W-R}" y="${H-6}" text-anchor="end" font-size="10" fill="var(--muted)">${md(pts.at(-1).date)}</text></svg>
+   <p class="note">${series.map(sr=>`<span style="color:${sr.c};font-weight:900">●</span> ${sr.n}`).join('　')}${unit?'（'+unit+'）':''}</p>`;
+}
+function momAlertTile(){const r=momLogSorted().find(x=>x.sys>0||x.dia>0);if(!r)return '';const b=bpStatus(r.sys,r.dia);if(!b||(b.lv!=='warn'&&b.lv!=='crit'))return '';
+  if(dayDiff(r.date,todayStr())>3)return '';
+  return `<button type="button" class="warnlist span2" data-gowife="log" style="border:0;text-align:left;color:var(--ink)"><h2 style="font-family:var(--font-display);font-weight:400;font-size:18px;margin:0">她的血壓${b.t}（${r.sys||'–'}/${r.dia||'–'}）</h2><p style="margin:0">${b.lv==='crit'?'請立即就醫或打 119。':'請盡快打給產檢醫院。'}點這裡看說明。</p></button>`}
+function momLogHTML(){
+  const rows=momLogSorted(),last=rows[0],today=todayStr();
+  const lastW=rows.find(r=>r.weight>0),lastBP=rows.find(r=>r.sys>0||r.dia>0),lastP=rows.find(r=>r.pulse>0);
+  const pre=s.wife&&parseFloat(s.wife.preWeight);
+  const bp=lastBP&&bpStatus(lastBP.sys,lastBP.dia);
+  const warn=bp&&(bp.lv==='warn'||bp.lv==='crit');
+  return `<div class="bento">
+   <section class="lvhero span2" style="background:linear-gradient(140deg,#F0507F,#FF8A7A 55%,#FFB070)"><div class="lvart">${momSVG(momPose(STAGES[stageIdx(age())].id))}</div>
+    <div class="lvinfo"><span class="lv">產檢紀錄${!s.born&&age()<0?'・懷孕 '+momWeekOf(today):''}</span><h2 style="font-size:21px">${rows.length?`已記錄 ${rows.length} 次`:'幫她記下每次產檢'}</h2>
+     <span class="xptext">每記一筆 +5 XP（老婆系）</span></div></section>
+   <section class="tile t-peach stat"><p class="k">體重</p><span class="n">${lastW?Number(lastW.weight).toFixed(1):'–'}<small>kg</small></span><p class="note">${lastW?(pre?`比孕前 ${lastW.weight-pre>=0?'+':''}${(lastW.weight-pre).toFixed(1)} kg`:lastW.date.slice(5).replace('-','/')):'還沒有紀錄'}</p></section>
+   <section class="tile t-lilac stat"><p class="k">血壓</p><span class="n" style="font-size:30px">${lastBP?`${lastBP.sys||'–'}/${lastBP.dia||'–'}`:'–'}</span><p class="note">${lastBP?pill(bp)+' '+lastBP.date.slice(5).replace('-','/'):'mmHg'}</p></section>
+   <section class="tile t-mint stat span2"><div class="row between"><p class="k">脈搏</p>${lastP?pill(pulseStatus(lastP.pulse)):''}</div><span class="n">${lastP?lastP.pulse:'–'}<small>次/分</small></span></section>
+   ${warn?`<section class="warnlist span2"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">血壓${bp.t}，請留意</h2>
+     <p style="margin:0">${bp.lv==='crit'?'血壓 160/110 以上，請立即帶她就醫或打 119。':'血壓 140/90 以上，請盡快打給產檢醫院，照醫師指示處理。休息 5 分鐘後可以再量一次確認。'}</p>
+     <p style="margin:0">如果同時有<b>劇烈頭痛、視力模糊、上腹痛、臉或手突然很腫、呼吸困難</b>，不要等，直接就醫。</p></section>`:''}
+   <section class="tile span2"><h2>記一筆</h2>
+    <form id="momLogForm" class="growform">
+     <div class="gf" style="grid-column:span 2"><label for="mDate">日期${!s.born?'（會自動算孕週）':''}</label><input id="mDate" type="date" value="${today}" required></div>
+     <div class="gf"><label for="mW">體重（kg）</label><input id="mW" type="number" step="0.1" min="30" max="150" inputmode="decimal" placeholder="${lastW?lastW.weight:''}"></div>
+     <div class="gf"><label for="mP">脈搏（次/分）</label><input id="mP" type="number" step="1" min="30" max="200" inputmode="numeric" placeholder="${lastP?lastP.pulse:''}"></div>
+     <div class="gf"><label for="mS">收縮壓（上面的數字）</label><input id="mS" type="number" step="1" min="60" max="250" inputmode="numeric" placeholder="${lastBP&&lastBP.sys||''}"></div>
+     <div class="gf"><label for="mD">舒張壓（下面的數字）</label><input id="mD" type="number" step="1" min="30" max="160" inputmode="numeric" placeholder="${lastBP&&lastBP.dia||''}"></div>
+     <div class="gf" style="grid-column:span 2"><label for="mN">備註</label><input id="mN" maxlength="40" placeholder="例如：32 週產檢、在家量"></div>
+     <button class="btn coral" type="submit">記下來</button></form>
+    <p class="note">體重、血壓、脈搏填其中一項就能存。在家量血壓：先坐著休息 5 分鐘，手臂放在心臟高度，量兩次取平均。</p></section>
+   ${rows.filter(r=>r.weight>0).length?`<section class="tile span2"><h2>體重曲線</h2>${miniChart(rows,[{k:'weight',n:'體重',c:'var(--coral)'}],pre?[{v:pre,label:'孕前'}]:[],'kg')}</section>`:''}
+   ${rows.filter(r=>r.sys>0||r.dia>0).length?`<section class="tile span2"><h2>血壓曲線</h2>${miniChart(rows,[{k:'sys',n:'收縮壓',c:'var(--rose-d)'},{k:'dia',n:'舒張壓',c:'var(--lilac-d)'}],[{v:140,label:'140'},{v:90,label:'90'}],'mmHg')}
+     <p class="note">紅色虛線是 140/90。超過虛線就要留意。</p></section>`:''}
+   ${rows.length?`<section class="tile span2"><h2>所有紀錄</h2><div class="tasks">${rows.map(r=>{const w=momWeekOf(r.date),b=bpStatus(r.sys,r.dia);return `<div class="grow-row"><span class="gd">${esc(r.date.slice(5).replace('-','/'))}${w?`<small>${w}</small>`:''}</span>
+     <span class="gv">${[r.weight?`<b>${Number(r.weight).toFixed(1)}</b> kg`:'',(r.sys||r.dia)?`<b>${r.sys||'–'}/${r.dia||'–'}</b> ${pill(b)}`:'',r.pulse?`脈搏 <b>${r.pulse}</b>`:''].filter(Boolean).join('・')}${r.note?`<small>${esc(r.note)}</small>`:''}</span>
+     <button type="button" class="copy" data-mdel="${esc(r.id)}">${s.delArm===r.id?'確定刪除':'刪除'}</button></div>`}).join('')}</div></section>`:''}
+   ${lastBP?`<section class="tile t-sky span2"><button type="button" class="btn" style="align-self:flex-start" data-askq="${esc(`老婆${momWeekOf(lastBP.date)?'懷孕 '+momWeekOf(lastBP.date):''}，血壓 ${lastBP.sys||'?'}/${lastBP.dia||'?'}${lastP?'、脈搏 '+lastP.pulse:''}，爸爸要注意什麼？`)}">問爸爸攻略：這個數字要注意什麼？</button></section>`:''}
+   <p class="note span2">這裡的範圍只是一般參考，不能取代產檢醫師的判斷。有任何不舒服，以醫師的建議為準。${pre?'':'到「她的資料」填孕前體重，就能看到增加了多少。'}</p>
+  </div>`;
+}
+function saveMomLog(form){
+  const g=id=>parseFloat(document.getElementById(id).value);
+  const rec={id:'m'+Date.now().toString(36),date:document.getElementById('mDate').value,note:document.getElementById('mN').value.trim(),addedAt:new Date().toISOString()};
+  const w=g('mW'),sy=g('mS'),di=g('mD'),pu=g('mP');
+  if(w>0)rec.weight=Math.round(w*10)/10;if(sy>0)rec.sys=Math.round(sy);if(di>0)rec.dia=Math.round(di);if(pu>0)rec.pulse=Math.round(pu);
+  if(!rec.date||!(rec.weight||rec.sys||rec.dia||rec.pulse)){toast('至少填一項數字');return}
+  s.momlog=[...(s.momlog||[]),rec];store.set('momlog',s.momlog);
+  ['mW','mS','mD','mP','mN'].forEach(id=>{const x=document.getElementById(id);if(x)x.value=''});
+  const b=bpStatus(rec.sys,rec.dia);
+  const btn=form.querySelector('button[type=submit]');
+  if(b&&(b.lv==='warn'||b.lv==='crit'))toast('已記下，血壓'+b.t+'，請看下方提醒');else{toast('記下來了 +5 XP');confetti(btn)}
+  render();
 }
 function linesHTML(){
   const tags=['全部','收藏','體貼','分擔','感謝','幽默'];
@@ -1557,7 +1646,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -1570,6 +1659,7 @@ view.addEventListener('click',e=>{
   if(el.dataset.qact){questAct(el.dataset.qact);return}
   if(el.dataset.lvdemo){const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);const prev={apprentice:'apprentice',knight_diaper:'apprentice',mage_love:'apprentice',ranger_supply:'apprentice',paladin_night:'knight_diaper',archmage_love:'mage_love',craftsman:'ranger_supply',hero_baby:'paladin_night',partner:'archmage_love',steward:'craftsman',allround:'partner'}[cid];showLevelUp(Math.max(1,lv-1),lv,cid==='apprentice'?'apprentice':prev,cid);return}
   if(el.dataset.goabu){s.abuSeg='grow';go('timeline');return}
+  if(el.dataset.mdel){const id=el.dataset.mdel;if(s.delArm!==id){s.delArm=id;render();return}s.delArm=null;s.momlog=(s.momlog||[]).filter(r=>r.id!==id);store.set('momlog',s.momlog);toast('已刪除');render();return}
   if(el.dataset.gdel){const id=el.dataset.gdel;if(s.delArm!==id){s.delArm=id;render();return}
     s.delArm=null;if(DB){DB.doc('growth/'+id).delete().then(()=>toast('已刪除'),()=>toast('刪除失敗，再試一次'))}return}
   if(el.dataset.gowife){s.wifeSeg=el.dataset.gowife;go('lines');return}
@@ -1596,6 +1686,7 @@ view.addEventListener('change',e=>{
 view.addEventListener('submit',e=>{
   if(e.target.id==='wifeForm'){e.preventDefault();if(!DB)return;const data={};WIFE_FIELDS.forEach(([,fs])=>fs.forEach(([k])=>{const v=document.getElementById('w_'+k).value.trim();if(v)data[k]=v}));
     data.updatedAt=new Date().toISOString();DB.doc('profile/wife').set(data).then(()=>{s.wifeEdit=false;toast('已儲存');render()},()=>toast('沒存成功，再試一次'));return}
+  if(e.target.id==='momLogForm'){e.preventDefault();saveMomLog(e.target);return}
   if(e.target.id==='growForm'){e.preventDefault();if(!DB)return;
     const date=document.getElementById('gDate').value,w=parseFloat(document.getElementById('gW').value),h=parseFloat(document.getElementById('gH').value),n=document.getElementById('gN').value.trim();
     if(!date||!(w>0)){toast('請填日期和體重');return}
@@ -1729,7 +1820,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v11';
+const APP_VERSION='v12';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -1751,7 +1842,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
@@ -1777,7 +1868,7 @@ async function pushNow(keys){
 function reloadState(){
   s.born=store.get('born',true);s.date=store.get('date',todayStr());s.baby=store.get('baby','寶寶');
   s.tasks=store.get('tasks',{});s.bought=store.get('bought',{});s.fav=store.get('fav',{});
-  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.growth=store.get('growth',[]);
+  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.growth=store.get('growth',[]);
   s.wife=store.get('wife',null);s.askHist=store.get('askHist',[]);s.myThreads=store.get('myThreads',[]);
   s.feed.threads=mergeThreads(feedRaw);s.isDemo=false;
 }
