@@ -193,6 +193,7 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .hcgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin:6px 0 4px}
 .hcitem{display:flex;align-items:center;gap:6px;font-size:14px;min-height:32px}
 .hcitem input{width:20px;height:20px;accent-color:var(--coral)}
+.wsteps{margin:0;padding-left:20px;font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
 .bkbox{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
 .bkbox textarea{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:14px;padding:8px 10px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
 .focuscard{padding-bottom:10px}
@@ -748,6 +749,10 @@ window.__hideSplash=function(){setTimeout(hide,Math.max(0,1500-(Date.now()-t0)))
     <div class="field"><label for="dateInput" id="dateLabel">出生日</label><input type="date" id="dateInput" required></div>
     <div class="field"><label for="babyName">寶寶小名</label><input id="babyName" maxlength="10"></div>
     <div id="homeCards" class="bkbox"></div>
+    <div class="bkbox"><p class="k" style="margin:0">iPhone 桌面小工具</p>
+      <p class="note" style="margin:0">用免費的 Scriptable App 做小工具，顯示倒數、下次產檢、待辦和今日話術。要先登入上面的帳號同步。</p>
+      <ol class="wsteps"><li>App Store 下載「Scriptable」。</li><li>按下面「複製小工具程式」。</li><li>打開 Scriptable，按右上角＋，貼上，左上角把名稱改成「好爸爸」，按完成。</li><li>點一下「好爸爸」執行，輸入同步帳號密碼登入（只存登入憑證）。</li><li>回桌面長按 → 左上角＋ → 選 Scriptable → 選大小加入 → 長按小工具「編輯小工具」→ Script 選「好爸爸」。</li></ol>
+      <button class="btn light sm" type="button" id="copyWidget" style="align-self:flex-start">複製小工具程式</button></div>
     <p class="note" id="welcomeNote" hidden>第一次使用：填好寶寶的出生日或預產期，App 會自動切到對應的階段。</p>
     <div class="field"><label for="apiKey">爸爸攻略用的 Anthropic API 金鑰（選填）</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-…"></div>
     <div class="row"><button class="btn coral" type="submit">儲存</button><button class="btn light" type="button" id="closeSettings">取消</button></div>
@@ -2955,7 +2960,8 @@ document.getElementById('bkShare').addEventListener('click',async()=>{const name
 document.getElementById('bkCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(bkMake());toast('已複製備份碼，貼到記事本或 LINE 存起來')}catch(_){toast('這支手機不讓複製，改用「分享備份檔」')}});
 document.getElementById('bkImport').addEventListener('click',()=>{const v=document.getElementById('bkPaste').value.trim();if(!v){toast('先貼上備份碼');return}bkRestore(v)});
 document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;bkRestore(await file.text());e.target.value=''});
-const APP_VERSION='v32';
+document.getElementById('copyWidget').addEventListener('click',async()=>{try{const r=await fetch('widget/gooddad-widget.js',{cache:'no-store'});if(!r.ok)throw 0;const t=await r.text();await navigator.clipboard.writeText(t);toast('已複製，打開 Scriptable 貼上')}catch(_){toast('複製失敗，確認有網路再試一次')}});
+const APP_VERSION='v33';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});

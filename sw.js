@@ -1,5 +1,5 @@
 // 好爸爸 service worker：離線也能打開，App 本體和精選優先抓最新
-const CACHE = 'good-dad-v32';
+const CACHE = 'good-dad-v33';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
