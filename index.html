@@ -397,6 +397,8 @@ body{overflow-x:hidden;overscroll-behavior-x:none;touch-action:pan-y pinch-zoom;
 .card2 h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:26px}
 .card2 p{margin:0}
 @media (prefers-reduced-motion:reduce){.rays,.spark,.lvk,.morph .new,.morph .old,.morph .flash,.lvnum .to,.lvnum .from,.card2,.xpfloat{animation:none!important;opacity:1}.job .morph .old,.spark,.morph .flash{display:none}}
+.syncbox{background:var(--bg);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.syncbox .field input{background:var(--surface)}
 .hist{border:0;text-align:left;background:var(--bg);border-radius:14px;padding:10px 14px;font-size:14px}
 .vinfo b{font-size:15px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .vinfo small{font-size:12px;color:var(--muted)}
@@ -424,7 +426,7 @@ nav.tabbar button[aria-current="page"]{background:var(--ink);color:var(--bg)}
 nav.tabbar button[aria-current="page"] span{font-weight:700}
 
 .sheet{position:fixed;inset:0;background:rgba(20,10,30,.45);display:flex;align-items:flex-end;justify-content:center;z-index:10;backdrop-filter:blur(3px)}
-.sheet .panel{background:var(--surface);width:100%;max-width:480px;border-radius:28px 28px 0 0;
+.sheet .panel{max-height:calc(100% - 24px);overflow-y:auto;overscroll-behavior:contain;background:var(--surface);width:100%;max-width:480px;border-radius:28px 28px 0 0;
   padding:22px max(20px,env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:14px;box-sizing:border-box}
 .panel h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:22px}
 .field{display:flex;flex-direction:column;gap:4px}
@@ -466,6 +468,7 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
 <div class="sheet" id="sheet" hidden>
   <form class="panel" id="settingsForm">
     <h2>設定</h2>
+    <div id="syncBox" class="syncbox"></div>
     <div class="seg2" role="group" aria-label="日期類型">
       <button type="button" id="modeBorn" aria-pressed="true">已出生</button>
       <button type="button" id="modeDue" aria-pressed="false">還沒出生</button>
@@ -1723,7 +1726,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v9';
+const APP_VERSION='v10';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -1735,10 +1738,129 @@ if('serviceWorker' in navigator){
 }
 try{if(sessionStorage.getItem('gd_updated')){sessionStorage.removeItem('gd_updated');setTimeout(()=>toast('已更新到最新版'),400)}}catch(_){}
 try{document.getElementById('appVer').textContent='（版本 '+APP_VERSION+'）'}catch(_){}
+// ---------- 帳號同步（Firebase：Email 登入＋雲端資料庫） ----------
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyAKdSmAQ2yBd1bpk3C6fxBmgEQ8WZSkwmU",
+  authDomain:"good-dad-6a69e.firebaseapp.com",
+  projectId:"good-dad-6a69e",
+  storageBucket:"good-dad-6a69e.firebasestorage.app",
+  messagingSenderId:"537055313899",
+  appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
+};
+const FIREBASE_VER='10.12.2';
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads'];
+const _rawSet=store.set.bind(store);
+const syncTs=()=>store.get('_syncts',{});
+let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
+const pendingKeys=new Set();
+store.set=function(k,v){
+  _rawSet(k,v);
+  if(applyingRemote||!SYNC_KEYS.includes(k))return;
+  const ts=syncTs();ts[k]=Date.now();_rawSet('_syncts',ts);
+  if(syncUser){pendingKeys.add(k);clearTimeout(pushTimer);pushTimer=setTimeout(()=>pushNow(),700)}
+};
+function rawGet(k){try{return localStorage.getItem('gd_'+k)}catch(_){return null}}
+function rawPut(k,v){try{localStorage.setItem('gd_'+k,v)}catch(_){}}
+async function pushNow(keys){
+  if(!syncUser||!fbDb)return;
+  const list=keys||[...pendingKeys];pendingKeys.clear();
+  const ts=syncTs(),data={};
+  for(const k of list){const v=rawGet(k);if(v===null)continue;data[k]={v,t:ts[k]||Date.now()}}
+  if(!Object.keys(data).length)return;
+  setSync('saving');
+  try{await fbDb.collection('users').doc(syncUser.uid).set({data,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});syncAt=Date.now();setSync('ok')}
+  catch(e){list.forEach(k=>pendingKeys.add(k));setSync('err')}
+}
+function reloadState(){
+  s.born=store.get('born',true);s.date=store.get('date',todayStr());s.baby=store.get('baby','寶寶');
+  s.tasks=store.get('tasks',{});s.bought=store.get('bought',{});s.fav=store.get('fav',{});
+  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.growth=store.get('growth',[]);
+  s.wife=store.get('wife',null);s.askHist=store.get('askHist',[]);s.myThreads=store.get('myThreads',[]);
+  s.feed.threads=mergeThreads(feedRaw);s.isDemo=false;
+}
+function onRemote(doc,fresh){
+  const remote=(doc.exists&&doc.data()&&doc.data().data)||{};
+  let ts=syncTs();
+  if(fresh&&doc.exists)ts={}; // 新裝置登入既有帳號：以雲端為準
+  const toPush=[];let changed=false;
+  applyingRemote=true;
+  for(const k of SYNC_KEYS){
+    const r=remote[k],lt=ts[k]||0,local=rawGet(k);
+    if(r&&r.t>lt){if(local!==r.v){rawPut(k,r.v);changed=true}ts[k]=r.t}
+    else if(local!==null&&(!r||r.t<lt)){if(!lt)ts[k]=1;toPush.push(k)}
+  }
+  applyingRemote=false;_rawSet('_syncts',ts);
+  if(changed){
+    reloadState();
+    if(fresh){try{const x=xpStats();_rawSet('lastLv',levelOf(x.total));_rawSet('lastCls',classOf(x))}catch(_){}}
+    try{if(!document.getElementById('sheet').hidden){setMode(s.born);document.getElementById('dateInput').value=s.date;document.getElementById('babyName').value=s.baby;document.getElementById('welcomeNote').hidden=true}}catch(_){}
+    render();if(!fresh)toast('已同步最新進度');
+  }
+  if(fresh&&changed)toast('已載入帳號裡的資料');
+  syncAt=Date.now();setSync('ok');
+  if(toPush.length)pushNow(toPush);
+}
+function setSync(st){syncState=st;renderSync()}
+const AUTH_ERR={'auth/invalid-email':'Email 格式不對','auth/missing-password':'請輸入密碼','auth/weak-password':'密碼至少要 6 個字元','auth/email-already-in-use':'這個 Email 已經註冊過了，請直接登入',
+  'auth/invalid-credential':'Email 或密碼不正確','auth/wrong-password':'Email 或密碼不正確','auth/user-not-found':'找不到這個帳號，請先建立帳號','auth/invalid-login-credentials':'Email 或密碼不正確',
+  'auth/too-many-requests':'嘗試太多次了，請稍後再試','auth/network-request-failed':'網路連不上，檢查後再試一次','auth/unauthorized-domain':'雲端還沒允許這個網站，請檢查 Firebase 的授權網域','auth/operation-not-allowed':'雲端還沒開啟 Email 登入，請檢查 Firebase 設定'};
+function syncMsg(t,bad){const m=document.getElementById('syncMsg');if(m){m.textContent=t||'';m.style.color=bad?'var(--coral-ink)':''}}
+function renderSync(){
+  const box=document.getElementById('syncBox');if(!box)return;
+  const mode=syncUser?'in':(syncState==='nocfg'||syncState==='neterr'||syncState==='loading')?syncState:'out';
+  if(box.dataset.mode!==mode){
+    box.dataset.mode=mode;
+    if(mode==='in')box.innerHTML=`<p class="k">帳號同步</p><div class="kv"><span>已登入</span><b>${esc(syncUser.email||'')}</b></div>
+      <p class="note" id="syncStat"></p><p class="note">另一半用同一組帳號密碼登入，就會看到一樣的進度，兩邊勾選都會即時同步。</p>
+      <div class="row"><button type="button" class="btn light sm" id="syncNow">立即同步</button><button type="button" class="btn light sm" id="syncOut">登出</button></div><p class="note" id="syncMsg"></p>`;
+    else if(mode==='out')box.innerHTML=`<p class="k">帳號同步</p><p class="note">登入後資料會存到雲端，另一半用同一組帳號登入就能看到一樣的進度。</p>
+      <div class="field"><label for="syncEmail">Email</label><input id="syncEmail" type="email" autocomplete="username" inputmode="email" autocapitalize="off"></div>
+      <div class="field"><label for="syncPass">密碼（至少 6 個字元）</label><input id="syncPass" type="password" autocomplete="current-password"></div>
+      <div class="row"><button type="button" class="btn coral sm" id="syncLogin">登入</button><button type="button" class="btn light sm" id="syncSignup">建立帳號</button><button type="button" class="btn light sm" id="syncReset">忘記密碼</button></div>
+      <p class="note" id="syncMsg"></p>`;
+    else box.innerHTML=`<p class="k">帳號同步</p><p class="note" id="syncStat"></p>`;
+  }
+  const st=document.getElementById('syncStat');if(!st)return;
+  const t=syncAt?new Date(syncAt):null,hm=t?`${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`:'';
+  st.textContent={nocfg:'雲端同步還沒設定好，設定完成後這裡就能登入。',loading:'正在連線雲端…',neterr:'連不到雲端，檢查網路後重新打開 App。',ok:`已同步${hm?'・'+hm:''}`,saving:'同步中…',err:'同步失敗，網路恢復後會再試',out:''}[syncState]||'';
+}
+function loadScript(src){return new Promise((res,rej)=>{const sc=document.createElement('script');sc.src=src;sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)})}
+async function initSync(){
+  renderSync();if(!FIREBASE_CONFIG)return;
+  try{for(const m of ['app','auth','firestore'])await loadScript(`https://www.gstatic.com/firebasejs/${FIREBASE_VER}/firebase-${m}-compat.js`)}catch(_){setSync('neterr');return}
+  try{firebase.initializeApp(FIREBASE_CONFIG);fbAuth=firebase.auth();fbDb=firebase.firestore()}catch(_){setSync('neterr');return}
+  fbAuth.onAuthStateChanged(u=>{
+    if(syncUnsub){syncUnsub();syncUnsub=null}
+    syncUser=u||null;
+    if(!u){setSync('out');return}
+    const fresh=store.get('syncUid',null)!==u.uid;_rawSet('syncUid',u.uid);
+    let first=true;setSync('loading');
+    syncUnsub=fbDb.collection('users').doc(u.uid).onSnapshot(doc=>{const f=first&&fresh;first=false;onRemote(doc,f)},()=>setSync('err'));
+  });
+}
+async function authDo(kind){
+  if(!fbAuth){syncMsg('雲端還沒準備好，稍等一下',true);return}
+  const email=(document.getElementById('syncEmail')||{}).value||'',pw=(document.getElementById('syncPass')||{}).value||'';
+  try{
+    if(kind==='reset'){if(!email.trim())return syncMsg('先在上面填 Email',true);await fbAuth.sendPasswordResetEmail(email.trim());return syncMsg('重設密碼的信已寄出，請到信箱收信')}
+    syncMsg(kind==='signup'?'建立中…':'登入中…');
+    if(kind==='signup')await fbAuth.createUserWithEmailAndPassword(email.trim(),pw);
+    else await fbAuth.signInWithEmailAndPassword(email.trim(),pw);
+    toast(kind==='signup'?'帳號建立好了，資料開始同步':'登入成功');
+  }catch(e){syncMsg(AUTH_ERR[e&&e.code]||'沒有成功，再試一次',true)}
+}
+document.getElementById('sheet').addEventListener('click',e=>{
+  const id=e.target&&e.target.id;
+  if(id==='syncLogin')authDo('login');else if(id==='syncSignup')authDo('signup');else if(id==='syncReset')authDo('reset');
+  else if(id==='syncNow'){pushNow(SYNC_KEYS.filter(k=>rawGet(k)!==null));toast('同步中')}
+  else if(id==='syncOut'){fbAuth&&fbAuth.signOut();_rawSet('syncUid',null);toast('已登出，資料仍保留在這支手機')}
+});
+document.getElementById('sheet').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='syncEmail'||e.target.id==='syncPass')){e.preventDefault();authDo('login')}});
 setupAsk();
 let firstRun=false;try{firstRun=localStorage.getItem('gd_date')===null}catch(_){}
 render();
 loadFeed(false).then(()=>render());
+initSync();
 if(firstRun){document.getElementById('openSettings').click();document.getElementById('modeDue').click();document.getElementById('dateInput').value='';document.getElementById('welcomeNote').hidden=false}
 })();
 </script>
