@@ -181,6 +181,19 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .nlist{margin:4px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:4px}
 .copy,.star{min-width:40px;min-height:40px}
 [data-week].btn.sm{min-width:40px;min-height:40px}
+.labortile{background:linear-gradient(140deg,#E0506A,#FF7A5C 60%,#FFB070)}
+.ctbox .ctbtn{border:0;width:100%;min-height:120px;border-radius:28px;font-family:var(--font-display);font-size:30px;color:#fff;background:linear-gradient(140deg,#3C8CF0,#6C7BFF);box-shadow:0 10px 24px rgba(60,100,240,.3)}
+.ctbox .ctbtn.on{background:linear-gradient(140deg,#E0506A,#FF7A5C);animation:ctpulse 1.4s ease-in-out infinite}
+@keyframes ctpulse{50%{transform:scale(.98);box-shadow:0 4px 14px rgba(224,80,106,.35)}}
+.qgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.qbtn{border:0;border-radius:18px;background:var(--bg);color:var(--ink);padding:12px 4px;font-size:22px;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:76px}
+.qbtn b{font-size:13px}.qbtn.on{background:var(--lemon)}
+.qbtn:active{transform:scale(.96)}
+.hcgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px;margin:6px 0 4px}
+.hcitem{display:flex;align-items:center;gap:6px;font-size:14px;min-height:32px}
+.hcitem input{width:20px;height:20px;accent-color:var(--coral)}
+.bkbox{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+.bkbox textarea{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:14px;padding:8px 10px;background:var(--bg);color:var(--ink);width:100%;box-sizing:border-box}
 .store{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--bg)}
 .store b{font-size:15px}
 .store small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
@@ -653,6 +666,7 @@ window.__hideSplash=function(){setTimeout(hide,Math.max(0,1500-(Date.now()-t0)))
     <div class="brand"><span class="logo" style="overflow:hidden"><svg viewBox="0 0 1024 1024" style="width:40px;height:40px" aria-hidden="true"><circle cx="860" cy="150" r="300" fill="#fff" opacity=".12"/><circle cx="512" cy="560" r="330" fill="#FFD9B8"/><path d="M470 240q60 -90 120 -10" stroke="#5A3A2A" stroke-width="34" fill="none" stroke-linecap="round"/><circle cx="395" cy="545" r="34" fill="#3A2A2A"/><circle cx="629" cy="545" r="34" fill="#3A2A2A"/><circle cx="335" cy="650" r="55" fill="#FF9AA8" opacity=".75"/><circle cx="689" cy="650" r="55" fill="#FF9AA8" opacity=".75"/><path d="M455 670q57 60 114 0" stroke="#3A2A2A" stroke-width="26" fill="none" stroke-linecap="round"/><path d="M800 860s-110-68-110-150a62 62 0 01110-40a62 62 0 01110 40c0 82-110 150-110 150z" fill="#fff"/></svg></span>
       <div><b>好爸爸</b><small>新手爸爸的口袋提醒</small></div></div>
     <span class="row" style="gap:8px;flex-wrap:nowrap"><button class="icon-btn" id="openLevel" type="button" aria-label="好爸爸等級" style="width:auto;padding:0 12px 0 4px;gap:4px;display:flex;font-weight:900;font-size:13px"><span id="lvMini" style="width:34px;height:34px;display:block"></span><span id="lvTxt">Lv.1</span></button>
+    <button class="icon-btn" id="openSearch" type="button" aria-label="搜尋整個 App"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg></button>
     <button class="icon-btn" id="openSettings" type="button" aria-label="設定"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg></button></span>
   </header>
   <main id="view" class="view"></main>
@@ -677,11 +691,15 @@ window.__hideSplash=function(){setTimeout(hide,Math.max(0,1500-(Date.now()-t0)))
     </div>
     <div class="field"><label for="dateInput" id="dateLabel">出生日</label><input type="date" id="dateInput" required></div>
     <div class="field"><label for="babyName">寶寶小名</label><input id="babyName" maxlength="10"></div>
+    <div id="homeCards" class="bkbox"></div>
     <p class="note" id="welcomeNote" hidden>第一次使用：填好寶寶的出生日或預產期，App 會自動切到對應的階段。</p>
     <div class="field"><label for="apiKey">爸爸攻略用的 Anthropic API 金鑰（選填）</label><input id="apiKey" type="password" autocomplete="off" placeholder="sk-ant-…"></div>
     <div class="row"><button class="btn coral" type="submit">儲存</button><button class="btn light" type="button" id="closeSettings">取消</button></div>
-    <div class="row"><button class="btn light sm" type="button" id="exportData">匯出備份</button><label class="btn light sm" for="importFile" style="cursor:pointer">匯入備份</label><input id="importFile" type="file" accept="application/json" hidden></div>
-    <p class="note">所有資料（含金鑰）只存在這支手機裡。換手機前記得先匯出備份。<span id="appVer"></span></p>
+    <div class="bkbox"><p class="k" style="margin:0">資料備份</p>
+      <div class="row"><button class="btn light sm" type="button" id="bkShare">分享備份檔</button><button class="btn light sm" type="button" id="bkCopy">複製備份碼</button><label class="btn light sm" for="importFile" style="cursor:pointer">選備份檔匯入</label><input id="importFile" type="file" accept="application/json,.json,text/plain" hidden></div>
+      <textarea id="bkPaste" rows="2" placeholder="或把備份碼貼在這裡"></textarea><button class="btn light sm" type="button" id="bkImport" style="align-self:flex-start">用貼上的備份碼還原</button>
+      <p class="note" style="margin:0">「分享備份檔」可以存到檔案 App 或傳 LINE 給自己。備份不含 API 金鑰。</p></div>
+    <p class="note">沒登入時，所有資料（含金鑰）只存在這支手機裡。換手機前記得先備份。<span id="appVer"></span></p>
   </form>
 </div>
 
@@ -917,10 +935,10 @@ let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
   momlog:store.get('momlog',[]),games:store.get('games',[]),gameSeen:store.get('gameSeen',[]),game:null,clsInfo:null,checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
-  learnSeg:'ask',notes:store.get('notes',[]),noteThumbs:store.get('noteThumbs',{}),noteCat:'全部',noteQ:'',noteOpen:null,scan:{status:'idle',imgs:[],text:'',err:'',draft:null},todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
+  learnSeg:'ask',contractions:store.get('contractions',[]),notify:store.get('notify',[]),blog:store.get('blog',[]),blogDay:'t',blogMl:store.get('blogMl',60),homeHide:store.get('homeHide',[]),gq:'',notes:store.get('notes',[]),noteThumbs:store.get('noteThumbs',{}),noteCat:'全部',noteQ:'',noteOpen:null,scan:{status:'idle',imgs:[],text:'',err:'',draft:null},todos:store.get('todos',[]),ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
-function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function todayStr(dd){const d=dd instanceof Date?dd:new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function dayDiff(a,b){return Math.round((Date.parse(b)-Date.parse(a))/DAY)}
 function overdue(){return s.born?-1:dayDiff(s.date,todayStr())}
 function age(){const t=todayStr();if(!s.born){const left=dayDiff(t,s.date);return left>0?-left:-1}return Math.max(0,dayDiff(s.date,t))}
@@ -1125,6 +1143,125 @@ function notesHTML(){
     ${list.length?`<div class="feed">${list.map(n=>`<button type="button" class="ncard" data-nopen="${n.id}">${noteThumb(n)?`<img src="${noteThumb(n)}" alt="">`:''}<span style="flex:1;min-width:0"><span class="spill ${noteCatCls(n.category)}">${esc(n.category)}</span><b>${esc(n.title)}</b><small>${esc((n.points||[]).slice(0,2).join('・')||n.summary||'')}</small></span></button>`).join('')}</div>`
       :`<p class="note">${(s.notes||[]).length?'沒有符合的筆記。':'還沒有筆記。拍一張衛教單張試試看。'}</p>`}
     <p class="note">最多保留 ${NOTE_MAX} 則。內容為資料整理，不能取代醫師的判斷。</p></section>`}
+// ========== 生產當天模式 ==========
+const LABOR_BAG=[['證件','媽媽手冊'],['證件','健保卡（兩人）'],['證件','身分證、印章'],['證件','產檢報告、住院同意書'],
+ ['媽媽','產褥墊、看護墊'],['媽媽','免洗褲或產後內褲'],['媽媽','哺乳內衣、溢乳墊'],['媽媽','拖鞋、保暖外套、襪子'],['媽媽','盥洗用品、吸管杯'],
+ ['寶寶','出院穿的衣服和包巾'],['寶寶','汽車安全座椅（出院前先裝好）'],['寶寶','紗布巾、尿布一小包'],
+ ['爸爸','手機充電線、行動電源'],['爸爸','零錢、悠遊卡、停車費'],['爸爸','水和小點心（給她也給你）'],['爸爸','自己的換洗衣物']];
+function nowMs(){return Date.now()}
+function ctList(){return s.contractions||[]}
+function ctStats(){const L=ctList().filter(c=>c.e),h=nowMs()-3600e3,rec=L.filter(c=>c.s>=h);
+  const iv=[];for(let i=1;i<rec.length;i++)iv.push(rec[i].s-rec[i-1].s);
+  const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+  return {n:rec.length,iv:avg(iv),dur:avg(rec.map(c=>c.e-c.s))}}
+function fmtDur(ms){ms=Math.max(0,Math.round(ms/1000));const m=Math.floor(ms/60),sec=ms%60;return m?`${m} 分 ${String(sec).padStart(2,'0')} 秒`:`${sec} 秒`}
+function fmtClock(ms){const d=new Date(ms);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function ctToggle(){const L=ctList().slice(),last=L[L.length-1];
+  if(last&&!last.e){last.e=nowMs();if(last.e-last.s<5000){L.pop();toast('太短了，這次不算')}}else L.push({s:nowMs(),e:0});
+  s.contractions=L.slice(-60);store.set('contractions',s.contractions);render()}
+let ctTimer=null;
+function ctTick(){const el=document.getElementById('ctLive');const L=ctList(),last=L[L.length-1];
+  if(!el){clearInterval(ctTimer);ctTimer=null;return}
+  if(last&&!last.e)el.textContent='這次已經 '+fmtDur(nowMs()-last.s);else if(last)el.textContent='距離上次開始 '+fmtDur(nowMs()-last.s);else el.textContent=''}
+function syncTip(){let su=null,st='loading';try{su=syncUser;st=syncState}catch(_){return ''}if(su||st==='loading'||store.get('hideSyncTip',0))return '';const hasData=Object.keys(s.tasks||{}).length+(s.todos||[]).length+(s.notes||[]).length+(s.momlog||[]).length>3;if(!hasData)return '';
+  return `<section class="tile span2 t-lemon"><p class="k">提醒</p><h2 style="font-size:18px">資料目前只存在這支手機</h2><p class="note" style="margin:0;color:var(--ink)">換手機或清掉瀏覽器資料就會不見。登入帳號會自動同步，也能讓老婆一起看；或到設定複製備份。</p>
+   <div class="row"><button type="button" class="btn coral sm" data-synctip="open">登入或備份</button><button type="button" class="btn light sm" data-synctip="hide">不再提醒</button></div></section>`}
+function laborTile(){if(s.born||age()<-63)return '';
+  return `<button type="button" class="tile span2 cktile labortile" data-go="labor"><span class="ckday"><b>⏱</b></span><span style="flex:1;min-width:0"><span class="k">生產當天模式</span><b>陣痛計時、待產包、醫院電話</b><small>要生了就點這裡，一頁搞定</small></span><span class="momprog">›</span></button>`}
+function laborHTML(){
+  const w=s.wife||{},L=ctList(),last=L[L.length-1],run=last&&!last.e,st=ctStats();
+  const near=st.n>=6&&st.iv>0&&st.iv<=5.5*60e3&&st.dur>=45e3;
+  const msg=`${s.baby||'寶寶'}要出生了！我們在${w.hospital||'醫院'}，有消息再跟大家說。`;
+  const bagDone=LABOR_BAG.filter((_,i)=>s.tasks['bag-'+i]).length;
+  const rows=L.filter(c=>c.e).slice(-8).reverse();
+  return `<div class="bento">
+   <section class="lvhero span2" style="background:linear-gradient(140deg,#E0506A,#FF7A5C 60%,#FFB070)"><div class="lvinfo" style="grid-column:1/-1"><span class="lv">生產當天模式</span><h2 style="font-size:24px">先深呼吸，你做得到</h2>
+    <div class="row">${w.hospitalPhone?`<a class="btn" style="background:#fff;color:var(--coral-ink)" href="tel:${esc(w.hospitalPhone.replace(/[^\d+#]/g,''))}">打給${esc(w.hospital||'產檢醫院')}</a>`:`<button type="button" class="btn" style="background:#fff;color:var(--coral-ink)" data-gowife="info">先填醫院電話</button>`}<a class="btn" style="background:rgba(255,255,255,.2);color:#fff" href="tel:119">119</a></div></div></section>
+   <section class="tile span2 ctbox"><div class="row between"><h2>陣痛計時</h2>${L.length?'<button type="button" class="btn light sm" data-labor="clear">清除</button>':''}</div>
+    <button type="button" class="ctbtn${run?' on':''}" data-labor="ct">${run?'宮縮結束':'宮縮開始'}</button>
+    <p class="note" id="ctLive" style="text-align:center;margin:0"></p>
+    <div class="gstats"><span><b>${st.n}</b>近 1 小時次數</span><span><b>${st.iv?Math.round(st.iv/6e3)/10:'–'}</b>平均間隔（分）</span><span><b>${st.dur?Math.round(st.dur/1000):'–'}</b>平均長度（秒）</span></div>
+    ${near?`<div class="warnlist" style="padding:12px 14px"><b>已經接近「5-1-1」了</b><p style="margin:4px 0 0">現在打給醫院，照醫護人員的指示決定什麼時候出發。</p></div>`:''}
+    ${rows.length?`<div class="tasks">${rows.map((c,i)=>{const prev=L[L.indexOf(c)-1];return `<div class="store"><b style="font-variant-numeric:tabular-nums">${fmtClock(c.s)}</b><span style="flex:1;min-width:0">持續 ${fmtDur(c.e-c.s)}</span><small>${prev?'間隔 '+fmtDur(c.s-prev.s):'第一次'}</small></div>`}).join('')}</div>`:''}
+    <details class="article"><summary>什麼時候該去醫院？</summary><p>很多醫院給第一胎的建議是「5-1-1」：大約每 5 分鐘痛一次、每次約 1 分鐘、這樣持續 1 小時，就可以準備出發。第二胎以後通常要更早出發。</p><p><b>不用等規律宮縮，直接聯絡醫院：</b>破水、出血量像月經或更多、胎動明顯變少、劇烈頭痛或視力模糊、發燒。</p><p>以上是一般原則，請以你們產檢醫院交代的為準。</p></details></section>
+   <section class="tile span2"><div class="row between"><h2>待產包</h2><span class="points">${bagDone}/${LABOR_BAG.length}</span></div>
+    <div class="tasks">${LABOR_BAG.map(([g,n],i)=>{const k='bag-'+i;return `<div class="task${s.tasks[k]?' done':''}"><input type="checkbox" id="t-${k}" data-task="${k}"${s.tasks[k]?' checked':''}><label for="t-${k}">${esc(n)}</label><span class="when">${g}</span></div>`}).join('')}</div></section>
+   <section class="tile span2"><h2>要通知的人</h2>
+    <form id="notifyForm" class="row" style="flex-wrap:nowrap"><input class="search" id="nfName" maxlength="12" placeholder="稱呼，例如：媽" aria-label="稱呼" style="flex:1;min-width:0"><input class="search" id="nfTel" type="tel" maxlength="20" placeholder="電話（可不填）" aria-label="電話" style="flex:1;min-width:0"><button class="btn coral sm" type="submit">加入</button></form>
+    ${(s.notify||[]).length?`<div class="tasks">${s.notify.map(p=>`<div class="store"><b style="flex:1;min-width:0">${esc(p.name)}</b>${p.tel?`<a class="shopee" style="background:var(--ink)" href="tel:${esc(p.tel.replace(/[^\d+#]/g,''))}">打電話</a>`:''}<a class="shopee" style="background:#06C755" href="https://line.me/R/msg/text/?${encodeURIComponent(msg)}" target="_blank" rel="noopener">LINE</a><button type="button" class="tdel" data-labor="nfdel" data-id="${p.id}" aria-label="刪除${esc(p.name)}">×</button></div>`).join('')}</div>`:'<p class="note">先把爸媽、公婆、主管加進來，生的時候一個一個點就好。</p>'}
+    <button type="button" class="btn light sm" data-copy="${esc(msg)}" style="align-self:flex-start">複製通知訊息</button></section>
+   <section class="tile span2 t-lilac"><h2>醫院資訊</h2>${w.hospital||w.hospitalPhone||w.doctor?`<div class="kv"><span>醫院</span><b>${esc(w.hospital||'–')}</b></div><div class="kv"><span>電話</span><b>${esc(w.hospitalPhone||'–')}</b></div><div class="kv"><span>醫師</span><b>${esc(w.doctor||'–')}</b></div>`:'<p class="note">到「老婆 → 她的資料」填醫院、電話和醫師，這裡就會顯示。</p>'}</section>
+  </div>`}
+
+// ========== 寶寶日常紀錄 ==========
+const BLOG_K={feedL:'母乳・左',feedR:'母乳・右',bottle:'瓶餵',wet:'濕尿布',poo:'便便',sleep:'睡覺'};
+function blogDay(day){return (s.blog||[]).filter(r=>todayStr(new Date(r.t))===day)}
+function agoTxt(ms){const m=Math.floor((nowMs()-ms)/60e3);return m<1?'剛剛':m<60?m+' 分鐘前':Math.floor(m/60)+' 小時 '+(m%60)+' 分前'}
+function blogAdd(k,ml){const L=(s.blog||[]).slice();if(k==='sleep'){const run=L.slice().reverse().find(r=>r.k==='sleep'&&!r.end);if(run){run.end=nowMs();s.blog=L;store.set('blog',L);toast('醒了，睡了 '+fmtDur(run.end-run.t));render();return}}
+  L.push({id:nowMs().toString(36),t:nowMs(),k,ml:ml||0,end:0});s.blog=L.slice(-800);store.set('blog',s.blog);toast('已記錄：'+BLOG_K[k]+(ml?' '+ml+' ml':''));render()}
+function blogSummary(day){const R=blogDay(day),f=R.filter(r=>/^feed|bottle/.test(r.k)),ml=R.filter(r=>r.k==='bottle').reduce((a,r)=>a+(+r.ml||0),0);
+  const sl=R.filter(r=>r.k==='sleep'&&r.end).reduce((a,r)=>a+(r.end-r.t),0);return {feeds:f.length,ml,wet:R.filter(r=>r.k==='wet').length,poo:R.filter(r=>r.k==='poo').length,sleep:sl}}
+function lastFeed(){return (s.blog||[]).slice().reverse().find(r=>/^feed|bottle/.test(r.k))}
+function blogHTML(){
+  const day=s.blogDay==='y'?todayStr(new Date(nowMs()-864e5)):todayStr(),R=blogDay(day).slice().reverse(),sm=blogSummary(day),lf=lastFeed();
+  const run=(s.blog||[]).slice().reverse().find(r=>r.k==='sleep'&&!r.end);
+  return `<div class="bento">
+   <section class="tile span2"><p class="k">快速記錄</p><h2>${lf?'上次餵奶 '+agoTxt(lf.t):'按一下就記好'}</h2>
+    <div class="qgrid"><button type="button" class="qbtn" data-blog="feedL">🤱<b>母乳・左</b></button><button type="button" class="qbtn" data-blog="feedR">🤱<b>母乳・右</b></button>
+     <button type="button" class="qbtn" data-blog="bottle">🍼<b>瓶餵</b></button><button type="button" class="qbtn" data-blog="wet">💧<b>濕尿布</b></button>
+     <button type="button" class="qbtn" data-blog="poo">💩<b>便便</b></button><button type="button" class="qbtn${run?' on':''}" data-blog="sleep">${run?'☀️<b>醒了</b>':'🌙<b>開始睡</b>'}</button></div>
+    <div class="row" style="flex-wrap:nowrap"><label for="blogMl" class="note" style="margin:0">瓶餵奶量</label><input id="blogMl" class="search" type="number" inputmode="numeric" min="0" max="300" step="10" value="${esc(s.blogMl||60)}" style="width:96px">ml</div></section>
+   <div class="tabs-mini span2" role="group" aria-label="日期"><button type="button" class="chip" data-blogday="t" aria-pressed="${s.blogDay!=='y'}">今天</button><button type="button" class="chip" data-blogday="y" aria-pressed="${s.blogDay==='y'}">昨天</button></div>
+   <section class="tile t-peach stat"><p class="k">餵奶</p><span class="n">${sm.feeds}<small>次</small></span><p class="note">${sm.ml?'瓶餵共 '+sm.ml+' ml':'　'}</p></section>
+   <section class="tile t-sky stat"><p class="k">尿布</p><span class="n">${sm.wet+sm.poo}<small>片</small></span><p class="note">濕 ${sm.wet}・便 ${sm.poo}</p></section>
+   <section class="tile t-lilac stat span2"><p class="k">睡眠</p><span class="n">${Math.floor(sm.sleep/36e5)}<small>小時</small> ${Math.round(sm.sleep%36e5/6e4)}<small>分</small></span>${run?`<p class="note">從 ${fmtClock(run.t)} 睡到現在</p>`:''}</section>
+   <section class="tile span2"><h2>${s.blogDay==='y'?'昨天':'今天'}的紀錄</h2>${R.length?`<div class="tasks">${R.map(r=>`<div class="store"><b style="font-variant-numeric:tabular-nums">${fmtClock(r.t)}</b><span style="flex:1;min-width:0">${BLOG_K[r.k]}${r.ml?' '+r.ml+' ml':''}${r.k==='sleep'?(r.end?'・'+fmtDur(r.end-r.t):'・睡覺中'):''}</span><button type="button" class="tdel" data-blogdel="${r.id}" aria-label="刪除這筆">×</button></div>`).join('')}</div>`:'<p class="note">還沒有紀錄。</p>'}
+    <p class="note">回診時醫師常問餵奶次數、尿布數和睡眠，這裡都有。紀錄會同步到老婆的手機。</p></section></div>`}
+function babyLogTile(){if(!s.born)return '';const sm=blogSummary(todayStr()),lf=lastFeed();
+  return `<button type="button" class="tile span2 momlink" data-goabu="log" style="background:linear-gradient(140deg,#FFE3CF,#ECE5FF)"><span style="flex:1;min-width:0"><span class="k">寶寶紀錄</span><b>${lf?'上次餵奶 '+agoTxt(lf.t):'開始記錄餵奶、尿布、睡眠'}</b><small class="note">今天 餵奶 ${sm.feeds} 次・尿布 ${sm.wet+sm.poo} 片</small></span><span class="momprog">›</span></button>`}
+
+// ========== 疫苗與兒童健檢 ==========
+const VAC=[[0,'出生 24 小時內',['B 型肝炎 第 1 劑']],[1,'滿 1 個月',['B 型肝炎 第 2 劑']],[2,'滿 2 個月',['五合一 第 1 劑','13 價肺炎鏈球菌 第 1 劑']],
+ [4,'滿 4 個月',['五合一 第 2 劑','13 價肺炎鏈球菌 第 2 劑']],[5,'滿 5 個月',['卡介苗（建議 5–8 個月）']],[6,'滿 6 個月',['五合一 第 3 劑','B 型肝炎 第 3 劑']],
+ [12,'滿 12 個月',['MMR（麻疹腮腺炎德國麻疹）第 1 劑','水痘','13 價肺炎鏈球菌 第 3 劑']],[15,'滿 15 個月',['日本腦炎 第 1 劑']],
+ [18,'滿 18 個月',['五合一 第 4 劑','A 型肝炎 第 1 劑']],[27,'滿 27 個月',['日本腦炎 第 2 劑','A 型肝炎 第 2 劑']],[60,'滿 5 歲至入國小前',['白喉破傷風百日咳及小兒麻痺（DTaP-IPV）','MMR 第 2 劑']]];
+const CHK=[[0,2,'出生至 2 個月'],[2,4,'2 至 4 個月'],[4,6,'4 至 6 個月'],[6,12,'6 至 12 個月'],[10,18,'10 個月至 1 歲半'],[18,24,'1 歲半至 2 歲'],[24,36,'2 至 3 歲'],[36,60,'3 至 5 歲'],[60,84,'5 至未滿 7 歲']];
+function addMonths(ds,m){const d=new Date(ds+'T00:00');const day=d.getDate();d.setMonth(d.getMonth()+m);if(d.getDate()<day)d.setDate(0);return todayStr(d)}
+function vacRows(){const b=s.date;return VAC.map(([m,l,items],i)=>({i,key:'vac-'+i,date:m?addMonths(b,m):b,label:l,items,done:!!s.tasks['vac-'+i]}))}
+function healthHTML(){
+  const est=!s.born,t=todayStr(),rows=vacRows(),next=rows.find(r=>!r.done&&r.date>=t)||rows.find(r=>!r.done);
+  const fmt=d=>d.replace(/-/g,'/');
+  return `<div class="bento">
+   ${est?`<section class="tile span2 t-lemon"><p style="margin:0">${esc(s.baby)}還沒出生，下面日期先用預產期估算。出生後到設定改成「已出生」並填出生日，就會自動更新。</p></section>`:''}
+   ${next?`<section class="tile span2 cknext"><p class="k">下一次打疫苗</p><span class="n">${(()=>{const n=dayDiff(t,next.date);return n<0?'該打了':n===0?'就是今天':n+' 天後'})()}</span><b class="ckwhen">${fmt(next.date)}・${esc(next.label)}</b><p style="margin:4px 0 0">${next.items.map(esc).join('、')}</p></section>`:''}
+   <section class="tile span2"><h2>公費疫苗時程</h2><div class="tasks">${rows.map(r=>`<div class="task${r.done?' done':''}"><input type="checkbox" id="t-${r.key}" data-task="${r.key}"${r.done?' checked':''}><label for="t-${r.key}"><b>${esc(r.label)}</b><br><small>${r.items.map(esc).join('、')}</small></label><span class="when${!r.done&&r.date<t?' late':''}">${fmt(r.date).slice(est?0:0)}</span></div>`).join('')}</div>
+    <p class="note">流感疫苗：滿 6 個月以上每年流感季接種，第一次要打 2 劑、間隔 4 週。另有自費疫苗（輪狀病毒等），可以問小兒科醫師。</p>
+    <div class="row"><a class="btn light sm" href="https://www.cdc.gov.tw/Vaccine/Index/M3lMd2tkMlVTUXMwVDc4MXk3L3dYZz09" target="_blank" rel="noopener">疾管署接種時間試算</a></div></section>
+   <section class="tile span2"><h2>兒童預防保健（健檢）</h2><p class="note" style="margin:0">115 年 7 月起共 9 次，帶兒童健康手冊和健保卡到兒科診所就能做。</p>
+    <div class="tasks">${CHK.map(([a,b2,l],i)=>{const k='chk-'+i,from=addMonths(s.date,a),to=addMonths(s.date,b2),now=t>=from&&t<to;return `<div class="task${s.tasks[k]?' done':''}"><input type="checkbox" id="t-${k}" data-task="${k}"${s.tasks[k]?' checked':''}><label for="t-${k}"><b>第 ${i+1} 次・${l}</b><br><small>${fmt(from)} – ${fmt(to)}${now&&!s.tasks[k]?'・現在可以做':''}</small></label></div>`}).join('')}</div></section>
+   <p class="note span2">時程依疾管署「現行兒童預防接種時程」（114 年 1 月版）與國健署兒童預防保健服務整理，實際以兒童健康手冊和醫師安排為準。</p></div>`}
+function vacTile(){if(!s.born)return '';const t=todayStr(),r=vacRows().find(x=>!x.done&&dayDiff(t,x.date)<=14);if(!r)return '';const n=dayDiff(t,r.date);
+  return `<button type="button" class="tile span2 cktile" data-goabu="health" style="background:linear-gradient(140deg,#2FB386,#2AA7B8 60%,#3C8CF0)"><span class="ckday"><b>${n<=0?'💉':n}</b>${n>0?'<small>天後</small>':''}</span><span style="flex:1;min-width:0"><span class="k">${n<0?'疫苗該打了':'疫苗提醒'}</span><b>${esc(r.label)}</b><small>${r.items.map(esc).join('、')}</small></span><span class="momprog">›</span></button>`}
+
+// ========== 全 App 搜尋 ==========
+function searchHTML(){
+  const q=(s.gq||'').trim();let groups=[];
+  if(q){const has=x=>String(x||'').toLowerCase().includes(q.toLowerCase());
+    groups=[
+     ['知識文章',KNOW.filter(k=>has(k.t)||has(k.b)).slice(0,8).map(k=>({t:k.t,sub:k.b,act:`data-sgo="read" data-sq="${esc(k.t)}"`}))],
+     ['我的筆記',(s.notes||[]).filter(n=>has(n.title)||has(n.text)||has((n.points||[]).join(''))).slice(0,8).map(n=>({t:n.title,sub:(n.points||[]).slice(0,2).join('・'),act:`data-nopen="${n.id}" data-sgo="notes"`}))],
+     ['我的待辦',(s.todos||[]).filter(t=>has(t.t)).slice(0,8).map(t=>({t:t.t,sub:t.done?'已完成':(t.due||'未完成'),act:'data-go="lists"'}))],
+     ['階段待辦',Object.entries(TASKS).flatMap(([st,l])=>l.map(x=>[st,x])).filter(([,x])=>has(x[0])).slice(0,8).map(([st,x])=>({t:x[0],sub:stageOf(st).title,act:'data-go="lists"'}))],
+     ['購物清單',SHOP.filter(x=>has(x[1])||has(x[5])).slice(0,8).map(x=>({t:x[1],sub:x[3]+'・'+x[4],act:'data-go="lists"'}))],
+     ['甜蜜話術',LINES.filter(l=>has(l[1])).slice(0,6).map(l=>({t:personal(l[1]),sub:l[0],act:'data-gowife="lines"'}))]
+    ].filter(g=>g[1].length)}
+  return `<div class="bento"><section class="tile span2"><form id="gsForm"><input class="search" id="gq" type="search" enterkeyhint="search" placeholder="搜尋整個 App：發燒、待產包、按摩…" value="${esc(s.gq||'')}" aria-label="搜尋整個 App" autofocus></form>
+   ${q?(groups.length?'':'<p class="note">找不到相關內容，換個關鍵字，或到「學習 → 攻略」直接問。</p>'):'<p class="note">會一起找知識文章、筆記、待辦、購物清單和話術。</p>'}</section>
+   ${groups.map(([g,items])=>`<section class="tile span2"><p class="k">${g}</p><div class="feed">${items.map(it=>`<button type="button" class="ncard" ${it.act}><span style="flex:1;min-width:0"><b>${esc(it.t)}</b><small>${esc(it.sub||'')}</small></span></button>`).join('')}</div></section>`).join('')}</div>`}
+
+// ========== 首頁卡片自訂 ==========
+const HOME_CARDS=[['ck','下次產檢'],['checkin','每日簽到'],['todo','我的待辦'],['quest','每日任務'],['game','職業小遊戲'],['ask','爸爸攻略搜尋'],['shape','寶寶身形'],['dates','紀念日提醒'],['week','這週的寶寶'],['mom','照顧媽媽'],['stats','等級與階段待辦'],['tasks','今天可以做的事'],['line','今日話術'],['focus','本週重點'],['tips','爸爸小撇步'],['shop','該買了'],['video','推薦影片'],['threads','社群精選']];
+function homeCardsBox(){const hide=s.homeHide||[];return `<p class="k" style="margin:0">首頁要顯示的卡片</p><div class="hcgrid">${HOME_CARDS.map(([k,l])=>`<label class="hcitem"><input type="checkbox" data-hc="${k}"${hide.includes(k)?'':' checked'}> ${l}</label>`).join('')}</div>`}
 function taskRows(id,limit){
   const list=(TASKS[id]||[]).map((t,i)=>({key:id+'-'+i,name:t[0],when:t[1]}));
   const rows=limit?list.filter(t=>!s.tasks[t.key]).slice(0,limit):list;
@@ -2050,33 +2187,39 @@ const V={
   const [dn,tot]=stageDone(st.id);
   const soon=SHOP.map((x,k)=>({x,k})).filter(o=>(o.x[0]===st.id||(nx&&o.x[0]===nx.id))&&!s.bought[o.k]).slice(0,4);
   const mk=MOM[momKey(st.id)],md=mk.care.filter((_,j)=>s.tasks['mom-'+mk.key+'-'+j]).length;
-  return `<div class="bento">`+heroHTML()+momAlertTile()+checkupTile()+checkinTile()+todoTile()+questTile()+gameTile()+
-  `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
-  (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
-  (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
+  return `<div class="bento">`+heroHTML()+momAlertTile()+laborTile()+syncTip()+vacTile()+babyLogTile()+
+  [ ['ck',()=>checkupTile()],
+  ['checkin',()=>checkinTile()],
+  ['todo',()=>todoTile()],
+  ['quest',()=>questTile()],
+  ['game',()=>gameTile()],
+  ['ask',()=>`<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`],
+  ['shape',()=>(()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()],
+  ['dates',()=>(()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
     const items=[bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null,mt!=null&&mt<=30?`認識紀念日 ${mt===0?'就是今天':mt+' 天後'}`:null].filter(Boolean);
-    return items.length?`<button type="button" class="tile t-lemon span2 momlink" data-gowife="info"><span><span class="k">別忘了</span><b>${items.join('・')}</b></span><span class="momprog">›</span></button>`:''})()+
-  (()=>{const w=WEEKS[weekIdx()];return `<button type="button" class="tile t-sky span2 momlink" data-goweek="1"><span><span class="k">這週的${esc(s.baby)}・${esc(w.label)}</span><b>${esc(w.baby)}</b></span><span class="momprog">›</span></button>`})()+
-  `<button type="button" class="tile t-rose span2 momlink abulink" data-gowife="care"><span class="mini-abu">${momSVG(momPose(st.id))}</span><span style="flex:1;min-width:0"><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`+
-  (()=>{const x=xpStats(),lv=levelOf(x.total),c=CLASSES[classOf(x)];return `<button type="button" class="tile t-peach stat lvlink" data-golevel="1" style="border:0;text-align:left;color:var(--ink)"><p class="k">好爸爸等級</p><span class="n">Lv.${lv}</span><p class="note" style="color:var(--ink)">${esc(c.name)}・${x.total} XP</p></button>`})()+
-  `<section class="tile t-lilac stat"><p class="k">本階段待辦</p><span class="n">${dn}<small>/ ${tot}</small></span><div class="bar"><i style="width:${tot?dn/tot*100:0}%"></i></div></section>`+
-  `<section class="tile span2"><div class="row between"><h2>今天可以做的事</h2><button class="btn sm light" type="button" data-go="lists">全部</button></div>${taskRows(st.id,3)}</section>`+
-  sweetHTML(dailyLine(),'今日甜蜜話術')+
-  `<section class="tile t-${st.color} span2"><p class="k">本週重點</p>${focusList(st)}</section>`+
-  `<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">爸爸小撇步</h2><span class="note">左右滑動</span></div>
-   <div class="swipe">${st.tips.map((t,k)=>tipHTML(t,COLORS[(i+k+1)%COLORS.length])).join('')}<article class="tipcard t-sky"><p class="k">媽媽此時</p><h3>${esc(st.mom)}</h3></article></div></div>`+
-  (soon.length?`<section class="tile t-mint span2"><div class="row between"><h2>該買了</h2><button class="btn sm ghost" type="button" data-go="lists">清單</button></div>
-    <div class="swipe">${soon.map(o=>`<div class="mini-shop"><span class="name">${esc(o.x[1])}</span><span class="meta">${esc(o.x[3])}・${esc(o.x[4])}</span><a class="shopee" style="align-self:flex-start" href="${shopee(o.x[5])}" target="_blank" rel="noopener">去蝦皮看看</a></div>`).join('')}</div></section>`:'')+
-  (()=>{const vl=feedFor('videos',st.id).filter(v=>v.topic!=='mom').slice(0,8);return vl.length?`<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">本週推薦影片</h2><button class="btn sm light" type="button" data-learn="video">更多</button></div><div class="swipe vswipe">${vl.map(videoCard).join('')}</div></div>`:''})()+
-  (()=>{const ts=feedFor('threads',st.id,2);return `<section class="tile t-ink span2"><p class="k">THREADS 精選</p><h2>其他爸媽最近在聊「${esc(st.kw)}」</h2>
+    return items.length?`<button type="button" class="tile t-lemon span2 momlink" data-gowife="info"><span><span class="k">別忘了</span><b>${items.join('・')}</b></span><span class="momprog">›</span></button>`:''})()],
+  ['week',()=>(()=>{const w=WEEKS[weekIdx()];return `<button type="button" class="tile t-sky span2 momlink" data-goweek="1"><span><span class="k">這週的${esc(s.baby)}・${esc(w.label)}</span><b>${esc(w.baby)}</b></span><span class="momprog">›</span></button>`})()],
+  ['mom',()=>`<button type="button" class="tile t-rose span2 momlink abulink" data-gowife="care"><span class="mini-abu">${momSVG(momPose(st.id))}</span><span style="flex:1;min-width:0"><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`],
+  ['stats',()=>(()=>{const x=xpStats(),lv=levelOf(x.total),c=CLASSES[classOf(x)];return `<button type="button" class="tile t-peach stat lvlink" data-golevel="1" style="border:0;text-align:left;color:var(--ink)"><p class="k">好爸爸等級</p><span class="n">Lv.${lv}</span><p class="note" style="color:var(--ink)">${esc(c.name)}・${x.total} XP</p></button>`})()],
+  ['stats',()=>`<section class="tile t-lilac stat"><p class="k">本階段待辦</p><span class="n">${dn}<small>/ ${tot}</small></span><div class="bar"><i style="width:${tot?dn/tot*100:0}%"></i></div></section>`],
+  ['tasks',()=>`<section class="tile span2"><div class="row between"><h2>今天可以做的事</h2><button class="btn sm light" type="button" data-go="lists">全部</button></div>${taskRows(st.id,3)}</section>`],
+  ['line',()=>sweetHTML(dailyLine(),'今日甜蜜話術')],
+  ['focus',()=>`<section class="tile t-${st.color} span2"><p class="k">本週重點</p>${focusList(st)}</section>`],
+  ['tips',()=>`<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">爸爸小撇步</h2><span class="note">左右滑動</span></div>
+   <div class="swipe">${st.tips.map((t,k)=>tipHTML(t,COLORS[(i+k+1)%COLORS.length])).join('')}<article class="tipcard t-sky"><p class="k">媽媽此時</p><h3>${esc(st.mom)}</h3></article></div></div>`],
+  ['shop',()=>(soon.length?`<section class="tile t-mint span2"><div class="row between"><h2>該買了</h2><button class="btn sm ghost" type="button" data-go="lists">清單</button></div>
+    <div class="swipe">${soon.map(o=>`<div class="mini-shop"><span class="name">${esc(o.x[1])}</span><span class="meta">${esc(o.x[3])}・${esc(o.x[4])}</span><a class="shopee" style="align-self:flex-start" href="${shopee(o.x[5])}" target="_blank" rel="noopener">去蝦皮看看</a></div>`).join('')}</div></section>`:'')],
+  ['video',()=>(()=>{const vl=feedFor('videos',st.id).filter(v=>v.topic!=='mom').slice(0,8);return vl.length?`<div class="span2"><div class="row between" style="margin-bottom:8px"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">本週推薦影片</h2><button class="btn sm light" type="button" data-learn="video">更多</button></div><div class="swipe vswipe">${vl.map(videoCard).join('')}</div></div>`:''})()],
+  ['threads',()=>(()=>{const ts=feedFor('threads',st.id,2);return `<section class="tile t-ink span2"><p class="k">THREADS 精選</p><h2>其他爸媽最近在聊「${esc(st.kw)}」</h2>
    ${ts.length?`<div class="feed">${ts.map(threadCard).join('')}</div>`:''}
    ${refreshBtn(true)}
-   <div class="row"><button class="btn coral" type="button" data-learn="threads">看全部精選</button><a class="btn ghost" style="color:var(--bg);background:rgba(255,255,255,.12)" href="${threads(st.kw)}" target="_blank" rel="noopener">自己搜尋</a></div></section>`})()+
+   <div class="row"><button class="btn coral" type="button" data-learn="threads">看全部精選</button><a class="btn ghost" style="color:var(--bg);background:rgba(255,255,255,.12)" href="${threads(st.kw)}" target="_blank" rel="noopener">自己搜尋</a></div></section>`})()]
+  ].filter(([k])=>!(s.homeHide||[]).includes(k)).map(([,f])=>f()).join('')+
   `</div>`;
  },
  timeline(){
-  const hd=`<div class="segtabs" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="寶寶">${[['grow','成長'],['weeks','每週'],['methods','育嬰'],['stages','時間軸']].map(([k,n])=>`<button type="button" data-aseg="${k}" aria-pressed="${s.abuSeg===k}">${n}</button>`).join('')}</div>`;
-  return hd+(s.abuSeg==='grow'?growHTML():s.abuSeg==='weeks'?weeksHTML():s.abuSeg==='methods'?methodsHTML():V.stagesView());
+  const hd=`<div class="segtabs" style="grid-template-columns:repeat(6,1fr)" role="group" aria-label="寶寶">${[['grow','成長'],['log','紀錄'],['health','疫苗'],['weeks','每週'],['methods','育嬰'],['stages','時間軸']].map(([k,n])=>`<button type="button" data-aseg="${k}" aria-pressed="${s.abuSeg===k}">${n}</button>`).join('')}</div>`;
+  return hd+(s.abuSeg==='log'?blogHTML():s.abuSeg==='health'?healthHTML():s.abuSeg==='grow'?growHTML():s.abuSeg==='weeks'?weeksHTML():s.abuSeg==='methods'?methodsHTML():V.stagesView());
  },
  stagesView(){
   const cur=stageIdx(age()),sel=s.selStage??cur,st=STAGES[sel];
@@ -2153,6 +2296,8 @@ const V={
   return head+linesHTML();
  },
  level(){return levelHTML()},
+ labor(){return laborHTML()},
+ search(){return searchHTML()},
  game(){return gameHTML()},
  _unused(){return ''}
 };
@@ -2475,8 +2620,9 @@ function render(){
   let sel=null;try{if(fid&&ae.selectionStart!=null)sel=[ae.selectionStart,ae.selectionEnd]}catch(_){}
   const vals={};view.querySelectorAll('input[id]').forEach(i=>{if(i.type!=='checkbox')vals[i.id]=i.value});
   view.innerHTML=V[s.tab]();
-  for(const id in vals){if(id==='askQ'||id==='knowQ'||id==='noteQ'||id==='scanFile')continue;const n=document.getElementById(id);if(n&&n.type!=='checkbox')n.value=vals[id]}
+  for(const id in vals){if(id==='askQ'||id==='knowQ'||id==='noteQ'||id==='scanFile'||id==='gq')continue;const n=document.getElementById(id);if(n&&n.type!=='checkbox')n.value=vals[id]}
   if(fid){const n=document.getElementById(fid);if(n){n.focus({preventScroll:true});try{if(sel)n.setSelectionRange(sel[0],sel[1])}catch(_){}}}
+  if(document.getElementById('ctLive')){ctTick();if(!ctTimer)ctTimer=setInterval(ctTick,1000)}
   document.querySelectorAll('nav.tabbar button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===s.tab?'page':'false'));
   if(s.tab==='timeline'&&s.abuSeg==='weeks'){const c=document.querySelector('#weekChips [aria-pressed="true"]'),wc=document.getElementById('weekChips');if(c&&wc)wc.scrollLeft=c.offsetLeft-wc.clientWidth/2+c.clientWidth/2}
   try{const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);document.getElementById('lvTxt').textContent='Lv.'+lv;const m=document.getElementById('lvMini');if(m.dataset.c!==cid){m.innerHTML=dadSVG(cid);m.dataset.c=cid}checkLevel()}catch(_){}
@@ -2495,7 +2641,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-bornnow],[data-nact],[data-ncat],[data-nopen],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-labor],[data-blog],[data-blogdel],[data-blogday],[data-sgo],[data-synctip],[data-bornnow],[data-nact],[data-ncat],[data-nopen],[data-tdel],[data-tclear],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -2513,13 +2659,19 @@ view.addEventListener('click',e=>{
   if(el.dataset.clsinfo){s.clsInfo=s.clsInfo===el.dataset.clsinfo?null:el.dataset.clsinfo;render();return}
   if(el.dataset.qact){questAct(el.dataset.qact);return}
   if(el.dataset.lvdemo){const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);showLevelUp(Math.max(1,lv-1),lv,CLASSES[cid].prev||'apprentice',cid);return}
-  if(el.dataset.goabu){s.abuSeg='grow';go('timeline');return}
+  if(el.dataset.goabu){s.abuSeg=el.dataset.goabu==='1'?'grow':el.dataset.goabu;go('timeline');return}
   if(el.dataset.mdel){const id=el.dataset.mdel;if(s.delArm!==id){s.delArm=id;render();return}s.delArm=null;s.momlog=(s.momlog||[]).filter(r=>r.id!==id);store.set('momlog',s.momlog);toast('已刪除');render();return}
   if(el.dataset.gdel){const id=el.dataset.gdel;if(s.delArm!==id){s.delArm=id;render();return}
     s.delArm=null;if(DB){DB.doc('growth/'+id).delete().then(()=>toast('已刪除'),()=>toast('刪除失敗，再試一次'))}return}
   if(el.dataset.gowife){if(el.dataset.ckset)s.ckEdit=true;s.wifeSeg=el.dataset.gowife;go('lines');return}
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
+  if(el.dataset.labor){const a=el.dataset.labor;if(a==='ct')ctToggle();else if(a==='clear'){if(confirmDel(el)){s.contractions=[];store.set('contractions',[]);render()}}else if(a==='nfdel'){s.notify=s.notify.filter(x=>x.id!==el.dataset.id);store.set('notify',s.notify);render()}return}
+  if(el.dataset.blog){const k=el.dataset.blog;let ml=0;if(k==='bottle'){const i=document.getElementById('blogMl');ml=Math.max(0,Math.min(400,parseInt(i&&i.value)||0));s.blogMl=ml;store.set('blogMl',ml)}blogAdd(k,ml);return}
+  if(el.dataset.blogdel){s.blog=s.blog.filter(r=>r.id!==el.dataset.blogdel);store.set('blog',s.blog);render();return}
+  if(el.dataset.blogday){s.blogDay=el.dataset.blogday;render();return}
+  if(el.dataset.sgo){const g=el.dataset.sgo;s.learnSeg=g;if(g==='read')s.knowQ=el.dataset.sq||'';if(!el.dataset.nopen)s.noteOpen=null;else s.noteOpen=el.dataset.nopen;go('learn');return}
+  if(el.dataset.synctip){const a=el.dataset.synctip;if(a==='hide'){store.set('hideSyncTip',1);render()}else document.getElementById('openSettings').click();return}
   if(el.dataset.bornnow){document.getElementById('openSettings').click();document.getElementById('modeBorn').click();const di=document.getElementById('dateInput');if(di)di.value=todayStr();return}
   if(el.dataset.nact){const a=el.dataset.nact,sc=s.scan;
     if(a==='run')runScan();else if(a==='gem')runGemini();else if(a==='free')runFree();else if(a==='save')saveNote();else if(a==='discard'){s.scan={status:'idle',imgs:[],text:'',err:'',draft:null};render()}
@@ -2549,6 +2701,7 @@ view.addEventListener('click',e=>{
 view.addEventListener('change',e=>{
   const t=e.target;
   if(t.dataset.quest){toggleQuest(t.dataset.quest,t);return}
+  if(t.dataset&&t.dataset.hc){const k=t.dataset.hc;let hd=(s.homeHide||[]).filter(x=>x!==k);if(!t.checked)hd.push(k);s.homeHide=hd;store.set('homeHide',hd);render();return}
   if(t.id==='scanFile'){if(t.files&&t.files.length)addScanFiles(t.files);t.value='';return}
   if(t.dataset.todo){const x=s.todos.find(o=>o.id===t.dataset.todo);if(x){x.done=t.checked;x.doneAt=t.checked?Date.now():null;saveTodos();if(t.checked){confetti(t);toast('完成一項')}setTimeout(render,t.checked?350:0)}return}
   if(t.dataset.task){s.tasks[t.dataset.task]=t.checked;store.set('tasks',s.tasks);if(t.checked){confetti(t);toast('+10 點，好爸爸')}setTimeout(render,t.checked?350:0)}
@@ -2564,13 +2717,16 @@ view.addEventListener('submit',e=>{
     const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
     const rec={date,weight:Math.round(w*100)/100,note:n,addedAt:new Date().toISOString()};if(h>0)rec.height=Math.round(h*10)/10;
     DB.collection('growth').add(rec).then(()=>{toast('記下來了');confetti(btn);['gW','gH','gN'].forEach(id=>{const x=document.getElementById(id);if(x)x.value=''});const b2=document.querySelector('#growForm button[type=submit]');if(b2)b2.disabled=false},err=>{btn.disabled=false;toast(err&&err.code==='quota_exceeded'?'紀錄已滿':'沒存成功，再試一次')});return}
+  if(e.target.id==='notifyForm'){e.preventDefault();const n=document.getElementById('nfName').value.trim(),tel=document.getElementById('nfTel').value.trim();if(!n){toast('先填稱呼');return}
+    s.notify=[...(s.notify||[]),{id:Date.now().toString(36),name:n.slice(0,12),tel:tel.slice(0,20)}].slice(0,20);store.set('notify',s.notify);document.getElementById('nfName').value='';document.getElementById('nfTel').value='';render();return}
+  if(e.target.id==='gsForm'){e.preventDefault();s.gq=document.getElementById('gq').value;render();return}
   if(e.target.id==='todoForm'){e.preventDefault();const v=document.getElementById('todoT').value.trim();if(!v)return;
     s.todos=[{id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:v,due:document.getElementById('todoDue').value||'',who:document.getElementById('todoWho').value,done:false,at:Date.now()},...(s.todos||[])].slice(0,200);saveTodos();
     document.getElementById('todoT').value='';document.getElementById('todoDue').value='';toast('已加入待辦');render();return}
   if(e.target.id==='ckForm'){e.preventDefault();saveCheckup();return}
   if(e.target.id==='storeForm'){e.preventDefault();const v=document.getElementById('storeQ').value.trim();s.storeQ=v||'嬰兒用品';document.getElementById('storeQ').blur();render();return}
   if(e.target.id==='homeAsk'){e.preventDefault();const v=document.getElementById('homeQ').value;if(v.trim())ask(v);else{s.learnSeg='ask';go('learn')}return}if(e.target.id==='askForm'){e.preventDefault();const v=document.getElementById('askQ').value;document.getElementById('askQ').blur();ask(v)}});
-view.addEventListener('input',e=>{if(e.target.id==='scanText'){s.scan.text=e.target.value;return}if(e.target.id==='noteQ'){s.noteQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('noteQ');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
+view.addEventListener('input',e=>{if(e.target.id==='gq'){s.gq=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('gq');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='scanText'){s.scan.text=e.target.value;return}if(e.target.id==='noteQ'){s.noteQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('noteQ');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
 
 const sheet=document.getElementById('sheet'),f=document.getElementById('settingsForm');
 let tmpBorn=s.born;
@@ -2578,7 +2734,9 @@ function setMode(b){tmpBorn=b;document.getElementById('modeBorn').setAttribute('
   document.getElementById('dateLabel').textContent=b?'出生日':'預產期'}
 document.getElementById('modeBorn').onclick=()=>setMode(true);
 document.getElementById('modeDue').onclick=()=>setMode(false);
-document.getElementById('openSettings').onclick=()=>{setMode(s.born);document.getElementById('dateInput').value=s.date;document.getElementById('babyName').value=s.baby;sheet.hidden=false};
+document.getElementById('openSearch').onclick=()=>{go('search');setTimeout(()=>{const n=document.getElementById('gq');if(n)n.focus()},50)};
+document.getElementById('sheet').addEventListener('change',e=>{const t=e.target;if(t.dataset&&t.dataset.hc){const k=t.dataset.hc;let hd=(s.homeHide||[]).filter(x=>x!==k);if(!t.checked)hd.push(k);s.homeHide=hd;store.set('homeHide',hd);render()}});
+document.getElementById('openSettings').onclick=()=>{document.getElementById('homeCards').innerHTML=homeCardsBox();setMode(s.born);document.getElementById('dateInput').value=s.date;document.getElementById('babyName').value=s.baby;sheet.hidden=false};
 document.getElementById('openLevel').onclick=()=>go('level');
 document.getElementById('lvup').addEventListener('click',e=>{if(e.target.id==='lvClose'||e.target.id==='lvup'){document.getElementById('lvup').hidden=true}});
 setTimeout(()=>{lvReady=true},3000);
@@ -2685,18 +2843,15 @@ const _render=render;render=function(){_render();babyTabLabel()};
 view.addEventListener('click',e=>{if(e.target.closest('[data-opensettings]'))document.getElementById('openSettings').click()});
 document.getElementById('openSettings').addEventListener('click',()=>{document.getElementById('apiKey').value=store.get('apiKey','')});
 f.addEventListener('submit',()=>{store.set('apiKey',document.getElementById('apiKey').value.trim());document.getElementById('welcomeNote').hidden=true;setupAsk();render()});
-document.getElementById('exportData').addEventListener('click',()=>{
-  const out={app:'good-dad',exportedAt:new Date().toISOString(),data:{}};
-  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('gd_')&&k!=='gd_apiKey')out.data[k]=localStorage.getItem(k)}}catch(_){}
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(out)],{type:'application/json'}));
-  a.download='好爸爸備份-'+todayStr().replace(/-/g,'')+'.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);toast('已匯出備份');
-});
-document.getElementById('importFile').addEventListener('change',async e=>{
-  const file=e.target.files[0];if(!file)return;
-  try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
-  catch(_){toast('這個檔案不是好爸爸的備份')}
-});
-const APP_VERSION='v29';
+function bkMake(){const out={app:'good-dad',exportedAt:new Date().toISOString(),data:{}};try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k.startsWith('gd_')&&k!=='gd_apiKey')out.data[k]=localStorage.getItem(k)}}catch(_){}return JSON.stringify(out)}
+function bkRestore(txt){try{const j=JSON.parse(txt);if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('還原完成，重新整理中');setTimeout(()=>location.reload(),600)}catch(_){toast('這不是好爸爸的備份')}}
+document.getElementById('bkShare').addEventListener('click',async()=>{const name='好爸爸備份-'+todayStr().replace(/-/g,'')+'.json',txt=bkMake();
+  try{const f=new File([txt],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'好爸爸備份'});return}}catch(e){if(e&&e.name==='AbortError')return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/json'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);toast('已匯出備份')});
+document.getElementById('bkCopy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(bkMake());toast('已複製備份碼，貼到記事本或 LINE 存起來')}catch(_){toast('這支手機不讓複製，改用「分享備份檔」')}});
+document.getElementById('bkImport').addEventListener('click',()=>{const v=document.getElementById('bkPaste').value.trim();if(!v){toast('先貼上備份碼');return}bkRestore(v)});
+document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;bkRestore(await file.text());e.target.value=''});
+const APP_VERSION='v30';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
@@ -2718,7 +2873,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes','contractions','notify','blog','homeHide'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
@@ -2745,7 +2900,7 @@ async function pushNow(keys){
 function reloadState(){
   s.born=store.get('born',true);s.date=store.get('date',todayStr());s.baby=store.get('baby','寶寶');
   s.tasks=store.get('tasks',{});s.bought=store.get('bought',{});s.fav=store.get('fav',{});
-  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.todos=store.get('todos',[]);s.notes=store.get('notes',[]);s.growth=store.get('growth',[]);
+  s.checkins=store.get('checkins',[]);s.quests=store.get('quests',{});s.momlog=store.get('momlog',[]);s.games=store.get('games',[]);s.gameSeen=store.get('gameSeen',[]);s.todos=store.get('todos',[]);s.notes=store.get('notes',[]);s.contractions=store.get('contractions',[]);s.notify=store.get('notify',[]);s.blog=store.get('blog',[]);s.homeHide=store.get('homeHide',[]);s.growth=store.get('growth',[]);
   s.wife=store.get('wife',null);s.askHist=store.get('askHist',[]);s.myThreads=store.get('myThreads',[]);
   s.feed.threads=mergeThreads(feedRaw);s.isDemo=false;
 }
