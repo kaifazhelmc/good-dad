@@ -153,6 +153,19 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .shop .buy{appearance:none;-webkit-appearance:none;width:24px;height:24px;border-radius:50%;border:2px solid var(--line);margin:0;cursor:pointer;flex:none;display:grid;place-items:center;background:var(--surface)}
 .shop .buy:checked{background:var(--mint-d);border-color:var(--mint-d)}
 .shop .buy:checked::after{content:"";width:9px;height:5px;border:solid #fff;border-width:0 0 2px 2px;transform:translateY(-1px) rotate(-45deg)}
+.cknext{background:linear-gradient(140deg,#DFEEFF,#ECE5FF)}
+.cknext .n{font-family:var(--font-display);font-size:40px;line-height:1.1}
+.ckwhen{font-size:17px}
+.ckprep{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 2px}
+.ckprep span{font-size:12px;font-weight:700;background:rgba(255,255,255,.75);border-radius:999px;padding:4px 10px}
+.cktile{border:0;text-align:left;flex-direction:row;align-items:center;gap:12px;background:linear-gradient(140deg,#3C8CF0,#6C7BFF 60%,#A774FF);color:#fff}
+.cktile .k{color:rgba(255,255,255,.85)}.cktile b{display:block;font-size:16px;margin-top:2px}.cktile small{display:block;font-size:12px;opacity:.9}.cktile .momprog{color:#fff}
+.ckday{flex:none;width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ckday b{font-family:var(--font-display);font-weight:400;font-size:28px;margin:0}.ckday small{font-size:11px;margin-top:2px}
+.store{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--bg)}
+.store b{font-size:15px}
+.store small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
+.store .spill{font-size:11px;vertical-align:1px}
 .shopee{font-size:13px;font-weight:700;background:var(--coral);color:#fff;border-radius:999px;padding:5px 11px;text-decoration:none;white-space:nowrap}
 
 .search{width:100%;box-sizing:border-box;border:0;background:var(--surface);color:var(--ink);border-radius:999px;padding:13px 18px;font:inherit;box-shadow:0 2px 10px rgba(60,30,90,.06)}
@@ -882,7 +895,7 @@ let s={born:store.get('born',true),date:store.get('date',todayStr()),baby:store.
   isDemo:false,tasks:store.get('tasks',{}),bought:store.get('bought',{}),fav:store.get('fav',{}),
   tab:store.get('tab','today'),selStage:null,shopFilter:'now',knowCat:'全部',knowQ:'',lineTag:'全部',
   momlog:store.get('momlog',[]),games:store.get('games',[]),gameSeen:store.get('gameSeen',[]),game:null,clsInfo:null,checkins:store.get('checkins',[]),quests:store.get('quests',{}),abuSeg:'grow',weekSel:null,methodCat:'全部',wife:null,wifeState:'loading',wifeEdit:false,refresh:'idle',refreshMsg:'',growth:[],growthState:'loading',delArm:null,
-  learnSeg:'ask',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
+  learnSeg:'ask',ckEdit:false,srcSeg:'threads',storeQ:'',learnStage:null,wifeSeg:'care',askQ:'',ask:{q:'',text:'',status:'idle',err:''},askHist:store.get('askHist',[]),feed:{threads:[],videos:[],meta:null,state:'loading'}};
 if(s.tab==='know')s.tab='learn';
 
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -961,6 +974,45 @@ function postedAt(url){ // Threads 貼文代碼裡藏著發文時間
 function fmtPosted(ms){if(!ms)return '';const d=new Date(ms),p=x=>String(x).padStart(2,'0');
   const days=Math.floor((Date.now()-ms)/864e5);const rel=days<1?'今天':days<7?days+' 天前':'';
   return `${d.getFullYear()}/${p(d.getMonth()+1)}/${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}${rel?'・'+rel:''}`}
+// ---------- 推薦商店與 Dcard ----------
+const mapq=k=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(k);
+const momo=k=>'https://www.momoshop.com.tw/search/searchShop.jsp?keyword='+encodeURIComponent(k);
+const pchome=k=>'https://24h.pchome.com.tw/search/?q='+encodeURIComponent(k);
+const dcardq=k=>'https://www.dcard.tw/search?query='+encodeURIComponent(k);
+const STORES=[
+ ['大樹藥局','藥局・婦嬰區','連鎖藥局，多數門市有奶粉、尿布、哺乳用品專區，也能順便問藥師。','大樹藥局'],
+ ['丁丁藥局','藥局・婦嬰區','連鎖藥局，婦嬰用品和孕期保健品選擇多。','丁丁藥局'],
+ ['麗嬰房','嬰童服飾與用品','老字號嬰童品牌，新生兒衣服、包巾、彌月禮盒都找得到。','麗嬰房'],
+ ['卡多摩','婦嬰用品專賣','推車、汽座、餐椅這類大件可以到現場試推、試裝。','卡多摩 嬰童館'],
+ ['安琪兒','婦嬰用品專賣','奶粉、尿布、寢具等日常用品可以一次買齊。','安琪兒 婦嬰用品'],
+ ['西松屋','日系平價嬰童用品','日本嬰童用品連鎖，2026 年 3 月在台南三井 Outlet 開出台灣首店，主打平價一站購足。','西松屋 台南'],
+ ['六甲村','孕產婦用品','孕婦裝、哺乳內衣、托腹帶等孕期與產後用品。','六甲村'],
+ ['Costco 好市多','量販囤貨','尿布、濕紙巾、洗衣精大包裝，適合確定好品牌後囤貨。','Costco 好市多']
+];
+const SHOPS_ON=[['蝦皮購物','比價、找小東西',shopee],['momo 購物網','品牌旗艦、到貨快',momo],['PChome 24h','急用時 24 小時到貨',pchome]];
+const DCARD_SEED=[
+ {url:'https://www.dcard.tw/f/parentchild/p/259986043',stage:'pre',summary:'整理剖腹產和自然產各自要帶的待產包，還有產前產後該辦的事。',why:'照著清單跟老婆一起把待產包打包好。'},
+ {url:'https://www.dcard.tw/f/parentchild/p/257776647',stage:'pre',summary:'從懷孕到生產前的總花費和購買清單，一次列出來。',why:'先抓好預算，分清楚哪些現在買、哪些之後再買。'},
+ {url:'https://www.dcard.tw/f/parentchild/p/261839397',stage:'pre',summary:'老婆懷孕 34 週，老公下班後寫了一個 App 來支援她。',why:'看看別的爸爸怎麼用自己的方式當靠山。'},
+ {url:'https://www.dcard.tw/f/parentchild/p/255362228',stage:'pre',summary:'第一次懷孕到自然產的完整紀錄（上集）。',why:'先了解產程，陪產時比較不會慌。'},
+ {url:'https://www.dcard.tw/f/parentchild/p/261172290',stage:'pre',summary:'月子中心開箱，特別看大寶能不能一起入住。',why:'參觀月子中心時可以照這些重點問。'},
+ {url:'https://www.dcard.tw/f/parentchild/p/261516575',stage:'n0',summary:'同一間月子中心住完出關後的心得。',why:'看住過的人覺得哪些值得、哪些可以省。'},
+ {url:'https://www.dcard.tw/f/parentchild/p/257926697',stage:'n0',summary:'第一胎在台北中正區月子中心的入住體驗。',why:'住月子中心期間，想想爸爸怎麼陪、怎麼分工。'}
+];
+const DC_BOARD={parentchild:'親子板',relationship:'感情板',marriage:'結婚板',mood:'心情板'};
+function dcardList(){const seen=new Set(),out=[];for(const t of [...((s.feed&&s.feed.dcard)||[]),...DCARD_SEED]){if(!t||!t.url||seen.has(t.url))continue;seen.add(t.url);out.push(t)}return out}
+function dcardCard(t){const st=stageOf(t.stage),b=(String(t.url).match(/\/f\/([a-z0-9_]+)/)||[])[1];
+  return `<a class="tcard" href="${esc(t.url)}" target="_blank" rel="noopener"><span class="who"><span class="avatar" style="background:#006AA6">D</span>
+   <span><b>Dcard・${esc(DC_BOARD[b]||b||'')}</b><small>${esc(st.title)}</small></span></span><p>${esc(t.summary)}</p>${t.why?`<span class="why2"><span class="lbl" style="background:var(--lemon-d)">爸爸看點</span>${esc(t.why)}</span>`:''}<span class="go">到 Dcard 看原文 →</span></a>`}
+function storesHTML(){
+  const q=s.storeQ||'嬰兒用品';
+  return `<section class="tile span2"><h2>推薦商店</h2><p class="note">育嬰和孕產用品可以到這些地方買。大件先去門市試，消耗品再上網比價。</p>
+   <p class="k" style="margin-top:6px">實體門市</p><div class="tasks">${STORES.map(([n,tag,d,mq])=>`<div class="store"><div style="flex:1;min-width:0"><b>${esc(n)}</b> <span class="spill info">${esc(tag)}</span><small>${esc(d)}</small></div><a class="shopee" style="background:var(--ink)" href="${mapq(mq)}" target="_blank" rel="noopener">找門市</a></div>`).join('')}</div>
+   <p class="k" style="margin-top:10px">網路商店</p>
+   <form id="storeForm" class="row" style="flex-wrap:nowrap"><input class="search" id="storeQ" type="search" enterkeyhint="search" value="${esc(q)}" placeholder="想買什麼？例如：吸乳器" aria-label="要搜尋的商品" style="flex:1;min-width:0"><button class="btn coral sm" type="submit">換關鍵字</button></form>
+   <div class="tasks">${SHOPS_ON.map(([n,d,f])=>`<div class="store"><div style="flex:1;min-width:0"><b>${esc(n)}</b><small>${esc(d)}</small></div><a class="shopee" href="${f(q)}" target="_blank" rel="noopener">搜「${esc(q.length>6?q.slice(0,6)+'…':q)}」</a></div>`).join('')}</div>
+   <p class="note">門市資訊和營業時間以各店官方公告為準。</p></section>`;
+}
 function threadCard(t){const st=stageOf(t.stage);const h=String(t.author||'').replace(/^@/,'');
   return `<a class="tcard" href="${esc(t.url)}" target="_blank" rel="noopener"><span class="who"><span class="avatar" style="background:${dcol(st.color)}">${esc((h[0]||'T').toUpperCase())}</span>
    <span><b>@${esc(h)}</b><small>${esc(st.title)}${postedAt(t.url)?'・發文 '+fmtPosted(postedAt(t.url)):''}</small></span></span><p>${esc(t.summary)}</p>${t.why?`<span class="why2"><span class="lbl" style="background:var(--lemon-d)">爸爸看點</span>${esc(t.why)}</span>`:''}<span class="go">到 Threads 看原文 →</span></a>`}
@@ -1014,7 +1066,7 @@ function methodsHTML(){
 // ---------- 老婆資料 ----------
 const WIFE_FIELDS=[
  ['基本',[['name','名字或暱稱','text'],['birthday','生日','date'],['anniversary','結婚紀念日','date'],['metday','認識紀念日','date'],['blood','血型','text']]],
- ['產檢與醫療',[['hospital','產檢醫院','text'],['doctor','醫師','text'],['hospitalPhone','醫院電話','tel'],['nextCheckup','下次產檢日期','date'],['checkupNote','下次產檢要做什麼','text'],['preWeight','孕前體重（kg）','number'],['allergies','過敏或不能吃的東西','text']]],
+ ['產檢與醫療',[['hospital','產檢醫院','text'],['doctor','醫師','text'],['hospitalPhone','醫院電話','tel'],['nextCheckup','下次產檢日期','date'],['checkupTime','下次產檢時間','time'],['checkupNote','下次產檢要做什麼','text'],['preWeight','孕前體重（kg）','number'],['allergies','過敏或不能吃的東西','text']]],
  ['她的喜好',[['foodLikes','最近想吃、愛吃的','text'],['foodAvoid','不喜歡或聞了會不舒服的','text'],['favorites','喜歡的店、花、顏色','text'],['sizes','衣服、鞋子尺寸','text']]],
  ['緊急聯絡',[['emergency','緊急聯絡人與電話','text']]]
 ];
@@ -1803,11 +1855,11 @@ const V={
   const [dn,tot]=stageDone(st.id);
   const soon=SHOP.map((x,k)=>({x,k})).filter(o=>(o.x[0]===st.id||(nx&&o.x[0]===nx.id))&&!s.bought[o.k]).slice(0,4);
   const mk=MOM[momKey(st.id)],md=mk.care.filter((_,j)=>s.tasks['mom-'+mk.key+'-'+j]).length;
-  return `<div class="bento">`+heroHTML()+momAlertTile()+checkinTile()+questTile()+gameTile()+
+  return `<div class="bento">`+heroHTML()+momAlertTile()+checkupTile()+checkinTile()+questTile()+gameTile()+
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
   (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
-    const items=[nc!=null&&nc>=0&&nc<=30?`下次產檢 ${nc===0?'就是今天':nc+' 天後'}`:null,bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null,mt!=null&&mt<=30?`認識紀念日 ${mt===0?'就是今天':mt+' 天後'}`:null].filter(Boolean);
+    const items=[nc!=null&&nc>7&&nc<=30?`下次產檢 ${nc===0?'就是今天':nc+' 天後'}`:null,bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null,mt!=null&&mt<=30?`認識紀念日 ${mt===0?'就是今天':mt+' 天後'}`:null].filter(Boolean);
     return items.length?`<button type="button" class="tile t-lemon span2 momlink" data-gowife="info"><span><span class="k">別忘了</span><b>${items.join('・')}</b></span><span class="momprog">›</span></button>`:''})()+
   (()=>{const w=WEEKS[weekIdx()];return `<button type="button" class="tile t-sky span2 momlink" data-goweek="1"><span><span class="k">這週的${esc(s.baby)}・${esc(w.label)}</span><b>${esc(w.baby)}</b></span><span class="momprog">›</span></button>`})()+
   `<button type="button" class="tile t-rose span2 momlink abulink" data-gowife="care"><span class="mini-abu">${momSVG(momPose(st.id))}</span><span style="flex:1;min-width:0"><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`+
@@ -1855,11 +1907,12 @@ const V={
    <section class="tile span2"><h2>${esc(cur.title)}待辦</h2>${taskRows(cur.id,0)}</section>
    <section class="tile span2"><h2>購物清單</h2><div class="tabs-mini" role="group" aria-label="篩選">${filters.map(f=>`<button type="button" class="chip" style="background:var(--bg)" data-shopf="${f[0]}" aria-pressed="${s.shopFilter===f[0]}">${f[1]}</button>`).join('')}</div>
     <div class="tasks">${items.length?items.map(o=>shopRow(o.x,o.k)).join(''):'<p class="note">都買齊了。</p>'}</div>
-    <p class="note">價格為參考區間。點「蝦皮」開啟搜尋結果，買好了按右邊圓圈。</p></section></div>`;
+    <p class="note">價格為參考區間。點「蝦皮」開啟搜尋結果，買好了按右邊圓圈。</p></section>
+   ${storesHTML()}</div>`;
  },
  learn(){
   const cur=STAGES[stageIdx(age())],sid=s.learnStage===null?cur.id:s.learnStage;
-  const segs=[['ask','攻略'],['video','影片'],['threads','Threads'],['read','文章']];
+  const segs=[['ask','攻略'],['video','影片'],['threads','社群'],['read','文章']];
   if(s.learnSeg==='ask')return `<div class="segtabs" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="學習分類">${segs.map(([k,n])=>`<button type="button" data-learn="${k}" aria-pressed="${s.learnSeg===k}">${n}</button>`).join('')}</div>`+askHTML(cur);
   const stageChips=`<div class="tabs-mini" role="group" aria-label="階段">${[['all','全部階段'],...STAGES.map(x=>[x.id,x.short])].map(([id,n])=>`<button type="button" class="chip" data-lstage="${id}" aria-pressed="${sid===id}">${n}${id===cur.id?'・現在':''}</button>`).join('')}</div>`;
   const head=`<div class="segtabs" style="grid-template-columns:repeat(4,1fr)" role="group" aria-label="學習分類">${segs.map(([k,n])=>`<button type="button" data-learn="${k}" aria-pressed="${s.learnSeg===k}">${n}</button>`).join('')}</div>`;
@@ -1873,7 +1926,12 @@ const V={
   }
   if(s.learnSeg==='threads'){
     const ts=feedFor('threads',filt);const kw=(stageOf(filt||cur.id)).kw;
-    return head+stageChips+`<div class="row between">${updatedLine()}</div>
+    const srcTabs=`<div class="tabs-mini" role="group" aria-label="來源">${[['threads','Threads'],['dcard','Dcard']].map(([k,n])=>`<button type="button" class="chip" data-src="${k}" aria-pressed="${(s.srcSeg||'threads')===k}">${n}</button>`).join('')}</div>`;
+    if(s.srcSeg==='dcard'){const ds=dcardList().filter(t=>!filt||t.stage===filt);
+      return head+srcTabs+stageChips+(ds.length?`<div class="feed">${ds.map(dcardCard).join('')}</div>`:'<section class="tile"><p class="note">這個階段還沒有 Dcard 精選，下次更新會補上。</p></section>')+`
+     <section class="tile t-ink"><p class="k">自己逛逛</p><div class="row"><a class="btn coral" href="${dcardq(kw)}" target="_blank" rel="noopener">Dcard 搜尋「${esc(kw)}」</a><a class="btn ghost" style="color:var(--bg);background:rgba(255,255,255,.12)" href="https://www.dcard.tw/f/parentchild" target="_blank" rel="noopener">Dcard 親子板</a></div></section>
+     <p class="note">精選只放摘要，點進去看原文。網友經驗僅供參考。</p>`}
+    return head+srcTabs+stageChips+`<div class="row between">${updatedLine()}</div>
      ${ts.length?`<div class="feed">${ts.map(threadCard).join('')}</div>`:(s.feed.state==='loading'?'':'<section class="tile"><p class="note">這個階段還沒有精選貼文，下次更新會補上。</p></section>')}
      <section class="tile"><p class="k">想看最新的？</p>${refreshBtn(false)}</section>
      <section class="tile t-ink"><p class="k">自己逛逛</p><div class="row"><a class="btn coral" href="${threads(kw)}" target="_blank" rel="noopener">Threads 搜尋「${esc(kw)}」</a><a class="btn ghost" style="color:var(--bg);background:rgba(255,255,255,.12)" href="${threads('新手爸爸')}" target="_blank" rel="noopener">#新手爸爸</a></div></section>
@@ -1989,6 +2047,43 @@ function miniChart(rows,series,refs,unit){
    <text x="${L}" y="${H-6}" font-size="10" fill="var(--muted)">${md(pts[0].date)}</text><text x="${W-R}" y="${H-6}" text-anchor="end" font-size="10" fill="var(--muted)">${md(pts.at(-1).date)}</text></svg>
    <p class="note">${series.map(sr=>`<span style="color:${sr.c};font-weight:900">●</span> ${sr.n}`).join('　')}${unit?'（'+unit+'）':''}</p>`;
 }
+// ---------- 下次產檢 ----------
+function ckWhen(w){if(!w||!w.nextCheckup)return '';const d=new Date(w.nextCheckup+'T00:00');return `${d.getMonth()+1}/${d.getDate()}（${'日一二三四五六'[d.getDay()]}）${w.checkupTime?' '+w.checkupTime:''}`}
+function ckICS(w){
+  const d=w.nextCheckup.replace(/-/g,''),t=(w.checkupTime||'').replace(':',''),stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+  const end=t?(()=>{const [hh,mm]=w.checkupTime.split(':').map(Number),m=hh*60+mm+60;return d+'T'+String(Math.floor(m/60)%24).padStart(2,'0')+String(m%60).padStart(2,'0')+'00'})():'';
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//good-dad//checkup//ZH','BEGIN:VEVENT','UID:ck-'+d+'@good-dad','DTSTAMP:'+stamp,
+    t?'DTSTART;TZID=Asia/Taipei:'+d+'T'+t+'00':'DTSTART;VALUE=DATE:'+d, t?'DTEND;TZID=Asia/Taipei:'+end:'',
+    'SUMMARY:陪老婆產檢'+(w.hospital?'（'+w.hospital+'）':''),w.hospital?'LOCATION:'+w.hospital:'',
+    'DESCRIPTION:'+('記得帶媽媽手冊和健保卡。'+(w.checkupNote?'這次要做：'+w.checkupNote:'')).replace(/[,;]/g,' '),
+    'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:明天要陪老婆產檢','TRIGGER:-P1D','END:VALARM',
+    t?'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:兩小時後產檢，準備出門\r\nTRIGGER:-PT2H\r\nEND:VALARM':'',
+    'END:VEVENT','END:VCALENDAR'].filter(Boolean);
+  return 'data:text/calendar;charset=utf-8,'+encodeURIComponent(L.join('\r\n'));
+}
+function checkupHTML(){
+  const w=s.wife||{},nc=daysUntil(w.nextCheckup,false),has=nc!=null&&nc>=0,edit=s.ckEdit||!has;
+  const big=has?(nc===0?'就是今天':nc===1?'明天':nc+' 天後'):'';
+  const form=`<form id="ckForm" class="growform">
+     <div class="gf"><label for="ckDate">日期</label><input id="ckDate" type="date" value="${esc(has?w.nextCheckup:'')}" required></div>
+     <div class="gf"><label for="ckTime">時間</label><input id="ckTime" type="time" value="${esc(w.checkupTime||'')}"></div>
+     <div class="gf" style="grid-column:span 2"><label for="ckPlace">醫院</label><input id="ckPlace" type="text" maxlength="40" value="${esc(w.hospital||'')}" placeholder="例如：台大醫院婦產科"></div>
+     <div class="gf" style="grid-column:span 2"><label for="ckNote">這次要做什麼</label><input id="ckNote" type="text" maxlength="80" value="${esc(has?w.checkupNote||'':'')}" placeholder="例如：超音波、抽血、問醫師腰痛"></div>
+     <div class="row" style="grid-column:span 2"><button class="btn coral" type="submit">儲存下次產檢</button>${has?'<button class="btn light" type="button" data-ckact="cancel">取消</button>':''}</div></form>`;
+  if(edit)return `<section class="tile span2" id="ckCard"><p class="k">下次產檢</p><h2>${has?'修改下次產檢':nc!=null&&nc<0?'上次產檢日過了，填下一次吧':'記下下次產檢日'}</h2>${form}
+    <p class="note">存好之後，前 7 天首頁會倒數提醒；也可以加進手機行事曆，前一天和兩小時前會響。</p></section>`;
+  return `<section class="tile span2 cknext" id="ckCard"><div class="row between"><p class="k">下次產檢</p><button type="button" class="glasschip" style="border:0" data-ckact="edit">修改</button></div>
+    <span class="n">${big}</span><b class="ckwhen">${esc(ckWhen(w))}</b>${w.hospital?`<p class="note" style="margin:0">${esc(w.hospital)}</p>`:''}${w.checkupNote?`<p style="margin:4px 0 0">這次要做：${esc(w.checkupNote)}</p>`:''}
+    <div class="ckprep"><span>帶媽媽手冊</span><span>帶健保卡</span><span>寫下想問醫師的問題</span><span>空腹與否照醫院指示</span></div>
+    <div class="row"><a class="btn coral" href="${ckICS(w)}" download="產檢提醒.ics">加入手機行事曆</a>${nc===0?'<button class="btn light" type="button" data-ckact="done">產檢完了，記一筆</button>':''}</div></section>`;
+}
+function checkupTile(){const w=s.wife||{},nc=daysUntil(w.nextCheckup,false);if(nc==null||nc<0||nc>7)return '';
+  return `<button type="button" class="tile span2 cktile" data-gowife="log"><span class="ckday"><b>${nc===0?'今天':nc}</b>${nc===0?'':'<small>天後</small>'}</span><span style="flex:1;min-width:0"><span class="k">${nc===0?'今天要產檢':nc===1?'明天要產檢':'產檢倒數'}</span><b>${esc(ckWhen(w))}${w.hospital?'・'+esc(w.hospital):''}</b><small>${w.checkupNote?esc(w.checkupNote):'記得陪她去，帶媽媽手冊和健保卡'}</small></span><span class="momprog">›</span></button>`}
+async function saveCheckup(){if(!DB)return;
+  const w=Object.assign({},s.wife||{}),v=id=>document.getElementById(id).value.trim();
+  w.nextCheckup=v('ckDate');w.checkupTime=v('ckTime');w.checkupNote=v('ckNote');const pl=v('ckPlace');if(pl)w.hospital=pl;
+  Object.keys(w).forEach(k=>{if(w[k]==='')delete w[k]});w.updatedAt=new Date().toISOString();
+  try{await DB.doc('profile/wife').set(w);s.ckEdit=false;toast('已記下，前 7 天首頁會提醒');render()}catch(_){toast('沒存成功，再試一次')}}
 function momAlertTile(){const r=momLogSorted().find(x=>x.sys>0||x.dia>0);if(!r)return '';const b=bpStatus(r.sys,r.dia);if(!b||(b.lv!=='warn'&&b.lv!=='crit'))return '';
   if(dayDiff(r.date,todayStr())>3)return '';
   return `<button type="button" class="warnlist span2" data-gowife="log" style="border:0;text-align:left;color:var(--ink)"><h2 style="font-family:var(--font-display);font-weight:400;font-size:18px;margin:0">她的血壓${b.t}（${r.sys||'–'}/${r.dia||'–'}）</h2><p style="margin:0">${b.lv==='crit'?'請立即就醫或打 119。':'請盡快打給產檢醫院。'}點這裡看說明。</p></button>`}
@@ -2008,6 +2103,7 @@ function momLogHTML(){
    ${warn?`<section class="warnlist span2"><h2 style="font-family:var(--font-display);font-weight:400;font-size:19px;margin:0">血壓${bp.t}，請留意</h2>
      <p style="margin:0">${bp.lv==='crit'?'血壓 160/110 以上，請立即帶她就醫或打 119。':'血壓 140/90 以上，請盡快打給產檢醫院，照醫師指示處理。休息 5 分鐘後可以再量一次確認。'}</p>
      <p style="margin:0">如果同時有<b>劇烈頭痛、視力模糊、上腹痛、臉或手突然很腫、呼吸困難</b>，不要等，直接就醫。</p></section>`:''}
+   ${checkupHTML()}
    <section class="tile span2"><h2>記一筆</h2>
     <form id="momLogForm" class="growform">
      <div class="gf" style="grid-column:span 2"><label for="mDate">日期${!s.born?'（會自動算孕週）':''}</label><input id="mDate" type="date" value="${today}" required></div>
@@ -2117,7 +2213,7 @@ function threadsSection(a){
   const kws=askKeywords(a),hits=threadHits(a.q,kws);
   return `<section class="tile t-ink"><p class="k">THREADS 上的相關討論</p>
    ${hits.length?`<div class="feed">${hits.map(threadCard).join('')}</div>`:`<p style="margin:0">精選裡還沒有這個主題的貼文，直接到 Threads 看大家怎麼說：</p>`}
-   <div class="row">${kws.map(k=>`<a class="btn coral sm" href="${threads(k)}" target="_blank" rel="noopener">Threads 搜「${esc(k)}」</a>`).join('')}</div>
+   <div class="row">${kws.map(k=>`<a class="btn coral sm" href="${threads(k)}" target="_blank" rel="noopener">Threads 搜「${esc(k)}」</a>`).join('')}${kws.slice(0,2).map(k=>`<a class="btn sm" style="background:#006AA6;color:#fff" href="${dcardq(k)}" target="_blank" rel="noopener">Dcard 搜「${esc(k)}」</a>`).join('')}</div>
    ${a.status==='streaming'&&!/搜尋關鍵字/.test(a.text)?'<p class="note" style="color:inherit;opacity:.7">回答完成後會補上更準的關鍵字</p>':''}</section>`;
 }
 function localHits(q){
@@ -2199,7 +2295,7 @@ function confetti(el){
 }
 view.addEventListener('click',e=>{
   if(e.target.closest('#askStop')){askCtl&&askCtl.abort();return}
-  const el=e.target.closest('[data-copy],[data-go],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
+  const el=e.target.closest('[data-copy],[data-go],[data-ckact],[data-src],[data-stage],[data-shopf],[data-kcat],[data-ltag],[data-fav],[data-learn],[data-lstage],[data-wseg],[data-askq],[data-hist],[data-gowife],[data-aseg],[data-goabu],[data-gdel],[data-mdel],[data-goweek],[data-week],[data-mcat],[data-wedit],[data-refresh],[data-golevel],[data-checkin],[data-gstart],[data-gans],[data-gskill],[data-gnext],[data-gquit],[data-clsinfo],[data-qact],[data-lvdemo]');if(!el)return;
   if(el.dataset.wseg){s.wifeSeg=el.dataset.wseg;render();return}
   if(el.dataset.aseg){s.abuSeg=el.dataset.aseg;render();return}
   if(el.dataset.goweek){s.abuSeg='weeks';s.weekSel=null;go('timeline');return}
@@ -2224,6 +2320,8 @@ view.addEventListener('click',e=>{
   if(el.dataset.gowife){s.wifeSeg=el.dataset.gowife;go('lines');return}
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
+  if(el.dataset.ckact){const a=el.dataset.ckact;if(a==='edit'){s.ckEdit=true;render()}else if(a==='cancel'){s.ckEdit=false;render()}else if(a==='done'){s.ckEdit=true;render();const f=document.getElementById('momLogForm');if(f)f.scrollIntoView({behavior:'smooth',block:'start'})}return}
+  if(el.dataset.src){s.srcSeg=el.dataset.src;render();return}
   if(el.dataset.learn){s.learnSeg=el.dataset.learn;if(s.tab!=='learn')go('learn');else render();return}
   if(el.dataset.lstage){s.learnStage=el.dataset.lstage;render();return}
   if(el.dataset.copy!==undefined){const txt=el.dataset.copy;
@@ -2252,6 +2350,8 @@ view.addEventListener('submit',e=>{
     const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
     const rec={date,weight:Math.round(w*100)/100,note:n,addedAt:new Date().toISOString()};if(h>0)rec.height=Math.round(h*10)/10;
     DB.collection('growth').add(rec).then(()=>{toast('記下來了');confetti(btn);['gW','gH','gN'].forEach(id=>{const x=document.getElementById(id);if(x)x.value=''});const b2=document.querySelector('#growForm button[type=submit]');if(b2)b2.disabled=false},err=>{btn.disabled=false;toast(err&&err.code==='quota_exceeded'?'紀錄已滿':'沒存成功，再試一次')});return}
+  if(e.target.id==='ckForm'){e.preventDefault();saveCheckup();return}
+  if(e.target.id==='storeForm'){e.preventDefault();const v=document.getElementById('storeQ').value.trim();s.storeQ=v||'嬰兒用品';document.getElementById('storeQ').blur();render();return}
   if(e.target.id==='homeAsk'){e.preventDefault();const v=document.getElementById('homeQ').value;if(v.trim())ask(v);else{s.learnSeg='ask';go('learn')}return}if(e.target.id==='askForm'){e.preventDefault();const v=document.getElementById('askQ').value;document.getElementById('askQ').blur();ask(v)}});
 view.addEventListener('input',e=>{if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
 
@@ -2297,7 +2397,7 @@ async function loadFeed(bust){
   try{
     const r=await fetch('feed.json'+(bust?'?t='+Date.now():''),{cache:bust?'no-store':'default'});if(!r.ok)throw 0;
     const j=await r.json(),before=s.feed.threads.length+s.feed.videos.length;
-    feedRaw=j.threads||[];s.feed.threads=mergeThreads(feedRaw);s.feed.videos=j.videos||[];s.feed.meta={updatedAt:j.updatedAt};s.feed.state='ok';
+    feedRaw=j.threads||[];s.feed.threads=mergeThreads(feedRaw);s.feed.videos=j.videos||[];s.feed.dcard=j.dcard||[];s.feed.meta={updatedAt:j.updatedAt};s.feed.state='ok';
     return before?(s.feed.threads.length+s.feed.videos.length)-before:0;
   }catch(_){s.feed.threads=mergeThreads(feedRaw);if(!s.feed.threads.length)s.feed.state='off';return null}
 }
@@ -2379,7 +2479,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v19';
+const APP_VERSION='v20';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
