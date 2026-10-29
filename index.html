@@ -2051,18 +2051,19 @@ function miniChart(rows,series,refs,unit){
 }
 // ---------- 下次產檢 ----------
 function ckWhen(w){if(!w||!w.nextCheckup)return '';const d=new Date(w.nextCheckup+'T00:00');return `${d.getMonth()+1}/${d.getDate()}（${'日一二三四五六'[d.getDay()]}）${w.checkupTime?' '+w.checkupTime:''}`}
-function ckICS(w){
-  const d=w.nextCheckup.replace(/-/g,''),t=(w.checkupTime||'').replace(':',''),stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
-  const end=t?(()=>{const [hh,mm]=w.checkupTime.split(':').map(Number),m=hh*60+mm+60;return d+'T'+String(Math.floor(m/60)%24).padStart(2,'0')+String(m%60).padStart(2,'0')+'00'})():'';
-  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//good-dad//checkup//ZH','BEGIN:VEVENT','UID:ck-'+d+'@good-dad','DTSTAMP:'+stamp,
-    t?'DTSTART;TZID=Asia/Taipei:'+d+'T'+t+'00':'DTSTART;VALUE=DATE:'+d, t?'DTEND;TZID=Asia/Taipei:'+end:'',
-    'SUMMARY:陪老婆產檢'+(w.hospital?'（'+w.hospital+'）':''),w.hospital?'LOCATION:'+w.hospital:'',
-    'DESCRIPTION:'+('記得帶媽媽手冊和健保卡。'+(w.checkupNote?'這次要做：'+w.checkupNote:'')).replace(/[,;]/g,' '),
-    'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:明天要陪老婆產檢','TRIGGER:-P1D','END:VALARM',
-    t?'BEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:兩小時後產檢，準備出門\r\nTRIGGER:-PT2H\r\nEND:VALARM':'',
-    'END:VEVENT','END:VCALENDAR'].filter(Boolean);
-  return 'data:text/calendar;charset=utf-8,'+encodeURIComponent(L.join('\r\n'));
-}
+function ckTimes(w){const d=w.nextCheckup,t=w.checkupTime||'09:00',[hh,mm]=t.split(':').map(Number),m=hh*60+mm+60,p=x=>String(x).padStart(2,'0');
+  return {start:`${d} ${t}`,end:`${d} ${p(Math.floor(m/60)%24)}:${p(m%60)}`,g:`${d.replace(/-/g,'')}T${t.replace(':','')}00/${d.replace(/-/g,'')}T${p(Math.floor(m/60)%24)}${p(m%60)}00`}}
+function ckTitle(w){return '陪老婆產檢'+(w.hospital?'（'+w.hospital+'）':'')}
+function ckNotes(w){return '記得帶媽媽手冊和健保卡。'+(w.checkupNote?'這次要做：'+w.checkupNote:'')}
+function ckGoogle(w){const t=ckTimes(w);return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(ckTitle(w))+'&dates='+t.g+'&ctz=Asia/Taipei&details='+encodeURIComponent(ckNotes(w))+(w.hospital?'&location='+encodeURIComponent(w.hospital):'')}
+const CK_SHORTCUT='好爸爸產檢';
+function ckShortcut(w){const t=ckTimes(w);return 'shortcuts://run-shortcut?name='+encodeURIComponent(CK_SHORTCUT)+'&input=text&text='+encodeURIComponent(JSON.stringify({title:ckTitle(w),start:t.start,end:t.end,place:w.hospital||'',notes:ckNotes(w)}))}
+function ckHelp(){return `<details class="article"><summary>第一次用 iPhone 行事曆：先設定捷徑（約 2 分鐘，只要做一次）</summary>
+  <p>1. 打開 iPhone 的「捷徑」App，點右上角「＋」，把捷徑名稱改成<b>「${CK_SHORTCUT}」</b>（一字不差）。</p>
+  <p>2. 搜尋並加入動作「<b>取得字典</b>」（從輸入取得字典），輸入選「捷徑輸入」。</p>
+  <p>3. 加入動作「<b>取得字典值</b>」，鍵填 <b>title</b>；再加 3 個一樣的動作，鍵分別填 <b>start</b>、<b>end</b>、<b>place</b>。</p>
+  <p>4. 加入動作「<b>加入新行程</b>」：標題選 title 的字典值、開始日期選 start、結束日期選 end、地點選 place；「提醒」設成「1 天前」（想要的話再加「2 小時前」）。</p>
+  <p>5. 按完成。之後在這裡點「加到 iPhone 行事曆」，就會自動跳到捷徑把行程寫進去；第一次執行 iPhone 會問能不能存取行事曆，按允許。</p></details>`}
 function checkupHTML(){
   const w=s.wife||{},nc=daysUntil(w.nextCheckup,false),has=nc!=null&&nc>=0,edit=s.ckEdit||!has;
   const big=has?(nc===0?'就是今天':nc===1?'明天':nc+' 天後'):'';
@@ -2073,11 +2074,11 @@ function checkupHTML(){
      <div class="gf" style="grid-column:span 2"><label for="ckNote">這次要做什麼</label><input id="ckNote" type="text" maxlength="80" value="${esc(has?w.checkupNote||'':'')}" placeholder="例如：超音波、抽血、問醫師腰痛"></div>
      <div class="row" style="grid-column:span 2"><button class="btn coral" type="submit">儲存下次產檢</button>${has?'<button class="btn light" type="button" data-ckact="cancel">取消</button>':''}</div></form>`;
   if(edit)return `<section class="tile span2" id="ckCard"><p class="k">下次產檢</p><h2>${has?'修改下次產檢':nc!=null&&nc<0?'上次產檢日過了，填下一次吧':'記下下次產檢日'}</h2>${form}
-    <p class="note">存好之後，前 7 天首頁會倒數提醒；也可以加進手機行事曆，前一天和兩小時前會響。</p></section>`;
+    <p class="note">存好之後，前 7 天首頁會倒數提醒；也可以加進手機行事曆，讓 iPhone 前一天提醒你。</p></section>`;
   return `<section class="tile span2 cknext" id="ckCard"><div class="row between"><p class="k">下次產檢</p><button type="button" class="glasschip" style="border:0" data-ckact="edit">修改</button></div>
     <span class="n">${big}</span><b class="ckwhen">${esc(ckWhen(w))}</b>${w.hospital?`<p class="note" style="margin:0">${esc(w.hospital)}</p>`:''}${w.checkupNote?`<p style="margin:4px 0 0">這次要做：${esc(w.checkupNote)}</p>`:''}
     <div class="ckprep"><span>帶媽媽手冊</span><span>帶健保卡</span><span>寫下想問醫師的問題</span><span>空腹與否照醫院指示</span></div>
-    <div class="row"><a class="btn coral" href="${ckICS(w)}" download="產檢提醒.ics">加入手機行事曆</a>${nc===0?'<button class="btn light" type="button" data-ckact="done">產檢完了，記一筆</button>':''}</div></section>`;
+    <div class="row"><a class="btn coral" href="${ckShortcut(w)}">加到 iPhone 行事曆</a><a class="btn light" href="${ckGoogle(w)}" target="_blank" rel="noopener">加到 Google 日曆</a>${nc===0?'<button class="btn light" type="button" data-ckact="done">產檢完了，記一筆</button>':''}</div>${ckHelp()}</section>`;
 }
 function checkupTile(){const w=s.wife||{},nc=daysUntil(w.nextCheckup,false);if(nc==null||nc<0||nc>7)return '';
   return `<button type="button" class="tile span2 cktile" data-gowife="log"><span class="ckday"><b>${nc===0?'今天':nc}</b>${nc===0?'':'<small>天後</small>'}</span><span style="flex:1;min-width:0"><span class="k">${nc===0?'今天要產檢':nc===1?'明天要產檢':'產檢倒數'}</span><b>${esc(ckWhen(w))}${w.hospital?'・'+esc(w.hospital):''}</b><small>${w.checkupNote?esc(w.checkupNote):'記得陪她去，帶媽媽手冊和健保卡'}</small></span><span class="momprog">›</span></button>`}
@@ -2481,7 +2482,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v21';
+const APP_VERSION='v22';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
