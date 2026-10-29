@@ -160,6 +160,7 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .ckprep span{font-size:12px;font-weight:700;background:rgba(255,255,255,.75);border-radius:999px;padding:4px 10px}
 .cktile{border:0;text-align:left;flex-direction:row;align-items:center;gap:12px;background:linear-gradient(140deg,#3C8CF0,#6C7BFF 60%,#A774FF);color:#fff}
 .cktile .k{color:rgba(255,255,255,.85)}.cktile b{display:block;font-size:16px;margin-top:2px}.cktile small{display:block;font-size:12px;opacity:.9}.cktile .momprog{color:#fff}
+.cktile.ckempty{background:linear-gradient(140deg,#8FA8D8,#9B8CE0)}
 .ckday{flex:none;width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
 .ckday b{font-family:var(--font-display);font-weight:400;font-size:28px;margin:0}.ckday small{font-size:11px;margin-top:2px}
 .todoform{display:flex;flex-direction:column;gap:8px;margin:4px 0 6px}
@@ -1884,7 +1885,7 @@ const V={
   `<form id="homeAsk" class="askpill span2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg><input id="homeQ" type="search" enterkeyhint="search" placeholder="爸爸攻略：有問題直接問" aria-label="爸爸攻略提問" autocomplete="off"><button type="submit">問</button></form>`+
   (()=>{const [c,k]=refAt(todayStr());return `<button type="button" class="tile t-mint span2 momlink abulink" data-goabu="1"><span class="mini-abu">${abuSVG(poseFor(st.id))}</span><span style="flex:1;min-width:0"><span class="k">${esc(s.baby)}的身形</span><b>約 ${c.toFixed(0)} 公分・${k.toFixed(1)} 公斤，差不多是${likeObj(c,k)}</b></span></button>`})()+
   (()=>{const w=s.wife||{};const nc=daysUntil(w.nextCheckup,false),bd=daysUntil(w.birthday,true),an=daysUntil(w.anniversary,true),mt=daysUntil(w.metday,true);
-    const items=[nc!=null&&nc>7&&nc<=30?`下次產檢 ${nc===0?'就是今天':nc+' 天後'}`:null,bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null,mt!=null&&mt<=30?`認識紀念日 ${mt===0?'就是今天':mt+' 天後'}`:null].filter(Boolean);
+    const items=[bd!=null&&bd<=30?`${esc(w.name||'老婆')}生日 ${bd===0?'就是今天':bd+' 天後'}`:null,an!=null&&an<=30?`結婚紀念日 ${an===0?'就是今天':an+' 天後'}`:null,mt!=null&&mt<=30?`認識紀念日 ${mt===0?'就是今天':mt+' 天後'}`:null].filter(Boolean);
     return items.length?`<button type="button" class="tile t-lemon span2 momlink" data-gowife="info"><span><span class="k">別忘了</span><b>${items.join('・')}</b></span><span class="momprog">›</span></button>`:''})()+
   (()=>{const w=WEEKS[weekIdx()];return `<button type="button" class="tile t-sky span2 momlink" data-goweek="1"><span><span class="k">這週的${esc(s.baby)}・${esc(w.label)}</span><b>${esc(w.baby)}</b></span><span class="momprog">›</span></button>`})()+
   `<button type="button" class="tile t-rose span2 momlink abulink" data-gowife="care"><span class="mini-abu">${momSVG(momPose(st.id))}</span><span style="flex:1;min-width:0"><span class="k">照顧媽媽專區</span><b>${esc(mk.head)}</b></span><span class="momprog">${md}/${mk.care.length}</span></button>`+
@@ -2104,7 +2105,9 @@ function checkupHTML(){
     <div class="ckprep"><span>帶媽媽手冊</span><span>帶健保卡</span><span>寫下想問醫師的問題</span><span>空腹與否照醫院指示</span></div>
     <div class="row"><a class="btn coral" href="${ckShortcut(w)}">加到 iPhone 行事曆</a><a class="btn light" href="${ckGoogle(w)}" target="_blank" rel="noopener">加到 Google 日曆</a>${nc===0?'<button class="btn light" type="button" data-ckact="done">產檢完了，記一筆</button>':''}</div>${ckHelp()}</section>`;
 }
-function checkupTile(){const w=s.wife||{},nc=daysUntil(w.nextCheckup,false);if(nc==null||nc<0||nc>7)return '';
+function checkupTile(){const w=s.wife||{},nc=daysUntil(w.nextCheckup,false);
+  if(nc==null||nc<0){if(s.born)return '';
+    return `<button type="button" class="tile span2 cktile ckempty" data-gowife="log" data-ckset="1"><span class="ckday"><b>＋</b></span><span style="flex:1;min-width:0"><span class="k">下次產檢</span><b>${nc!=null&&nc<0?'上次產檢過了，記下下一次':'還沒記下次產檢日'}</b><small>點這裡填日期，首頁就會一直倒數提醒</small></span><span class="momprog">›</span></button>`}
   return `<button type="button" class="tile span2 cktile" data-gowife="log"><span class="ckday"><b>${nc===0?'今天':nc}</b>${nc===0?'':'<small>天後</small>'}</span><span style="flex:1;min-width:0"><span class="k">${nc===0?'今天要產檢':nc===1?'明天要產檢':'產檢倒數'}</span><b>${esc(ckWhen(w))}${w.hospital?'・'+esc(w.hospital):''}</b><small>${w.checkupNote?esc(w.checkupNote):'記得陪她去，帶媽媽手冊和健保卡'}</small></span><span class="momprog">›</span></button>`}
 async function saveCheckup(){if(!DB)return;
   const w=Object.assign({},s.wife||{}),v=id=>document.getElementById(id).value.trim();
@@ -2344,7 +2347,7 @@ view.addEventListener('click',e=>{
   if(el.dataset.mdel){const id=el.dataset.mdel;if(s.delArm!==id){s.delArm=id;render();return}s.delArm=null;s.momlog=(s.momlog||[]).filter(r=>r.id!==id);store.set('momlog',s.momlog);toast('已刪除');render();return}
   if(el.dataset.gdel){const id=el.dataset.gdel;if(s.delArm!==id){s.delArm=id;render();return}
     s.delArm=null;if(DB){DB.doc('growth/'+id).delete().then(()=>toast('已刪除'),()=>toast('刪除失敗，再試一次'))}return}
-  if(el.dataset.gowife){s.wifeSeg=el.dataset.gowife;go('lines');return}
+  if(el.dataset.gowife){if(el.dataset.ckset)s.ckEdit=true;s.wifeSeg=el.dataset.gowife;go('lines');return}
   if(el.dataset.askq){ask(el.dataset.askq);return}
   if(el.dataset.hist){const h=s.askHist[+el.dataset.hist];if(h){if(askCtl)askCtl.abort();s.askQ=h.q;s.ask={q:h.q,text:h.text,status:'done',err:''};render();window.scrollTo({top:0,behavior:'smooth'})}return}
   if(el.dataset.tdel){s.todos=s.todos.filter(t=>t.id!==el.dataset.tdel);saveTodos();render();return}
@@ -2512,7 +2515,7 @@ document.getElementById('importFile').addEventListener('change',async e=>{
   try{const j=JSON.parse(await file.text());if(j.app!=='good-dad'||!j.data)throw 0;for(const k in j.data)if(k.startsWith('gd_'))localStorage.setItem(k,j.data[k]);toast('匯入完成，重新整理中');setTimeout(()=>location.reload(),600)}
   catch(_){toast('這個檔案不是好爸爸的備份')}
 });
-const APP_VERSION='v23';
+const APP_VERSION='v24';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
