@@ -213,6 +213,7 @@ ul.plain{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;g
 .hb b{font-size:13px}.hb small{font-size:11px;color:var(--muted)}.hb.done{opacity:.6}
 .daycard{border:0;text-align:left;color:var(--ink);font:inherit;display:flex;flex-direction:column;gap:8px}
 .daycard h3{font-size:17px;line-height:1.5}
+.askmore.none{background:linear-gradient(140deg,var(--lilac),var(--rose))}
 .store{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:var(--bg)}
 .store b{font-size:15px}
 .store small{display:block;color:var(--muted);font-size:12px;margin-top:2px;line-height:1.45}
@@ -1356,6 +1357,12 @@ function vacTile(){if(!s.born)return '';const t=todayStr(),r=vacRows().find(x=>!
   return `<button type="button" class="tile span2 cktile" data-goabu="health" style="background:linear-gradient(140deg,#2FB386,#2AA7B8 60%,#3C8CF0)"><span class="ckday"><b>${n<=0?'💉':n}</b>${n>0?'<small>天後</small>':''}</span><span style="flex:1;min-width:0"><span class="k">${n<0?'疫苗該打了':'疫苗提醒'}</span><b>${esc(r.label)}</b><small>${r.items.map(esc).join('、')}</small></span><span class="momprog">›</span></button>`}
 
 // ========== 全 App 搜尋 ==========
+function claudeAskURL(q){const st=STAGES[stageIdx(age())];const ctx=s.born?`寶寶${s.baby||''}出生 ${age()+1} 天（${st.title}）`:`老婆懷孕中，${s.baby||'寶寶'}預產期 ${s.date}（${st.title}）`;
+  return 'https://claude.ai/new?q='+encodeURIComponent(`我是台灣的新手爸爸，${ctx}。想問：${q}\n請用繁體中文、條列重點、實用簡潔地回答；跟醫療有關的請說明什麼情況要就醫。`)}
+function askBox(q,none){const key=!!store.get('apiKey','');
+  return `<section class="tile span2 askmore${none?' none':''}"><p class="k">${none?'App 裡找不到相關內容':'還想知道更多？'}</p><h2 style="font-size:18px">直接問「${esc(q)}」</h2>
+   <div class="row"><a class="btn coral" href="${claudeAskURL(q)}" target="_blank" rel="noopener">用 Claude 問</a>${key?`<button type="button" class="btn light" data-askq="${esc(q)}">在 App 裡問爸爸攻略</button>`:''}</div>
+   <p class="note" style="margin:0">會打開 Claude，問題和${s.born?'寶寶的月齡':'懷孕階段'}已經幫你填好。</p></section>`}
 function searchHTML(){
   const q=(s.gq||'').trim();let groups=[];
   if(q){const has=x=>String(x||'').toLowerCase().includes(q.toLowerCase());
@@ -1367,9 +1374,10 @@ function searchHTML(){
      ['購物清單',SHOP.filter(x=>has(x[1])||has(x[5])).slice(0,8).map(x=>({t:x[1],sub:x[3]+'・'+x[4],act:'data-go="lists"'}))],
      ['甜蜜話術',LINES.filter(l=>has(l[1])).slice(0,6).map(l=>({t:personal(l[1]),sub:l[0],act:'data-gowife="lines"'}))]
     ].filter(g=>g[1].length)}
-  return `<div class="bento"><section class="tile span2"><form id="gsForm"><input class="search" id="gq" type="search" enterkeyhint="search" placeholder="搜尋整個 App：發燒、待產包、按摩…" value="${esc(s.gq||'')}" aria-label="搜尋整個 App" autofocus></form>
-   ${q?(groups.length?'':'<p class="note">找不到相關內容，換個關鍵字，或到「學習 → 攻略」直接問。</p>'):'<p class="note">會一起找知識文章、筆記、待辦、購物清單和話術。</p>'}</section>
-   ${groups.map(([g,items])=>`<section class="tile span2"><p class="k">${g}</p><div class="feed">${items.map(it=>`<button type="button" class="ncard" ${it.act}><span style="flex:1;min-width:0"><b>${esc(it.t)}</b><small>${esc(it.sub||'')}</small></span></button>`).join('')}</div></section>`).join('')}</div>`}
+  return `<div class="bento"><section class="tile span2"><form id="gsForm"><input class="search" id="gq" type="search" enterkeyhint="search" placeholder="搜尋或發問：發燒、待產包、她腰痛怎麼辦…" value="${esc(s.gq||'')}" aria-label="搜尋整個 App" autofocus></form>
+   ${q?'':'<p class="note">會一起找知識文章、筆記、待辦、購物清單和話術；找不到的話可以直接問 Claude。</p>'}</section>
+   ${q&&!groups.length?askBox(q,true):''}
+   ${groups.map(([g,items])=>`<section class="tile span2"><p class="k">${g}</p><div class="feed">${items.map(it=>`<button type="button" class="ncard" ${it.act}><span style="flex:1;min-width:0"><b>${esc(it.t)}</b><small>${esc(it.sub||'')}</small></span></button>`).join('')}</div></section>`).join('')}${q&&groups.length?askBox(q,false):''}</div>`}
 
 function taskRows(id,limit){
   const list=(TASKS[id]||[]).map((t,i)=>({key:id+'-'+i,name:t[0],when:t[1]}));
@@ -2832,7 +2840,7 @@ view.addEventListener('submit',e=>{
     DB.collection('growth').add(rec).then(()=>{toast('記下來了');confetti(btn);['gW','gH','gN'].forEach(id=>{const x=document.getElementById(id);if(x)x.value=''});const b2=document.querySelector('#growForm button[type=submit]');if(b2)b2.disabled=false},err=>{btn.disabled=false;toast(err&&err.code==='quota_exceeded'?'紀錄已滿':'沒存成功，再試一次')});return}
   if(e.target.id==='notifyForm'){e.preventDefault();const n=document.getElementById('nfName').value.trim(),tel=document.getElementById('nfTel').value.trim();if(!n){toast('先填稱呼');return}
     s.notify=[...(s.notify||[]),{id:Date.now().toString(36),name:n.slice(0,12),tel:tel.slice(0,20)}].slice(0,20);store.set('notify',s.notify);document.getElementById('nfName').value='';document.getElementById('nfTel').value='';render();return}
-  if(e.target.id==='gsForm'){e.preventDefault();s.gq=document.getElementById('gq').value;render();return}
+  if(e.target.id==='gsForm'){e.preventDefault();s.gq=document.getElementById('gq').value;render();const a=document.querySelector('.askmore.none a');if(a)a.click();return}
   if(e.target.id==='todoForm'){e.preventDefault();const v=document.getElementById('todoT').value.trim();if(!v)return;
     s.todos=[{id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),t:v,due:document.getElementById('todoDue').value||'',who:document.getElementById('todoWho').value,done:false,at:Date.now()},...(s.todos||[])].slice(0,200);saveTodos();
     document.getElementById('todoT').value='';document.getElementById('todoDue').value='';toast('已加入待辦');render();return}
@@ -2982,7 +2990,7 @@ document.getElementById('bkCopy').addEventListener('click',async()=>{try{await n
 document.getElementById('bkImport').addEventListener('click',()=>{const v=document.getElementById('bkPaste').value.trim();if(!v){toast('先貼上備份碼');return}bkRestore(v)});
 document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;bkRestore(await file.text());e.target.value=''});
 document.getElementById('copyWidget').addEventListener('click',async()=>{try{const r=await fetch('widget/gooddad-widget.js',{cache:'no-store'});if(!r.ok)throw 0;const t=await r.text();await navigator.clipboard.writeText(t);toast('已複製，打開 Scriptable 貼上')}catch(_){toast('複製失敗，確認有網路再試一次')}});
-const APP_VERSION='v35';
+const APP_VERSION='v36';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
