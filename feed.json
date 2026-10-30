@@ -1,6 +1,54 @@
 {
- "updatedAt": "2026-10-30 20:05",
+ "updatedAt": "2026-10-31 07:58",
  "threads": [
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "author": "dr_jaden777",
+   "stage": "n0",
+   "summary": "醫師介紹國外臍帶護理改以清水清潔、保持乾燥為主，重點在通風。",
+   "url": "https://www.threads.com/@dr_jaden777/post/DSUtSoHjW0j",
+   "why": "臍帶照護先照醫院衛教做，保持乾燥最重要"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "author": "dr.lin_obgyn",
+   "stage": "pre",
+   "summary": "婦產科醫師說明臍帶繞頸很常見，多數不影響生產，摸肚子也不會造成繞頸。",
+   "url": "https://www.threads.com/@dr.lin_obgyn/post/DJl5UK0tLvE",
+   "why": "產檢聽到繞頸別慌，記得一起留意胎動"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "author": "mol.labor",
+   "stage": "pre",
+   "summary": "勞動部說明育嬰留停可按日請共 30 天，按月請總計可到兩年。",
+   "url": "https://www.threads.com/@mol.labor/post/DVhozIND3Ie",
+   "why": "產後想多陪幾天，可先查單日育嬰留停"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "author": "lovebabyfloat2015",
+   "stage": "pre",
+   "summary": "整理住院到出院流程：住院天數、衛教內容、自費項目，以及出院要領的文件。",
+   "url": "https://www.threads.com/@lovebabyfloat2015/post/DUURiDREhNH",
+   "why": "出生證明、診斷書由爸爸負責收好"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "author": "lovebabyfloat2015",
+   "stage": "n0",
+   "summary": "從月中或醫院帶寶寶回家前，先跟護理師交接作息、練習照護，回家再模擬嬰兒室環境。",
+   "url": "https://www.threads.com/@lovebabyfloat2015/post/DSeAJs-kmfO",
+   "why": "出月中前最後幾天，爸爸也要親手練洗澡"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "author": "lovemacherie",
+   "stage": "pre",
+   "summary": "肚子變硬、側躺休息就緩解多半是假性宮縮；變規律、越來越痛才要警覺。",
+   "url": "https://www.threads.com/@lovemacherie/post/DZCmyHRGoLO",
+   "why": "半夜她說肚子硬，先陪她休息觀察頻率"
+  },
   {
    "addedAt": "2026-10-30T20:05:00+08:00",
    "author": "lovebabyfloat2015",
@@ -513,6 +561,28 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "stage": "pre",
+   "summary": "第一胎媽媽詢問落紅後通常多久才會生。",
+   "url": "https://www.dcard.tw/f/parentchild/p/239831060",
+   "why": "先了解落紅不等於馬上生，別太慌"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "stage": "pre",
+   "summary": "媽媽寫給準爸爸們的一封信。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/236905154",
+   "why": "聽聽媽媽視角，知道她最需要什麼"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "stage": "pre",
+   "summary": "媽媽分享待產體驗不佳，建議待產時住單人房。",
+   "url": "https://www.dcard.tw/f/parentchild/p/257026648",
+   "why": "提早問醫院待產房型，替她爭取安靜"
+  },
+  {
    "addedAt": "2026-10-30T20:05:00+08:00",
    "stage": "pre",
    "summary": "新手媽媽分享第一胎住台北月子中心的體驗心得。",
@@ -536,6 +606,24 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "channel": "YouTube",
+   "note": "認識產兆",
+   "stage": "pre",
+   "thumb": "thumbs/whi9ha6yNl0.jpg",
+   "title": "五大產兆，產科醫師一次解",
+   "url": "https://www.youtube.com/watch?v=whi9ha6yNl0"
+  },
+  {
+   "addedAt": "2026-10-31T07:58:00+08:00",
+   "channel": "木生爸媽教室",
+   "note": "落紅破水陣痛",
+   "stage": "pre",
+   "thumb": "thumbs/FCSJJ9iifsQ.jpg",
+   "title": "什麼時候要去醫院？3大產兆全解析",
+   "url": "https://www.youtube.com/watch?v=FCSJJ9iifsQ"
+  },
   {
    "addedAt": "2026-10-30T20:05:00+08:00",
    "channel": "黃瑽寧醫師健康講堂",
