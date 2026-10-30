@@ -647,6 +647,10 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
   @keyframes rise{from{transform:translateY(10px)}to{transform:none}}}
 @media (prefers-reduced-motion:reduce){.confetti{display:none}}
 
+@keyframes slideL{from{transform:translateX(28px);opacity:.35}to{transform:none;opacity:1}}
+@keyframes slideR{from{transform:translateX(-28px);opacity:.35}to{transform:none;opacity:1}}
+#view.slide-l{animation:slideL .24s ease-out}#view.slide-r{animation:slideR .24s ease-out}
+@media (prefers-reduced-motion:reduce){#view.slide-l,#view.slide-r{animation:none}}
 /* ===== 可讀性修正 ===== */
 .hero,.lvhero,.cktile,.askbox{text-shadow:0 1px 2px rgba(70,10,50,.28)}
 .askbox{position:relative;overflow:hidden}
@@ -2835,6 +2839,22 @@ view.addEventListener('submit',e=>{
   if(e.target.id==='ckForm'){e.preventDefault();saveCheckup();return}
   if(e.target.id==='storeForm'){e.preventDefault();const v=document.getElementById('storeQ').value.trim();s.storeQ=v||'嬰兒用品';document.getElementById('storeQ').blur();render();return}
   if(e.target.id==='homeAsk'){e.preventDefault();const v=document.getElementById('homeQ').value;if(v.trim())ask(v);else{s.learnSeg='ask';go('learn')}return}if(e.target.id==='askForm'){e.preventDefault();const v=document.getElementById('askQ').value;document.getElementById('askQ').blur();ask(v)}});
+
+// ---------- 左右滑動切換子分頁 ----------
+(function(){let sx=0,sy=0,st=0,ok=false;
+  const NOSWIPE='input,textarea,select,.arena,.ctbtn,[data-noswipe]';
+  const hScroll=el=>{for(let x=el;x&&x!==view;x=x.parentElement){const o=getComputedStyle(x).overflowX;if((o==='auto'||o==='scroll')&&x.scrollWidth>x.clientWidth+4)return true}return false};
+  view.addEventListener('touchstart',e=>{if(e.touches.length!==1){ok=false;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;st=Date.now();
+    ok=sx>18&&sx<innerWidth-18&&!e.target.closest(NOSWIPE)&&!hScroll(e.target)},{passive:true});
+  view.addEventListener('touchend',e=>{if(!ok)return;ok=false;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)<60||Math.abs(dx)<Math.abs(dy)*1.6||Date.now()-st>700)return;
+    const seg=view.querySelector('.segtabs');if(!seg)return;const bs=[...seg.querySelectorAll('button')];if(bs.length<2)return;
+    const cur=bs.findIndex(b=>b.getAttribute('aria-pressed')==='true');const nx=dx<0?cur+1:cur-1;if(cur<0||nx<0||nx>=bs.length)return;
+    bs[nx].click();const dir=dx<0?'slide-l':'slide-r';view.classList.remove('slide-l','slide-r');void view.offsetWidth;view.classList.add(dir);
+    const nb=view.querySelector('.segtabs button[aria-pressed="true"]');if(nb&&nb.scrollIntoView)nb.scrollIntoView({block:'nearest',inline:'center'});
+  },{passive:true});
+  view.addEventListener('animationend',e=>{if(e.target===view)view.classList.remove('slide-l','slide-r')});
+})();
 view.addEventListener('input',e=>{if(e.target.id==='gq'){s.gq=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('gq');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='scanText'){s.scan.text=e.target.value;return}if(e.target.id==='noteQ'){s.noteQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('noteQ');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
 
 const sheet=document.getElementById('sheet'),f=document.getElementById('settingsForm');
@@ -2961,7 +2981,7 @@ document.getElementById('bkCopy').addEventListener('click',async()=>{try{await n
 document.getElementById('bkImport').addEventListener('click',()=>{const v=document.getElementById('bkPaste').value.trim();if(!v){toast('先貼上備份碼');return}bkRestore(v)});
 document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;bkRestore(await file.text());e.target.value=''});
 document.getElementById('copyWidget').addEventListener('click',async()=>{try{const r=await fetch('widget/gooddad-widget.js',{cache:'no-store'});if(!r.ok)throw 0;const t=await r.text();await navigator.clipboard.writeText(t);toast('已複製，打開 Scriptable 貼上')}catch(_){toast('複製失敗，確認有網路再試一次')}});
-const APP_VERSION='v33';
+const APP_VERSION='v34';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
