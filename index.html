@@ -2855,7 +2855,8 @@ view.addEventListener('submit',e=>{
   },{passive:true});
   view.addEventListener('animationend',e=>{if(e.target===view)view.classList.remove('slide-l','slide-r')});
 })();
-view.addEventListener('input',e=>{if(e.target.id==='gq'){s.gq=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('gq');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='scanText'){s.scan.text=e.target.value;return}if(e.target.id==='noteQ'){s.noteQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('noteQ');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
+view.addEventListener('compositionend',e=>{if(['gq','knowQ','noteQ'].includes(e.target.id))e.target.dispatchEvent(new Event('input',{bubbles:true}))});
+view.addEventListener('input',e=>{if(e.isComposing&&['gq','knowQ','noteQ'].includes(e.target.id)){if(e.target.id==='gq')s.gq=e.target.value;else if(e.target.id==='knowQ')s.knowQ=e.target.value;else s.noteQ=e.target.value;return}if(e.target.id==='gq'){s.gq=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('gq');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='scanText'){s.scan.text=e.target.value;return}if(e.target.id==='noteQ'){s.noteQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('noteQ');if(n){n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}return}if(e.target.id==='askQ'){s.askQ=e.target.value;return}if(e.target.id==='knowQ'){s.knowQ=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById('knowQ');n.focus();try{n.setSelectionRange(pos,pos)}catch(_){}}});
 
 const sheet=document.getElementById('sheet'),f=document.getElementById('settingsForm');
 let tmpBorn=s.born;
@@ -2981,7 +2982,7 @@ document.getElementById('bkCopy').addEventListener('click',async()=>{try{await n
 document.getElementById('bkImport').addEventListener('click',()=>{const v=document.getElementById('bkPaste').value.trim();if(!v){toast('先貼上備份碼');return}bkRestore(v)});
 document.getElementById('importFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;bkRestore(await file.text());e.target.value=''});
 document.getElementById('copyWidget').addEventListener('click',async()=>{try{const r=await fetch('widget/gooddad-widget.js',{cache:'no-store'});if(!r.ok)throw 0;const t=await r.text();await navigator.clipboard.writeText(t);toast('已複製，打開 Scriptable 貼上')}catch(_){toast('複製失敗，確認有網路再試一次')}});
-const APP_VERSION='v34';
+const APP_VERSION='v35';
 if('serviceWorker' in navigator){
   const hadCtl=!!navigator.serviceWorker.controller;let reloading=false;
   navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!hadCtl||reloading)return;reloading=true;try{sessionStorage.setItem('gd_updated','1')}catch(_){}location.reload()});
