@@ -1,6 +1,49 @@
 {
- "updatedAt": "2026-10-30 07:58",
+ "updatedAt": "2026-10-30 20:05",
  "threads": [
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "author": "lovebabyfloat2015",
+   "stage": "n0",
+   "summary": "整理溢奶和吐奶的差別：量多寡、是否噴射、寶寶表情與體重變化。",
+   "url": "https://www.threads.com/@lovebabyfloat2015/post/DTxrCPsEUbe",
+   "why": "學會分辨，才知道何時該帶去看醫生。"
+  },
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "author": "yulittlestar",
+   "stage": "pre",
+   "summary": "媽媽住過月子中心也請過月嫂，比較兩種坐月子方式的優缺點。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@yulittlestar/post/DKmftE1BN99",
+   "why": "月中還是月嫂？現在就該和老婆討論預約。"
+  },
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "author": "lovebabyfloat2015",
+   "stage": "n0",
+   "summary": "說明一歲前寶寶只能仰睡、別側睡；拍嗝拍不出來就直立抱一會再放下。",
+   "url": "https://www.threads.com/@lovebabyfloat2015/post/Dc5vyoWIA4Z",
+   "why": "半夜拍不出嗝別硬拍，仰睡最安全。"
+  },
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "author": "lovefood.maiduo",
+   "stage": "pre",
+   "summary": "孕晚期側躺會肚子緊、正躺又腰痠，媽媽求問怎麼睡比較舒服。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@lovefood.maiduo/post/DRihOhiExqz",
+   "why": "幫她調枕頭、按按腰，睡前多一點體貼。"
+  },
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "產後荷爾蒙驟降，媽媽情緒起伏可能持續一兩年，不是她太脆弱。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DQlJH38E32W",
+   "why": "老婆情緒不穩時，多給耐心少講道理。"
+  },
   {
    "addedAt": "2026-10-30T07:58:00+08:00",
    "author": "ynsuper",
@@ -470,6 +513,14 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "stage": "pre",
+   "summary": "新手媽媽分享第一胎住台北月子中心的體驗心得。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/257926697",
+   "why": "挑月中前，先看過來人的實際感受。"
+  },
+  {
    "addedAt": "2026-10-30T07:58:00+08:00",
    "stage": "pre",
    "summary": "在台大生產，無產兆催生到吃全餐的 56 小時紀錄。",
@@ -485,6 +536,25 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "channel": "黃瑽寧醫師健康講堂",
+   "note": "學會怎麼和她溝通",
+   "stage": "n0",
+   "thumb": "thumbs/7VOD2cD4hpY.jpg",
+   "title": "產後憂鬱不是單一因素，正確溝通才能紓解",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=7VOD2cD4hpY"
+  },
+  {
+   "addedAt": "2026-10-30T20:05:00+08:00",
+   "channel": "禾馨醫療",
+   "note": "拍嗝兩招學起來",
+   "stage": "n0",
+   "thumb": "thumbs/FpMi2ee-qvs.jpg",
+   "title": "2種幫寶寶拍嗝的方法與要點",
+   "url": "https://www.youtube.com/watch?v=FpMi2ee-qvs"
+  },
   {
    "addedAt": "2026-10-30T07:58:00+08:00",
    "channel": "黃瑽寧",
