@@ -1,6 +1,49 @@
 {
- "updatedAt": "2026-11-01 07:55",
+ "updatedAt": "2026-11-01 20:00",
  "threads": [
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "author": "naph.naphy",
+   "stage": "pre",
+   "summary": "建議上產前課了解產程、避免一直躺著，並讓另一半學會陣痛時幫忙按摩。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@naph.naphy/post/DVmDf_hktP9",
+   "why": "陪產按摩先練起來，產房才派得上用場"
+  },
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "author": "ynsuper",
+   "stage": "n0",
+   "summary": "破解推肚子就能消產後肚的說法，恢復要靠核心訓練、運動和時間。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ynsuper/post/DRTH96oE-uP",
+   "why": "別催老婆瘦身，陪她慢慢恢復就好"
+  },
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "author": "charlotte_menghsuan",
+   "stage": "n0",
+   "summary": "提醒「幫小孩洗澡」包含脫衣、洗、擦乾吹乾、擦乳液到穿好衣服的全套流程。",
+   "url": "https://www.threads.com/@charlotte_menghsuan/post/DQ609Jhgchp",
+   "why": "洗澡就包到底，別只負責泡水那段"
+  },
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "author": "lovemacherie",
+   "stage": "pre",
+   "summary": "孕期血量增加，心跳變快多屬正常；若持續過快、胸悶或頭暈就該就醫。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@lovemacherie/post/DYAA5BlETk8",
+   "why": "老婆說心悸時，知道哪些情況要陪她去看"
+  },
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "author": "ynsuper",
+   "stage": "n0",
+   "summary": "解釋新生兒為何建議延後 24 小時再洗澡，保留胎脂幫助保溼與穩定體溫。",
+   "url": "https://www.threads.com/@ynsuper/post/DRijspdkviR",
+   "why": "出生後不急著洗，胎脂是天然保護"
+  },
   {
    "addedAt": "2026-11-01T08:05:00+08:00",
    "author": "mamiyuuu2021",
@@ -645,6 +688,22 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "stage": "pre",
+   "summary": "媽媽詢問產後是否一定要住月子中心。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/258608416",
+   "why": "和老婆一起評估月子怎麼坐最適合"
+  },
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "stage": "pre",
+   "summary": "媽媽分享為什麼覺得產後該住月子中心。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/252931480",
+   "why": "了解月子中心對產後恢復的意義"
+  },
+  {
    "addedAt": "2026-11-01T08:05:00+08:00",
    "stage": "pre",
    "summary": "媽媽分享自己剛整理好的待產包內容物。",
@@ -720,6 +779,25 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "channel": "慈心產後護理之家",
+   "note": "洗澡＋臍帶護理",
+   "stage": "n0",
+   "thumb": "thumbs/TIJMlGn9mvI.jpg",
+   "title": "寶寶沐浴教學：新生兒洗澡與臍帶護理",
+   "url": "https://www.youtube.com/watch?v=TIJMlGn9mvI"
+  },
+  {
+   "addedAt": "2026-11-01T20:00:00+08:00",
+   "channel": "宏其婦幼醫院",
+   "note": "孕期水腫怎麼緩解",
+   "stage": "pre",
+   "thumb": "thumbs/M16bpoL3nvg.jpg",
+   "title": "孕期水腫紓緩方法，喝水要減量嗎？",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=M16bpoL3nvg"
+  },
   {
    "addedAt": "2026-11-01T08:05:00+08:00",
    "channel": "賴聊聊",
