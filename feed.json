@@ -1,6 +1,55 @@
 {
-  "updatedAt": "2026-11-02 19:55",
+  "updatedAt": "2026-11-03 07:54",
   "threads": [
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "author": "mummy.com.tw",
+      "stage": "pre",
+      "summary": "母嬰同室方便親餵和學照顧，但要有人分擔，媽媽才能休息。",
+      "topic": "mom",
+      "url": "https://www.threads.com/@mummy.com.tw/post/DWLyvfYGlc4",
+      "why": "住院期間爸爸多接手，讓太太能好好睡。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "author": "mohw_taiwan",
+      "stage": "pre",
+      "summary": "衛福部說明 115 年起國保或未參保的媽媽，生育補助每胎 10 萬。",
+      "url": "https://www.threads.com/@mohw_taiwan/post/DYBb1R4Ciu9",
+      "why": "先確認太太的投保身分，報戶口時可一併申請。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "author": "dr.haoyuan",
+      "stage": "pre",
+      "summary": "婦產科醫師談催生迷思：對寶寶重要的是出生週數，不是有沒有催生。",
+      "url": "https://www.threads.com/@dr.haoyuan/post/C7JELwnyPvi",
+      "why": "遇到催生討論，陪太太一起問醫師週數與風險。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "author": "loveuna_mama",
+      "stage": "n0",
+      "summary": "育兒師教奶後直立抱 15–20 分鐘，托穩頭頸，雙腿維持 M 字。",
+      "url": "https://www.threads.com/@loveuna_mama/post/DWVtwHxiepj",
+      "why": "餵完奶爸爸接手抱，順便練好正確姿勢。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "author": "ginnybaby.zzz",
+      "stage": "n0",
+      "summary": "新生兒常打嗝是橫膈膜未成熟，不影響喝奶或睡覺就不必處理。",
+      "url": "https://www.threads.com/@ginnybaby.zzz/post/DSaLdvUj7qi",
+      "why": "寶寶打嗝別慌，先看有沒有影響喝奶和睡眠。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "author": "inkiiing",
+      "stage": "pre",
+      "summary": "過來人建議取名、報戶口和新生兒保險，產前一個月就先談好。",
+      "url": "https://www.threads.com/@inkiiing/post/DHXhSN_zdqG",
+      "why": "趁現在把保單和名字定案，產後才不手忙腳亂。"
+    },
     {
       "addedAt": "2026-11-02T19:55:00+08:00",
       "author": "naph.naphy",
@@ -791,6 +840,27 @@
   ],
   "dcard": [
     {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "stage": "pre",
+      "summary": "輔大醫院無產兆催生 9 小時的生產經驗與費用分享。",
+      "url": "https://www.dcard.tw/f/parentchild/p/256742761",
+      "why": "了解催生大概要等多久、花多少。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "stage": "pre",
+      "summary": "一位爸爸分享第一次當爸爸的感動。",
+      "url": "https://www.dcard.tw/f/parentchild/p/259119050",
+      "why": "看看過來爸爸的心情，先有點心理準備。"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "stage": "n0",
+      "summary": "新生兒購物清單和用品使用心得分享。",
+      "url": "https://www.dcard.tw/f/parentchild/p/259588196",
+      "why": "採買前對照一下，少買用不到的東西。"
+    },
+    {
       "addedAt": "2026-11-02T19:55:00+08:00",
       "stage": "n0",
       "summary": "媽媽分享生產後身心的改變。",
@@ -920,6 +990,24 @@
     }
   ],
   "videos": [
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "channel": "若瑟醫院",
+      "note": "護理長解說黃疸",
+      "stage": "n0",
+      "thumb": "thumbs/fcj6XpQ0PFk.jpg",
+      "title": "新生兒黃疸怎麼辦？照光治療與居家觀察重點",
+      "url": "https://www.youtube.com/watch?v=fcj6XpQ0PFk"
+    },
+    {
+      "addedAt": "2026-11-03T07:54:11+08:00",
+      "channel": "史丹利愛分享",
+      "note": "爸爸真實陪產紀錄",
+      "stage": "pre",
+      "thumb": "thumbs/9lTClM_xbr8.jpg",
+      "title": "產房陪產全記錄 VLOG#09",
+      "url": "https://www.youtube.com/watch?v=9lTClM_xbr8"
+    },
     {
       "addedAt": "2026-11-02T19:55:00+08:00",
       "channel": "YouTube",
