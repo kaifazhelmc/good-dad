@@ -697,15 +697,17 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
 .rdmini i.p{background:var(--mint-d)}.rdmini i.c{background:var(--coral);height:11px;border-radius:9px}
 .rdwrap{gap:10px}.rdswipehint{font-size:12px;color:var(--muted)}
 .rdhot{padding:12px 16px;gap:4px}.rdhotrow{display:flex;justify-content:space-between;gap:10px;border:0;background:none;padding:6px 0;min-height:36px;text-align:left;font-size:14px}.rdhotrow span{flex:none;color:var(--coral-ink);font-weight:700}
-.rdline{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:4px 16px;position:relative;scroll-behavior:smooth}.rdline::-webkit-scrollbar,.rdswipe::-webkit-scrollbar,.rdkinds::-webkit-scrollbar{display:none}
+.rdline{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:4px 16px;position:relative;scroll-behavior:smooth}.rdline::-webkit-scrollbar,.rdkinds::-webkit-scrollbar{display:none}
 .rdstep{flex:0 0 62px;border:0;background:none;padding:2px 0;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;font-size:12px;color:var(--muted)}
 .rdstep::before{content:"";position:absolute;top:17px;left:-50%;width:100%;height:3px;background:var(--line);z-index:0}.rdstep:first-child::before{display:none}
 .rdstep i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:3px solid var(--line);font-weight:700;font-size:13px;position:relative;z-index:1;color:var(--ink);box-sizing:border-box}
 .rdstep.here i{border-color:var(--coral)}.rdstep.full i{background:var(--mint-d);border-color:var(--mint-d);color:#fff}
 .rdstep[aria-current="true"]{color:var(--ink);font-weight:700}.rdstep[aria-current="true"] i{background:var(--ink);border-color:var(--ink);color:var(--bg);transform:scale(1.12)}
 .rdkinds{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}.rdchip{background:var(--surface);min-height:36px}.tile .rdchip{background:var(--bg)}.rdchip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
-.rdswipe{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px;scrollbar-width:none;align-items:flex-start;transition:height .2s ease;min-width:0;overscroll-behavior-x:contain}
-.rdcard{flex:0 0 calc(100% - 22px);box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:7px;border-top:5px solid var(--c);min-width:0}
+.rdswipe{overflow:hidden;margin-inline:-16px;touch-action:pan-y;transition:height .2s ease;min-width:0}
+.rdtrack{display:flex;gap:12px;padding-inline:16px;align-items:flex-start;transition:transform .27s cubic-bezier(.2,.8,.2,1);will-change:transform;box-sizing:border-box;width:100%}.rdtrack.drag{transition:none}
+@media (prefers-reduced-motion:reduce){.rdtrack,.rdswipe{transition:none}}
+.rdcard{flex:0 0 calc(100% - 22px);box-sizing:border-box;background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:7px;border-top:5px solid var(--c);min-width:0}
 .rdcard h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:24px;line-height:1.2}.rdch{display:flex;justify-content:space-between;align-items:center;min-height:22px}.rdno{font-size:12px;font-weight:700;color:var(--muted)}
 .rdhere{font-size:12px;font-weight:700;background:var(--coral);color:#fff;border-radius:999px;padding:1px 10px}
 .rdrange{font-size:12px;color:var(--muted);margin:0}.rdgist{margin:2px 0 4px;font-size:14px}.rdbar{height:6px;background:var(--bg);border-radius:9px;overflow:hidden}.rdbar i{display:block;height:100%;background:var(--mint-d);border-radius:9px}
@@ -713,7 +715,7 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
 .rdrow.done .rdopen b{color:var(--muted);text-decoration:line-through}.rdgo{color:var(--muted);font-size:18px;flex:none}
 .rdtag{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:999px;color:var(--ink);background:color-mix(in srgb,var(--k) 26%,transparent)}.rdwhen.late{color:var(--coral-ink);font-weight:700}.rdwhen.soon{color:var(--coral-ink);font-weight:700}
 .rdnext{align-self:flex-end;margin-top:6px}
-.rdprefs{gap:8px;padding:12px 16px}.rdprefs summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;min-height:32px}.rdprefs summary small{color:var(--muted);font-size:12px}.rdprow{display:flex;flex-direction:column;gap:5px;margin-top:6px}.rdprow>span{font-size:12px;color:var(--muted)}.rdprow .row{gap:6px}
+.rdprefbox{gap:6px;padding:12px 16px}.rdcityrow{display:flex;align-items:center;justify-content:space-between;gap:12px}.rdcitysel{flex:1;max-width:60%;min-height:40px;border:0;border-radius:12px;background:var(--bg);color:var(--ink);padding:0 12px;font:inherit;font-size:16px}.rdvar .rdcitysel{max-width:none;width:100%;box-sizing:border-box;background:var(--surface)}.rdc p{font-size:14.5px}.rdc .btn{align-self:flex-start}.rdprefs{display:block}.rdprefs summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;min-height:32px}.rdprefs summary small{color:var(--muted);font-size:12px}.rdprow{display:flex;flex-direction:column;gap:5px;margin-top:6px}.rdprow>span{font-size:12px;color:var(--muted)}.rdprow .row{gap:6px}
 .rdsheet{z-index:20}.rdsheet .panel{gap:12px}.rdsheet .panel h2{font-size:22px;line-height:1.25}.rdsheet section{display:flex;flex-direction:column;gap:5px}.rdsheet h3{margin:0;font-size:13px;color:var(--muted)}.rdsheet p{margin:0}
 .rdx{border:0;background:var(--bg);width:40px;height:40px;border-radius:50%;font-size:22px;line-height:1;flex:none}
 .rdmeta{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:13px;color:var(--muted);align-items:center}.rdmeta b{color:var(--coral-ink)}
@@ -2828,13 +2830,15 @@ const RI=(id,k,t,at,o={})=>({id,k,t,at,...o});
 const ROAD=[
  {id:'plan',no:'備孕',t:'備孕準備',from:null,to:-281,c:'var(--lilac-d)',gist:'還沒懷孕也能先做。兩個人先把身體和錢對齊。',items:[
   RI('pre-check','health','夫妻一起做孕前健檢','決定要懷孕時',{who:'爸媽',only:{city:'tp'},why:'先知道雙方身體狀況，有問題可以早點處理。',where:'臺北市特約醫療機構，名單在衛生局「助您好孕」專區。',steps:['帶身分證明文件和健保卡去掛號。','現場直接抵免，不用另外申請。'],facts:['男性補助 875 元，7 項','女性補助 1,800 元，10 項','AMH 加選，定額補助 500 元','終身補助 1 次，不含掛號與診察費'],tip:'限 18 歲以上、尚未生第 1 胎，本人或配偶設籍臺北市。',src:['pre','taipei']}),
-  RI('pre-money','prep','確認兩人的保險和戶籍','懷孕前',{who:'爸媽',why:'之後能領什麼錢，大多由媽媽的保險別和戶籍決定。有些補助要連續設籍一段時間，臨時遷戶籍可能來不及。',steps:['確認媽媽是勞保、公保、國保、農保或沒有投保。','確認戶籍地，以及打算讓寶寶設籍哪裡。','把答案填進這頁上方的「我家狀況」，路線會自動調整。'],tip:'臺北市生育補助要從出生日或預產日前 10 個月連續設籍，新北市、基隆市可併計。',src:['tpbirth']}),
+  RI('pre-money','prep','確認兩人的保險和戶籍','懷孕前',{who:'爸媽',why:'之後能領什麼錢，大多由媽媽的保險別和戶籍決定。各縣市生育補助都要求設籍一段時間，從 6 個月到 2 年不等，臨時遷戶籍可能來不及。',steps:['確認媽媽是勞保、公保、國保、農保或沒有投保。','確認戶籍地，以及打算讓寶寶設籍哪裡。','把答案填進這頁上方的「我家狀況」，路線會自動調整。'],tip:'中途遷出常會中斷計算。想遷戶籍前，先看路線圖裡你縣市的條件。'}),
+  RI('pre-local','health','問戶籍地有沒有孕前健檢補助','決定要懷孕時',{who:'爸媽',only:{notTp:1},why:'各縣市孕前檢查的補助不同，打一通電話就知道。',steps:['打給戶籍地衛生局或健康服務中心。','問對象、項目和特約院所。']}),
   RI('pre-ivf','money','有需要時查試管嬰兒補助','備孕一段時間後',{who:'爸媽',why:'中央和縣市都有補助，療程費用可以省不少。',steps:['先和不孕症門診討論是否需要。','補助條件常調整，看官方頁面最新版本。'],src:['ivf']})]},
  {id:'t1',no:'孕初',t:'懷孕初期',from:-280,to:-183,sub:'第 1–13 週',c:'var(--lilac-d)',gist:'最容易累和孕吐。先把產檢節奏和請假方式搞清楚。',items:[
   RI('t1-first','health','陪第一次產檢，拿孕婦健康手冊','第 8 週前後',{who:'爸媽',why:'手冊是之後每次產檢和申請補助都會用到的憑證。',where:'產檢醫院或診所。',steps:['帶媽媽的身分證和健保卡。','確認預產期後，到「設定」更新。','手機拍下手冊封面和重要頁面，兩個人都存一份。'],src:['mombook','anc']}),
   RI('t1-cal','prep','把 14 次公費產檢排進行事曆','現在',{who:'爸爸',why:'14 次是國健署建議的時程，先排好才知道哪幾天要請假。',facts:['第 8、12、16、20、24、28 週','第 30、32、34、36 週','第 37、38、39、40 週','一般超音波：8–16 週、約 20 週、32 週後'],steps:['把週數換算成日期放進行事曆。','優先陪的幾次：超音波、妊娠糖尿病篩檢。'],src:['anc'],go:['wife','記下次產檢']}),
   RI('t1-leave','doc','搞懂陪產檢假怎麼請','第一次產檢前',{who:'爸爸',why:'陪產檢和陪產假是同一包 7 天，產檢用掉多少，生產時就少多少。',vars:[{on:{job:'gov'},h:'爸爸是公務員',b:['陪產檢及陪產假共 7 日，可分次，也可以小時計。','陪產檢用在配偶懷孕期間。','陪產假要在分娩當日及前後合計 15 日內（含例假日）請完。']},{on:{job:'labor'},h:'爸爸是一般受僱者',b:['陪產檢及陪產假共 7 日，薪資照給。','陪產假要在分娩前後合計 15 日內請完。','可選全日、半日或小時，選定後不能改，以小時計是 56 小時。','公司可要求媽媽手冊或出生證明等證明。']}],tip:'建議留 3–5 天給生產和出院，其他才用在產檢。這是分配建議，不是規定。',src:['leave','mol']}),
   RI('t1-down','health','討論唐氏症與子癇前症篩檢','第 9–13 週',{who:'爸媽',only:{city:'tp'},why:'這些篩檢有週數限制，過了就不能做同一項。',where:'臺北市特約醫療機構，不用另外申請。',facts:['初期唐氏症篩檢：9–13 週，補助 2,200 元','中期唐氏症篩檢：15–20 週，補助 1,000 元','NIPT：10–20 週，定額補助 2,500 元','子癇前症篩檢：10–13 週，定額補助 800 元'],tip:'唐氏症篩檢每胎擇一項補助。設籍臺北市的婦女或配偶適用。',src:['down']}),
+  RI('t1-local','money','查戶籍地的孕期補助','領到手冊後',{who:'爸爸幫辦',only:{notTp:1},why:'產檢交通、營養品、唐氏症篩檢等補助是各縣市自己辦，名稱和金額都不同。',steps:['打給戶籍地衛生局，問產檢交通和孕期篩檢補助。','問鄉鎮市區公所有沒有加碼。','有孕婦健康手冊再去申請，多半要附。'],tip:'鄉鎮市公所也可能有自己的孕婦補助，要一起問。'}),
   RI('t1-ride','money','申請好孕 2U 專車乘車金','領到手冊後',{who:'爸爸幫辦',only:{city:'tp'},why:'產檢、就醫都能用，趁早申請可以用比較久。',where:'臺北服務通線上申請，或合作院所、12 區健康服務中心、區公所。',steps:['準備申請表、媽媽身分證。','附孕婦健康手冊，或 1 個月內的診斷證明。','線上申請要附最近一次產檢收據，臨櫃親辦免附。'],facts:['每次懷孕 10,000 元乘車金','單趟最高折 250 元','可使用到預產期後 1 年'],tip:'臺北市另有孕婦及 6 歲以下兒童家庭停車位，條件看官方頁面。',src:['ride','park']}),
   RI('t1-care','care','接手會讓她不舒服的家事','現在',{who:'爸爸',why:'孕吐和疲倦很難預期，主動接手比等她開口好。',steps:['問她哪些氣味最受不了，先避開。','倒垃圾、煮飯、買東西先由你負責。','出血或腹痛別等，馬上聯絡產檢醫院。'],go:['momcare','看照顧老婆']})]},
  {id:'t2',no:'孕中',t:'懷孕中期',from:-182,to:-85,sub:'第 14–27 週',c:'var(--lilac-d)',gist:'最舒服的階段。大事趁現在決定：醫院、月子、預算。',items:[
@@ -2863,25 +2867,27 @@ const ROAD=[
   RI('b0-vac','health','確認 B 肝疫苗與兒童健康手冊','出生 24 小時內',{who:'爸爸',why:'B 型肝炎第 1 劑要在出生後盡快接種，手冊會記錄之後所有的檢查和疫苗。',steps:['跟護理師確認接種時間。','拿到兒童健康手冊，出院時帶走。','問清楚大便卡和黃疸的觀察方式。'],src:['kidbook'],go:['health','看疫苗時程']}),
   RI('b0-screen','health','確認新生兒篩檢','出生後 48 小時至 7 天',{who:'爸爸',dl:{d:6},why:'這些疾病外表看不出來，要靠篩檢及早發現。',where:'通常由出生醫院安排，住院期間主動確認。',facts:['腳跟血篩檢：2026 年 7 月起全額公費，共 22 項','新增脊髓性肌肉萎縮症（SMA）','報告陽性不等於確診，要再到確診醫院檢查'],tip:'不要為了投保延後或不做篩檢。',src:['screen']}),
   RI('b0-heart','health','先天性心臟病篩檢','出生 7 日內',{who:'爸爸',dl:{d:6},only:{city:'tp'},why:'血氧篩檢不痛，可以及早發現危急型心臟病。',where:'臺北市特約院所出生者可在院內做；其他情況可到聯合醫院和平婦幼院區。',steps:['住院時問有沒有做。','沒做就在 7 日內安排，出院前確認。'],src:['heart']}),
-  RI('b0-hear','health','新生兒聽力篩檢','出生 3 個月內',{who:'爸爸',dl:{m:3},why:'聽力影響語言發展，越早發現越好。',where:'國健署公告的特約院所，多數生產醫院出院前會安排。',steps:['出院前問有沒有做。','把結果記在兒童健康手冊。'],tip:'檢查費用由政府負擔。',src:['hear']}),
+  RI('b0-hear','health','新生兒聽力篩檢','出生 3 個月內',{who:'爸爸',dl:{m:3},why:'聽力影響語言發展，越早發現越好。',where:'國健署公告的特約院所。',steps:['出院前問有沒有做。','把結果記在兒童健康手冊。'],tip:'檢查費用由政府負擔。',src:['hear']}),
   RI('b0-home','care','讓媽媽優先睡覺','整週',{who:'爸爸',why:'傷口痛加上荷爾蒙變化，她現在最需要休息和肯定。',steps:['幫她擋掉探訪，訪客先問過她。','學會換尿布、拍嗝、包巾。','大量出血、發燒、劇烈頭痛、小腿腫痛，或說出想傷害自己的話，馬上就醫。'],go:['momcare','看照顧老婆']})]},
  {id:'b1',no:'報戶口',t:'出生 60 天內',from:7,to:59,sub:'報戶口、領補助',c:'var(--coral)',gist:'最重要的一站。一次到戶政事務所，可以順便辦好幾件事。',items:[
   RI('b1-reg','doc','辦出生登記（報戶口）','出生 60 日內',{who:'爸媽任一方',dl:{d:59},why:'所有補助和健保都卡在這一步。沒辦好，後面的事都不能跑。',where:'戶政事務所，或內政部線上申辦。',vars:[{h:'方法 A：臨櫃辦理（臺北市約 90 分鐘）',b:['到戶政事務所抽號。','交出文件，當場填申請。','換領戶口名簿每份 30 元。','順便提出下面的健保、生育補助等申請。']},{h:'方法 B：線上辦理（約 2 日）',b:['需要自然人憑證，申請人是父或母。','父母都要在臺有戶籍，寶寶在臺灣出生，並與父或母同戶。','已婚要下載從姓約定書，簽好拍照上傳。','不用紙本出生證明，由國健署通報。','超過 60 日只能親自臨櫃。']}],docs:['戶口名簿','出生證明書正本','子女從姓約定書（出生證明已寫可免）','申請人身分證及印章或簽名','委託書（委託別人辦時）'],src:['ris','tpreg']}),
   RI('b1-nhi','doc','幫寶寶加保並申請健保卡','跟出生登記一起',{who:'爸媽任一方',dl:{d:59},why:'出生 60 日內可用父母健保卡就醫，超過還沒辦，就可能要先自費再申請核退。',where:'辦出生登記時在戶政事務所一起申請。',steps:['櫃檯說要同時辦新生兒健保加保和健保卡。','線上出生登記結案後，也可一併申請。','決定寶寶依附爸爸或媽媽。'],src:['ris','nhi60']}),
   RI('b1-gi','money','媽媽領生育給付（每胎補到 10 萬）','出生後盡快',{who:'媽媽，爸爸代跑',why:'115 年 1 月 1 日起生產適用，不同保險的申請路徑不一樣，選錯會白跑。',vars:[{on:{ins:'labor'},h:'媽媽有勞保',b:['生育給付加補助合計每胎 10 萬，雙胞胎加倍。','申請給付就好，補助會合併發給。','擇一申請：戶政通報、勞保局線上、書面、投保單位線上。','分娩翌日起 5 年內申請，請擇一，別重複送件。','男性勞工不能請領這項補助。']},{on:{ins:'gov'},h:'媽媽有公保',b:['公保給 2 個月生育給付，未達 10 萬由政府補差額。','差額不用另外申請，由臺灣銀行併發。','向媽媽服務機關的人事單位申請。']},{on:{ins:'nat'},h:'媽媽是國保',b:['生育給付 42,206 元，加給 57,794 元，合計 10 萬。','擇一：辦出生登記時在戶政一站式申請、勞保局線上、郵寄或臨櫃。']},{on:{ins:'farm'},h:'媽媽有農保',b:['向所屬農會申請。','勞保局說明農保也有補到每胎 10 萬。','細節洽農業部 02-2381-2991。']},{on:{ins:'none'},h:'媽媽沒有參加社會保險',b:['直接發給 10 萬。','擇一：戶政一站式、勞保局線上、郵寄或臨櫃。','洽詢：衛福部 02-8590-6666。']}],src:['blibirth','molqa','gi','gi10','dosi']}),
   RI('b1-tp','money','申請臺北市生育補助','出生次日起 60 日內',{who:'媽媽，可委託',dl:{d:59},only:{city:'tp'},why:'最容易錯過的一筆，期限比中央短很多。',where:'出生登記地或新生兒設籍地的戶政事務所，報戶口時一起辦。',facts:['第 1 名 4 萬元','第 2 名 4.5 萬元','第 3 名以上 5 萬元'],docs:['申請書','媽媽身分證明文件','印章或簽名','媽媽的存摺影本','代辦時加受託人身分證明和委託書'],tip:'父或母要從出生日或預產日前 10 個月起連續設籍到申請時，新北市、基隆市可併計，申請時須設籍臺北市。有正當理由並經核准可延長。',src:['tpbirth','tplaw']}),
-  RI('b1-city','money','查戶籍地的生育津貼','報戶口前',{who:'爸媽',dl:{d:59},only:{city:'other'},why:'各縣市金額和設籍條件不同，通常要在報戶口時一起申請。',steps:['打給戶籍地戶政事務所，問金額、設籍條件和期限。','確認要帶哪些文件。'],tip:'路線圖目前只細寫臺北市，其他縣市請以當地公告為準。'}),
+  RI('b1-city','money','申請縣市生育補助','依縣市規定',{who:'爸媽',only:{notTp:1},why:'這筆錢是縣市自己發的，跟中央的 10 萬可以分開領。期限從 1 個月到 1 年不等，選錯就會錯過。',docs:['身分證','印章或簽名','申請人存摺影本','委託書（委託別人辦時）']}),
   RI('b1-dad','money','爸爸是公教人員：問生育補助','生育事實日起 3 個月內',{who:'爸爸',dl:{m:3},only:{job:'gov'},why:'夫妻只能領一份，而且媽媽若有其他社會保險要先走那邊，別等過期才問。',where:'服務機關人事單位。',facts:['標準：事實發生當月 2 個月薪俸額','媽媽有健保以外的社保：先依該保險申請','該保險給付低於標準時，才可附證明申請差額','夫妻同為公教只能領一份，要填切結書'],docs:['申請表','出生證明書正本','戶口名簿影本，或戶籍謄本正本'],tip:'這份簡明表是 107 年版，113 年規定有修正。媽媽領到 10 萬後還有沒有差額，請先問人事。',src:['gov2']}),
-  RI('b1-allow','money','申請育兒津貼','出生 60 日內最保險',{who:'爸媽任一方',dl:{d:59},why:'每月領到 2 歲。晚申請會少領，年底出生更要注意。',where:'twbaby 線上申請，或郵寄、親送戶籍地區公所社會課。',facts:['第 1 胎每月 5,000 元','第 2 胎每月 6,000 元','第 3 胎以上每月 7,000 元','初審約需 1.5 個月，過了才追溯發放','可與育嬰留停津貼同時領'],docs:['申請表','申請人和寶寶身分證明影本（如戶口名簿）','父或母名下存摺影本（臺北市為郵局或臺北富邦）'],tip:'11 月 2 日到 12 月 31 日出生，60 日內完成登記並申請，可追溯到出生月。超過又跨年，就只從申請年 1 月起算。送托公共或準公共托育者不能領，也不能與臺北市育兒津貼併領。',src:['allow','allowQ','twbaby']}),
+  RI('b1-town','money','問鄉鎮市區公所有沒有加碼','報戶口時順便問',{who:'爸爸',only:{notTp:1},why:'很多鄉鎮市公所有自己的生育補助，跟縣市的分開算。同一個縣市裡，隔壁鄉鎮的金額和條件就可能完全不同，也不一定會有人主動告訴你。',steps:['打給戶籍地的鄉鎮市區公所社會課，或報戶口時在戶政事務所問。','確認有沒有生育補助、產婦營養費或育兒禮金。','問清楚金額、要設籍多久、申請期限和要去哪裡辦。','確認有沒有所得或實際居住的限制。'],tip:'公所補助常是另外申請，期限也和縣市不同，別以為在戶政辦完就全部好了。'}),
+  RI('b1-allow','money','申請育兒津貼','出生 60 日內最保險',{who:'爸媽任一方',dl:{d:59},why:'每月領到 2 歲，全國都有。晚申請會少領，年底出生更要注意。',where:'twbaby 線上申請，或郵寄、親送戶籍地鄉鎮市區公所。',facts:['第 1 胎每月 5,000 元','第 2 胎每月 6,000 元','第 3 胎以上每月 7,000 元','初審約需 1.5 個月，過了才追溯發放','可與育嬰留停津貼同時領'],docs:['申請表','申請人和寶寶身分證明影本（如戶口名簿）','父或母名下存摺影本（銀行限制看各縣市申請表，臺北市為郵局或臺北富邦）'],tip:'11 月 2 日到 12 月 31 日出生，60 日內完成登記並申請，可追溯到出生月。超過又跨年，就只從申請年 1 月起算。送托公共或準公共托育者不能領。臺北市另規定不能與臺北市育兒津貼併領。',src:['allow','allowQ','twbaby']}),
   RI('b1-med','doc','申請臺北市兒童醫療補助資格','報戶口後',{who:'爸爸',only:{city:'tp'},why:'設籍臺北市未滿 6 歲的孩子，看診可依規定享有補助，輪狀病毒疫苗補助也要先有這個資格。',where:'任一區健康服務中心。第 3 胎以上到戶政事務所。',docs:['寶寶與父母一方的戶口名簿正本'],tip:'第一類：父母一方設籍且實際居住臺北市滿 10 個月。',src:['med']}),
   RI('b1-nursery','prep','有打算送托就登記公托','報戶口後',{who:'爸媽',only:{city:'tp'},why:'臺北市公托依申請先後給號，早一天排就早一個順位。',where:'線上隨時登記，可在臺北市托育地圖查名額與等候人數。',steps:['確認父母都連續設籍臺北市滿 6 個月，且期間沒有遷出入。','寶寶完成出生登記，取得身分證字號。','線上登記，免帶文件。','用簡訊或 email 收審查結果，之後用候補連結查順位。'],tip:'收托年齡是滿 2 個月到未滿 2 歲，在托者可讀到入幼兒園或 2 歲專班。',src:['nursery']}),
+  RI('b1-nursery-o','prep','有打算送托就先問公托','報戶口後',{who:'爸媽',only:{notTp:1},why:'公共托育名額有限，各縣市登記方式不同，越早問越好。',steps:['打給縣市社會局或居家托育服務中心。','問公辦民營托嬰、社區公共托育家園怎麼登記。','確認收托年齡和設籍條件。']}),
   RI('b1-kid1','health','第 1 次兒童預防保健','出生至 2 個月',{who:'爸媽',dl:{m:2},why:'2026 年 7 月起，未滿 7 歲共 9 次公費健檢，第一次就在這段時間。',steps:['帶兒童健康手冊和健保卡。','滿 1 個月順便打 B 肝第 2 劑。','把想問的問題記在手機。'],src:['kid'],go:['health','看疫苗時程']}),
   RI('b1-mom','care','陪她度過月子期','整段',{who:'爸爸',why:'連續低落、失眠或沒胃口超過兩週，要陪她就醫，不要靠硬撐。',vars:[{on:{ins:'labor'},h:'媽媽是一般受僱者',b:['產假 8 星期，受僱滿 6 個月全薪，未滿半薪。']},{on:{ins:'gov'},h:'媽媽是公務員',b:['娩假 42 日，要一次請完。','產前假 8 日可分次，不能保留到分娩後。']}],steps:['夜奶至少接一班。','幫她擋掉長輩意見。','她的情緒狀況，每週問一次。'],src:['mol','leave'],go:['momcare','看照顧老婆']})]},
  {id:'m1',no:'2–6月',t:'2–6 個月',from:60,to:179,sub:'疫苗、托育、回職場',c:'var(--mint-d)',gist:'開始打很多疫苗。誰帶小孩要在這時決定。',items:[
   RI('m1-vac','health','排 2、4、5、6 個月疫苗','照時程',{who:'爸媽',why:'這段疫苗最密集，錯過要重排。',steps:['App 會依出生日算好日期。','打完拍照記在手冊。'],go:['health','看疫苗時程']}),
   RI('m1-rota','health','決定是否打輪狀病毒疫苗','6 週起',{who:'爸媽',why:'有週數限制，超過就不能打，補助也不發。',facts:['第 1 劑滿 6 週起，每劑至少隔 4 週','Rotarix 2 劑：2、4 個月，24 週前打完','RotaTeq 3 劑：2、4、6 個月，32 週前打完','臺北市第 1、3 類：每劑補助 1,050 元或 700 元'],tip:'行政院已同意納入公費，預計 116 年實施。實際開始日和適用對象還要看疾管署公告，打之前先問。',src:['rota','rota116']}),
   RI('m1-kid2','health','第 2、3 次兒童預防保健','2–4 個月、4–6 個月',{who:'爸媽',why:'順便做發展評估。可以跟打疫苗排同一天。',steps:['帶手冊和健保卡。','手冊裡有寶寶發展項目，先看一遍。'],src:['kid']}),
-  RI('m1-who','prep','決定誰帶：自己帶、保母或托嬰','滿 2 個月前後',{who:'爸媽',why:'會影響補助、育嬰留停，也會影響兩個人的工作。',vars:[{h:'中央補助（臺北市一般家庭，每週托 30 小時以上）',b:['公辦民營托嬰、社區公共托育家園：每月 7,000 元。','私立托嬰、居家保母（準公共）：每月 13,000 元。','領托育補助就不能領育兒津貼。']},{on:{city:'tp'},h:'臺北市加碼（友善托育）',b:['寶寶及父母都設籍臺北市，送托也在臺北市。','公托每月 2,500 元、家園 6,000 元、準公共 8,000 元。','官方頁面另列胎次金額，申請前請再問。','合計不超過實際支付金額。']},{on:{city:'tp'},h:'臺北市協力照顧',b:['綜所稅稅率未達 20%，每週 30 小時以上。','每月 2,000–3,000 元，弱勢家庭 4,000–5,000 元。']}],tip:'金額以托育單位當期公告和申請表為準，洽詢 1999 分機 1624、1625。',src:['pub','friend','coop']}),
+  RI('m1-who','prep','決定誰帶：自己帶、保母或托嬰','滿 2 個月前後',{who:'爸媽',why:'會影響補助、育嬰留停，也會影響兩個人的工作。',vars:[{h:'中央托育補助（一般家庭，每週托 30 小時以上）',b:['公辦民營托嬰、社區公共托育家園：每月 7,000 元。','私立托嬰、居家保母（準公共）：每月 13,000 元。','領托育補助就不能領育兒津貼。']},{on:{city:'tp'},h:'臺北市加碼（友善托育）',b:['寶寶及父母都設籍臺北市，送托也在臺北市。','公托每月 2,500 元、家園 6,000 元、準公共 8,000 元。','官方頁面另列胎次金額，申請前請再問。','合計不超過實際支付金額。']},{on:{city:'tp'},h:'臺北市協力照顧',b:['綜所稅稅率未達 20%，每週 30 小時以上。','每月 2,000–3,000 元，弱勢家庭 4,000–5,000 元。']}],tip:'金額取自臺北市公告的中央標準，各縣市可能另有加碼，以當地社會局和托育單位公告為準。',src:['pub','friend','coop']}),
   RI('m1-leave','doc','決定誰請育嬰留停','有需要時',{who:'爸媽',why:'津貼每人最多 6 個月，規則也不同，先算好再請。',vars:[{on:{job:'gov'},h:'公務員',b:['養育 3 足歲以下子女，機關不得拒絕，最長到滿 3 足歲。','公保年資滿 1 年並續保，津貼 6 成，加發 2 成，最長 6 個月。','夫妻都有公保，同期請可同時領。','向服務機關申請，每月 25 日入帳。','續保或退保要在生效日起 60 日內選定，選了不能改。','屆滿前 20 日內申請復職，逾期可能視同辭職。','目前法規沒看到「以日申請」，要先問人事。']},{on:{job:'labor'},h:'一般受僱者',b:['子女未滿 3 歲，津貼 6 成加薪資補助 2 成，合計 8 成，最長 6 個月。','115 年起可以日申請，每人上限 30 日，雙親合計 60 日。','一般要在 5 日前提出，孩子生病、停托可在 1 日前申請。','可累積多日一次申請，2 年內要提出。']}],tip:'考試院 2026 年 6 月通過草案，擬放寬公教津貼到子女未滿 7 歲、最長 9 個月。還沒施行，先別照這個規劃。',src:['lwop','bot','draft','flex','bli']}),
   RI('m1-care','care','把家務分工寫下來','現在',{who:'爸媽',why:'口頭說「我會幫忙」最容易變成沒做。',steps:['列出每天的家務，各自認領。','每週給她半天真正的休息。'],go:['momcare','看照顧老婆']})]},
  {id:'m2',no:'半歲',t:'6–12 個月',from:180,to:364,sub:'副食品、爬行',c:'var(--mint-d)',gist:'寶寶開始會動。家裡安全和副食品是重點。',items:[
@@ -2897,7 +2903,7 @@ const ROAD=[
   RI('y1-next','prep','滿 2 歲前換軌補助','1 歲 10 個月',{who:'爸媽',why:'衛福部津貼只到未滿 2 歲，2 歲起改由教育部申請，要另外辦。',steps:['決定 2 歲後要讀幼兒園、托嬰續托或自己帶。','預先找好線上申請網址。'],src:['allow','k12']})]},
  {id:'y2',no:'2歲',t:'2–3 歲',from:730,to:1094,sub:'幼兒園、如廁',c:'var(--sky-d)',gist:'幼兒園要開始看了。有請育嬰留停的也要算好復職。',items:[
   RI('y2-allow','money','申請教育部育兒津貼','滿 2 歲時',{who:'爸媽',why:'從受理當月起算，晚申請就少領。',where:'區公所社會課，或線上。',facts:['第 1 胎每月 5,000 元','第 2 胎每月 6,000 元','第 3 胎以上每月 7,000 元'],tip:'適用讀私立幼兒園（非非營利、準公共）或沒就學的孩子，不能與臺北市育兒津貼併領。',src:['allow','k12']}),
-  RI('y2-kg','prep','參觀並登記幼兒園','每年招生期',{who:'爸媽',why:'公幼和非營利幼兒園要照招生時程，錯過要等下一輪。',steps:['留意教育局當年招生公告。','比較公幼、非營利、準公共、私幼。','實際參觀，看師生比和午休環境。'],facts:['臺北市非營利：第 1 胎每月上限 2,000 元','臺北市準公共：第 1 胎每月上限 3,000 元','第 2 胎起更低，不含課後、保險、交通等費用'],src:['kg']}),
+  RI('y2-kg','prep','參觀並登記幼兒園','每年招生期',{who:'爸媽',why:'公幼和非營利幼兒園要照招生時程，錯過要等下一輪。',steps:['留意教育局當年招生公告。','比較公幼、非營利、準公共、私幼。','實際參觀，看師生比和午休環境。'],facts:['臺北市非營利：第 1 胎每月上限 2,000 元','臺北市準公共：第 1 胎每月上限 3,000 元','第 2 胎起更低，不含課後、保險、交通等費用'],tip:'其他縣市的收費上限和招生時間，看當地教育局公告。',src:['kg']}),
   RI('y2-vac','health','27 個月疫苗與第 7 次預防保健','2–3 歲',{who:'爸媽',why:'日本腦炎和 A 肝的下一劑都在這時候。',go:['health','看疫苗時程'],src:['kid']}),
   RI('y2-back','doc','育嬰留停的人算好復職日','滿 3 歲前',{who:'請假的一方',only:{job:'gov'},why:'公務員育嬰留停最長到孩子滿 3 足歲。屆滿前 20 日內要申請復職，逾期可能視同辭職。',steps:['機關會在屆滿前 30 日通知，自己也記進行事曆。','提早安排孩子的托育銜接。'],src:['lwop']}),
   RI('y2-toilet','care','開始如廁訓練','看孩子準備度',{who:'爸媽',why:'不急，孩子準備好才有用。',steps:['先觀察能不能表達、能不能憋尿。','失敗不責備，兩個人說法要一致。'],go:['methods','看育嬰方式']})]},
@@ -2914,48 +2920,100 @@ const ROAD=[
 ];
 ROAD.forEach((st,i)=>{st.i=i;st.items.forEach(x=>{x.st=st;x.key='road-'+x.id})});
 const ROAD_ITEMS=ROAD.flatMap(st=>st.items);
+// ok:true = 已對照政府官方頁面或法規；ok:false = 官方頁面讀不到，暫用二手整理，App 會標示
+const RD_C=(id,n,amt,need,when,dl,where,url,ok,note)=>({id,n,amt,need,when,dl,where,url,ok,note});
+const RD_CITIES=[
+ RD_C('ntpc','新北市',['第 1 名 4 萬','第 2 名 4.5 萬','第 3 名以上 5 萬'],'母或父設籍滿 10 個月，可併計基隆、臺北、桃園；申請時母或父和寶寶都要設籍新北。也可在出生後持續設籍累計滿 10 個月。','出生次日起 1 年內',{m:12},'新北市任一戶政事務所，或新北市雲端 E 櫃台線上申辦。','https://www.ca.ntpc.gov.tw/home.jsp?id=3af0fb3ede4a9056',true),
+ RD_C('tp','臺北市',['第 1 名 4 萬','第 2 名 4.5 萬','第 3 名以上 5 萬'],'父或母從出生日或預產日前 10 個月連續設籍，新北、基隆可併計；申請時須設籍臺北市。','出生次日起 60 日內',{d:59},'出生登記地或新生兒設籍地的戶政事務所。','https://born.taipei/cp.aspx?n=4BB21D19B8E70CE0',true),
+ RD_C('kl','基隆市',['每胎 3 萬'],'父或母從出生前 10 個月連續設籍到申請時，臺北、新北、桃園可併計；申請時須設籍基隆。','出生 60 日內，有正當理由經核准最長 1 年',{d:59},'基隆市戶政事務所，跟出生登記一起辦。','https://www.klcg.gov.tw/tw/civil/2210-300799.html',true,'基隆市另有好孕乘三（產檢車資、營養品、治裝費）補助，向區公所查詢。'),
+ RD_C('ty','桃園市',['第 1 名 3 萬','第 2 名 4 萬','第 3 名以上 5 萬','多胞胎每名加 1 萬'],'出生前連續設籍滿 1 年；另有併計北北基，或出生後補滿 1 年的條件。申請時須設籍桃園。','出生後 6 個月內（補滿 1 年者為滿 1 年後 2 個月內）',{m:6},'桃園市各區戶政事務所、區公所社會課代收，或桃園網路 e 指通。','https://dowcd.tycg.gov.tw/News_Content.aspx?n=16422&s=1178219',true),
+ RD_C('hcc','新竹市',['每胎 3 萬','雙胞胎 6 萬','三胞胎以上 10 萬'],'父或母出生前連續設籍滿 1 年，寶寶設籍新竹市。','各家整理不一致（6 個月或 1 年），以 6 個月內為準最保險',{m:6},'新竹市戶政事務所。','https://dep-civil.hccg.gov.tw/ch/home.jsp?id=272&parentpath=0%2C4%2C51',false,'新竹市 2026 年 6 月提案 116 年調高到 6 萬，還要預算審議，生之前再確認一次。'),
+ RD_C('hc','新竹縣',['第 1 胎 1 萬','第 2 胎 2 萬','第 3 胎以上 5 萬','雙胞胎 3 萬','三胞胎以上 10 萬'],'父或母連續設籍並實際居住滿 1 年。','出生次日起 1 個月內',{d:29},'新竹縣戶政事務所。','https://social.hsinchu.gov.tw/News_Content.aspx?n=203&s=3713',false,'這是全台最短的期限之一，生完先辦。'),
+ RD_C('ml','苗栗縣',['目前每名 2 萬','116/1/1 起出生：第 1 胎 2 萬，第 2 胎以上 5 萬'],'父或母連續設籍 6 個月以上，申請時仍設籍。','出生日起 6 個月內',{m:6},'苗栗縣戶政事務所。','https://law.miaoli.gov.tw/glrsnewsout/LawContent.aspx?id=FL044438',true,undefined),
+ RD_C('tc','臺中市',['第 1、2 名各 2 萬','第 3 名起每多一名加 1 萬'],'父或母在出生當日已設籍滿 180 天，申請時仍設籍臺中市。','出生次日起 6 個月內',{m:6},'新生兒設籍地的臺中市戶政事務所。','https://www.society.taichung.gov.tw/13710/13735/13762/13768/461494',true),
+ RD_C('ch','彰化縣',['第 1 胎 3 萬','第 2 胎 5 萬','第 3 胎以上 8 萬'],'父或母從出生日回推設籍並實際居住滿 1 年，中途未遷出。','出生後 3 個月內，辦出生登記時提出',{m:3},'彰化縣任一戶政事務所。','https://www.chcg.gov.tw/ch2/newsdetail.aspx?bull_id=422926',true,'彰化另有好孕卡：每次產檢 500 元電子票證，最高 14 次。'),
+ RD_C('nt','南投縣',['第 1 胎 1 萬','第 2 胎 1.5 萬','第 3 胎 2 萬','第 4 胎 5 萬','第 5 胎以上 10 萬'],'父或母連續居住滿 10 個月以上，中途不可遷出，並在南投完成出生登記。','出生後 60 日內',{d:59},'新生兒設籍地的戶政事務所，也可線上申辦。','https://glrs.nantou.gov.tw/LawContent.aspx?id=GL000080&KeyWord=%E7%94%9F%E8%82%B2',true),
+ RD_C('yl','雲林縣',['第 1、2 胎各 3 萬','第 3 胎起每名 10 萬'],'出生時連續設籍滿 8 個月以上，中途遷出要重算。','建議出生後 6 個月內，請先問戶政',{m:6},'雲林縣戶政事務所。','https://www.yunlin.gov.tw/News_Content.aspx?n=1246&s=257305',false),
+ RD_C('cyc','嘉義市',['每名 3 萬'],'父或母從出生日回推設籍滿 6 個月，中途未遷出；申請時仍設籍。','出生後 3 個月內',{m:3},'新生兒出生登記地的戶政事務所。','https://social.chiayi.gov.tw/News_Content.aspx?n=403&s=782684',true),
+ RD_C('cy','嘉義縣',['金額待確認：官方舊頁每胎 6,000 元，2026 年整理為 1.2、2.4、3.6 萬'],'產婦或配偶從出生日回推設籍滿 6 個月，申請時仍在籍。','出生次日起 3 個月內',{m:3},'設籍地鄉鎮市戶政事務所，報戶口時一起辦。','https://sabcc.cyhg.gov.tw/cp.aspx?n=B5EE49FA21B5A443',false,'金額來源互相矛盾，請以戶政事務所說明為準。'),
+ RD_C('tn','臺南市',['第 1、2 名各 2 萬','第 3、4 名各 3 萬','第 5 名以上 5 萬'],'父或母連續設籍滿 6 個月以上，申請時仍設籍臺南市。','出生後 180 日內',{d:179},'辦理出生登記的臺南市戶政事務所。','https://people.tainan.gov.tw/cp.aspx?n=32018',true),
+ RD_C('kh','高雄市',['每名 3 萬'],'父或母在出生當日已設籍並實際居住滿 10 個月。','出生日起 1 年內',{m:12},'高雄市各區戶政事務所。','https://outlaw.kcg.gov.tw/LawContent.aspx?id=GL000578',true),
+ RD_C('pt','屏東縣',['第 1 胎 2 萬','第 2 胎以上 3 萬'],'出生當天連續設籍並實際居住滿 1 年，申請時仍在籍。','出生次日起 6 個月內',{m:6},'屏東縣戶政事務所。','https://www.pthg.gov.tw/plancab/cp.aspx?n=9F8B99754361E42D',false),
+ RD_C('yi','宜蘭縣',['每名 2 萬','另有產檢交通費每胎 3,000 元'],'母親或配偶從出生日回推連續設籍滿 1 年。','出生後 6 個月內',{m:6},'宜蘭縣戶政事務所。','https://www.e-land.gov.tw/News_Content.aspx?n=2720&sms=12290&s=386609',false),
+ RD_C('hl','花蓮縣',['每名 10 萬，分 5 次領','核定後 2 萬，滿 1、2、3、4 歲各 2 萬'],'父或母出生前設籍滿 1 年未遷出，並持續設籍到第 5 次領取。','完成出生登記後 60 日內，之後每年生日後 60 日內要再申請',{d:59},'辦理出生登記的戶政事務所。','https://sa.hl.gov.tw/Detail_sp/933bc57c73ce40f0997247a34148bd85',true,'分期款每年都要自己申請，漏掉不補發，建議每年生日排進行事曆。'),
+ RD_C('tt','臺東縣',['第 1 胎 4 萬','第 2 胎 4.5 萬','第 3 胎以上 5 萬'],'父或母設籍滿 6 個月，寶寶初設戶籍在臺東。','出生後 60 日內',{d:59},'父母戶籍地的戶政事務所。','https://ttbaby.taitung.gov.tw/articles/29/',true),
+ RD_C('ph','澎湖縣',['第 1 胎 4 萬','第 2 胎 6 萬','第 3 胎以上 8 萬'],'父或母連續設籍 2 年以上，寶寶也設籍澎湖。','出生後 3 個月內',{m:3},'戶政事務所，報戶口時一起辦，或送轄區衛生所。','https://www.penghu.gov.tw/welfare/home.jsp?id=9&act=view&dataserno=202502180005',true),
+ RD_C('km','金門縣',['生產補助：單胞胎 2 萬、雙胞胎 6 萬、三胞胎以上每胞胎 4 萬','115 年起加碼每名 3 萬'],'生產補助：父或母設籍滿 6 個月。加碼：父或母出生前連續設籍滿 1 年。寶寶都要設籍金門。','生產日後 8 個月內',{m:8},'生產補助向縣府申請；加碼向鄉鎮公所申請。','https://law.kinmen.gov.tw/LawContent.aspx?id=GL000869',true),
+ RD_C('lj','連江縣',['第 1 胎 3 萬','第 2 胎 6 萬','第 3 胎 9 萬','第 4 胎以上 15 萬'],'父母之一設籍滿 1 年且累計滿 2 年，寶寶設籍連江。','生產後 3 個月內',{m:3},'連江縣政府民政社會處。','https://law.matsu.gov.tw/LawContent.aspx?id=GL000234',true)
+];
+const RD_TOWNS={
+ ch:[['彰化縣各鄉鎮鼓勵生育措施彙整表（115/1/20）','https://social.chcg.gov.tw/getFile.aspx?file_id=344649&file=2&type=2&did=11371']],
+ hc:[['新竹縣公所加碼生育福利及補助','https://civil.hsinchu.gov.tw/News_Content.aspx?n=1617&s=234212']],
+ kh:[['高雄市各區地區性生育補助（106 年資料）','https://orgws.kcg.gov.tw/001/KcgOrgUploadFiles/192/relfile/12864/35237/f099c4cf-3e59-4083-9202-a9d9d6ddfa50.pdf']],
+ yi:[['蘇澳鎮生育津貼','https://www.suao.gov.tw/cp.aspx?n=6754'],['羅東鎮產婦營養補給費','https://www.lotong.gov.tw/News_Content.aspx?n=17723&s=339503']],
+ hl:[['吉安鄉生育補助津貼','https://www.ji-an.gov.tw/news/content/52926'],['富里鄉轉知花蓮縣婦女生育補助','https://www.fuli.gov.tw/News_Content.aspx?n=1448&s=98588']],
+ pt:[['屏東市生育獎勵金申請表','https://www.ptcg.gov.tw/News_Content.aspx?n=47B5ECE0F2B83554&sms=2F1A20C11B459EA9&s=1E16C14FF500BF18']],
+ tt:[['臺東市婦女生育補助','https://www.taitungcity.gov.tw/article/%E3%80%90%E8%87%BA%E6%9D%B1%E5%B8%82%E5%A9%A6%E5%A5%B3%E7%94%9F%E8%82%B2%E8%A3%9C%E5%8A%A9%E3%80%91(%E5%90%AB%E7%94%B3%E8%AB%8B%E8%A1%A8%E6%A0%BC)']],
+ ml:[['苗栗縣生育津貼宣導（通霄鎮戶所）','https://tongsiao.house.miaoli.gov.tw/News_Content.aspx?n=1212&s=748837']]
+};
+function rdCity(p=rdP()){return RD_CITIES.find(c=>c.id===p.city)||null}
+function rdCitySel(id,p){return `<select id="${id}" class="rdcitysel" data-rdcity aria-label="戶籍地"><option value="">選擇縣市</option>${RD_CITIES.map(c=>`<option value="${c.id}"${p.city===c.id?' selected':''}>${c.n}</option>`).join('')}</select>`}
 const RD_INS=[['labor','勞保'],['gov','公保'],['nat','國保'],['farm','農保'],['none','沒保']];
 const RD_JOB=[['gov','公務員'],['labor','一般受僱']];
-const RD_CITY=[['tp','臺北市'],['other','其他縣市']];
 function rdP(){return store.get('roadPrefs',{})||{}}
-function rdShow(x,p=rdP()){const o=x.only;if(!o)return true;return Object.keys(o).every(k=>!p[k]||p[k]===o[k])}
+function rdShow(x,p=rdP()){const o=x.only;if(!o)return true;if(o.city&&p.city!==o.city)return false;if(o.notTp&&p.city==='tp')return false;if(o.job&&p.job&&p.job!==o.job)return false;return true}
 function rdNow(){const d=age();for(let i=ROAD.length-1;i>=1;i--){if(d>=ROAD[i].from)return i}return 1}
 function rdStat(st){const it=st.items.filter(x=>rdShow(x)),done=it.filter(x=>s.tasks[x.key]).length;return [done,it.length]}
 function rdFmt(ds){return ds.replace(/-/g,'/')}
-function rdDue(x){if(!x.dl)return null;return x.dl.m?addDays(addMonths(s.date,x.dl.m),-1):addDays(s.date,x.dl.d)}
-function rdDueTxt(x){const d=rdDue(x);if(!d)return x.at;if(s.tasks[x.key])return x.at;const n=dayDiff(todayStr(),d);return n<0?'已過期限':n===0?'今天到期':s.born&&n<=30?'剩 '+n+' 天':rdFmt(d).slice(5)+(s.born?' 前':' 前（估）')}
-function rdHot(){if(!s.born)return [];return ROAD_ITEMS.filter(x=>x.dl&&rdShow(x)&&!s.tasks[x.key]).map(x=>({x,n:dayDiff(todayStr(),rdDue(x))})).filter(o=>o.n>=-30&&o.n<=30).sort((a,b)=>a.n-b.n)}
+function rdDl(x){if(x.id==='b1-city'){const c=rdCity();return c?c.dl:null}return x.dl||null}
+function rdDue(x){const l=rdDl(x);if(!l)return null;return l.m?addDays(addMonths(s.date,l.m),-1):addDays(s.date,l.d)}
+function rdDueTxt(x){const d=rdDue(x);if(!d)return x.id==='b1-city'?'先選縣市':x.at;if(s.tasks[x.key])return x.at;const n=dayDiff(todayStr(),d);return n<0?'已過期限':n===0?'今天到期':s.born&&n<=30?'剩 '+n+' 天':rdFmt(d).slice(5)+(s.born?' 前':' 前（估）')}
+function rdHot(){if(!s.born)return [];return ROAD_ITEMS.filter(x=>rdDl(x)&&rdShow(x)&&!s.tasks[x.key]).map(x=>({x,n:dayDiff(todayStr(),rdDue(x))})).filter(o=>o.n>=-30&&o.n<=30).sort((a,b)=>a.n-b.n)}
 function rdRange(st){if(st.from==null)return '懷孕前';const a=addDays(s.date,st.from),b=addDays(s.date,st.to);return rdFmt(a)+' – '+rdFmt(b)+(s.born?'':'（估）')}
 function roadTile(){const i=rdNow(),st=ROAD[i],all=ROAD_ITEMS.filter(x=>rdShow(x)),done=all.filter(x=>s.tasks[x.key]).length,hot=rdHot()[0],nx=st.items.find(x=>rdShow(x)&&!s.tasks[x.key]);
  return `<button type="button" class="tile span2 rdtile" data-go="road"><span class="k">爸爸路線圖</span><span class="rdmini" aria-hidden="true">${ROAD.map((r,j)=>`<i class="${j<i?'p':j===i?'c':''}"></i>`).join('')}</span><b>第 ${i+1} 站・${esc(st.t)}</b><small>${hot?esc(hot.x.t)+'：'+esc(rdDueTxt(hot.x)):nx?'下一件：'+esc(nx.t):'這一站完成了，左右滑看下一站'}</small><small class="rdsm">全程完成 ${done}／${all.length} 項 ›</small></button>`}
-function rdRow(x){const on=!!s.tasks[x.key],late=!on&&x.dl&&dayDiff(todayStr(),rdDue(x))<0&&s.born,soon=!on&&s.born&&x.dl&&dayDiff(todayStr(),rdDue(x))<=14,[kn,kc]=RD_KIND[x.k];
- return `<div class="task rdrow${on?' done':''}"><input type="checkbox" id="t-${x.key}" data-task="${x.key}"${on?' checked':''} aria-label="完成：${esc(x.t)}"><button type="button" class="rdopen" data-rdopen="${x.id}"><b>${esc(x.t)}</b><small><span class="rdtag" style="--k:${kc}">${kn}</span>${x.dl?`<span class="rdwhen${late?' late':soon?' soon':''}">${esc(rdDueTxt(x))}</span>`:`<span class="rdwhen">${esc(x.at)}</span>`}</small></button><span class="rdgo" aria-hidden="true">›</span></div>`}
+function rdRow(x){const on=!!s.tasks[x.key],du=rdDue(x),late=!on&&du&&dayDiff(todayStr(),du)<0&&s.born,soon=!on&&s.born&&du&&dayDiff(todayStr(),du)<=14,[kn,kc]=RD_KIND[x.k];
+ return `<div class="task rdrow${on?' done':''}"><input type="checkbox" id="t-${x.key}" data-task="${x.key}"${on?' checked':''} aria-label="完成：${esc(x.t)}"><button type="button" class="rdopen" data-rdopen="${x.id}"><b>${esc(x.t)}</b><small><span class="rdtag" style="--k:${kc}">${kn}</span>${rdDl(x)||x.id==='b1-city'?`<span class="rdwhen${late?' late':soon?' soon':''}">${esc(rdDueTxt(x))}</span>`:`<span class="rdwhen">${esc(x.at)}</span>`}</small></button><span class="rdgo" aria-hidden="true">›</span></div>`}
 function rdCard(st){const [d,n]=rdStat(st),k=s.rdKind||'all',it=st.items.filter(x=>rdShow(x)&&(k==='all'||x.k===k)),nx=ROAD[st.i+1];
  return `<article class="rdcard" data-rdc="${st.i}" style="--c:${st.c}"><div class="rdch"><span class="rdno">第 ${st.i+1} 站／${ROAD.length}</span>${st.i===rdNow()?'<span class="rdhere">你在這裡</span>':''}</div><h2>${esc(st.t)}</h2><p class="rdrange">${st.sub?esc(st.sub)+'・':''}${esc(rdRange(st))}</p><p class="rdgist">${esc(st.gist)}</p><div class="rdbar" role="img" aria-label="完成 ${d}／${n}"><i style="width:${n?Math.round(d/n*100):0}%"></i></div><p class="rdrange" style="margin:0">完成 ${d}／${n}</p><div class="tasks">${it.length?it.map(rdRow).join(''):'<p class="note" style="margin:0">這一站沒有這個分類的項目。</p>'}</div>${nx?`<button type="button" class="btn light sm rdnext" data-rdjump="${st.i+1}">下一站：${esc(nx.t)} ›</button>`:''}</article>`}
 function rdPick(k,l,opts,p){return `<div class="rdprow"><span>${l}</span><div class="row">${opts.map(([v,n])=>`<button type="button" class="chip rdchip" data-rdp="${k}:${v}" aria-pressed="${p[k]===v}">${n}</button>`).join('')}</div></div>`}
-function roadHTML(){if(s.rdIdx==null)s.rdIdx=rdNow();const p=rdP(),now=rdNow(),hot=rdHot().slice(0,2),k=s.rdKind||'all',set=['ins','job','city'].filter(x=>p[x]).length;
- const prefs=`<details class="tile span2 rdprefs"${s.rdPrefOpen?' open':''}><summary><b>我家狀況</b>${set?`<small>已選 ${set}／3</small>`:'<small>點開設定，只留適用項目 ›</small>'}</summary>${rdPick('ins','媽媽的保險',RD_INS,p)}${rdPick('job','爸爸的工作',RD_JOB,p)}${rdPick('city','戶籍地',RD_CITY,p)}</details>`;
+function roadHTML(){if(s.rdIdx==null)s.rdIdx=rdNow();const p=rdP(),now=rdNow(),hot=rdHot().slice(0,2),k=s.rdKind||'all',set2=['ins','job'].filter(x=>p[x]).length;
+ const prefs=`<div class="tile span2 rdprefbox"><label class="rdcityrow"><b>戶籍地</b>${rdCitySel('rdCity',p)}</label><details class="rdprefs"${s.rdPrefOpen?' open':''}><summary><b>保險與工作</b><small>${set2?`已選 ${set2}／2`:'點開設定，只留適用項目 ›'}</small></summary>${rdPick('ins','媽媽的保險',RD_INS,p)}${rdPick('job','爸爸的工作',RD_JOB,p)}</details></div>`;
  return `<div class="bento rdwrap"><div class="span2 row between"><button type="button" class="btn light sm" data-go="today">‹ 回首頁</button><span class="rdswipehint">左右滑看每一站</span></div>
   ${hot.length?`<section class="tile span2 t-rose rdhot"><p class="k">快到期</p>${hot.map(o=>`<button type="button" class="rdhotrow" data-rdopen="${o.x.id}"><b>${esc(o.x.t)}</b><span>${esc(rdDueTxt(o.x))} ›</span></button>`).join('')}</section>`:''}
   <nav class="rdline span2" id="rdLine" aria-label="階段">${ROAD.map((st,i)=>{const [d,n]=rdStat(st);return `<button type="button" class="rdstep${i===now?' here':''}${n&&d===n?' full':''}" data-rdjump="${i}" aria-current="${i===s.rdIdx}" style="--c:${st.c}"><i>${n&&d===n?'✓':i+1}</i><span>${esc(st.no)}</span></button>`}).join('')}</nav>
-  ${set<3?prefs:''}
+  ${prefs}
   <div class="span2 rdkinds" role="group" aria-label="分類"><button type="button" class="chip rdchip" data-rdk="all" aria-pressed="${k==='all'}">全部</button>${Object.entries(RD_KIND).map(([key,[n]])=>`<button type="button" class="chip rdchip" data-rdk="${key}" aria-pressed="${k===key}">${n}</button>`).join('')}</div>
-  <div class="rdswipe span2" id="rdSwipe">${ROAD.map(rdCard).join('')}</div>
-  ${set<3?'':prefs}
-  <p class="note span2" style="margin:0">規定與金額查證至 ${RD_CHECKED}，會隨政府公告調整，送件前請以主管機關為準。補助細節目前以臺北市為主。</p></div>`}
-function rdAfter(){const sw=document.getElementById('rdSwipe');if(!sw)return;const c=sw.children[s.rdIdx];if(!c)return;const prev=sw.style.scrollBehavior;sw.style.scrollBehavior='auto';sw.scrollLeft=s.rdIdx*(c.offsetWidth+12);sw.style.scrollBehavior=prev;rdSync(true)}
-function rdSync(center){const sw=document.getElementById('rdSwipe');if(!sw||!sw.children.length)return;const w=sw.children[0].offsetWidth+12,i=Math.max(0,Math.min(ROAD.length-1,Math.round(sw.scrollLeft/w)));const ch=i!==s.rdIdx;s.rdIdx=i;sw.style.height=sw.children[i].offsetHeight+'px';
- if(ch||center){const ln=document.getElementById('rdLine');if(ln){[...ln.children].forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));const b=ln.children[i];ln.scrollLeft=b.offsetLeft-ln.clientWidth/2+b.clientWidth/2}}}
-let rdRaf=0;view.addEventListener('scroll',e=>{if(e.target&&e.target.id==='rdSwipe'&&!rdRaf)rdRaf=requestAnimationFrame(()=>{rdRaf=0;rdSync()})},true);
+  <div class="rdswipe span2" id="rdSwipe"><div class="rdtrack" id="rdTrack">${ROAD.map(rdCard).join('')}</div></div>
+  <p class="note span2" style="margin:0">規定與金額查證至 ${RD_CHECKED}，會隨政府公告調整，送件前請以主管機關為準。</p></div>`}
+function rdTrack(){return document.getElementById('rdTrack')}
+function rdW(){const t=rdTrack();return t&&t.children[0]?t.children[0].offsetWidth+12:0}
+function rdPos(x,anim){const t=rdTrack();if(!t)return;t.classList.toggle('drag',!anim);t.style.transform=`translate3d(${Math.round(x)}px,0,0)`}
+let rdBusy=false,rdRO=null,rdBusyT=0;
+function rdFit(){if(rdBusy)return;const t=rdTrack(),sw=document.getElementById('rdSwipe');if(!t||!sw)return;const c=t.children[s.rdIdx];if(c)sw.style.height=c.offsetHeight+'px'}
+function rdWatch(){if(!window.ResizeObserver)return;if(rdRO)rdRO.disconnect();const t=rdTrack(),c=t&&t.children[s.rdIdx];if(!c)return;rdRO=new ResizeObserver(rdFit);rdRO.observe(c)}
+function rdMark(){const ln=document.getElementById('rdLine');if(!ln)return;[...ln.children].forEach((b,j)=>b.setAttribute('aria-current',j===s.rdIdx?'true':'false'));const b=ln.children[s.rdIdx];if(b)ln.scrollLeft=b.offsetLeft-ln.clientWidth/2+b.clientWidth/2}
+function rdAfter(){if(!rdTrack())return;rdPos(-s.rdIdx*rdW(),false);rdFit();rdWatch();rdMark()}
+function rdTo(i){const t=rdTrack(),sw=document.getElementById('rdSwipe');if(!t||!sw)return;i=Math.max(0,Math.min(ROAD.length-1,i));const old=sw.offsetHeight;s.rdIdx=i;rdBusy=true;clearTimeout(rdBusyT);sw.style.height=Math.max(old,t.children[i].offsetHeight)+'px';rdPos(-i*rdW(),true);rdMark();rdWatch();
+ rdBusyT=setTimeout(()=>{rdBusy=false;rdFit();const top=sw.getBoundingClientRect().top;if(top<0)scrollBy({top:top-70,behavior:'auto'})},290)}
+let rdT=null;
+view.addEventListener('touchstart',e=>{rdT=null;if(s.tab!=='road'||e.touches.length!==1||!e.target.closest('#rdSwipe'))return;const p=e.touches[0];rdT={x:p.clientX,y:p.clientY,at:Date.now(),axis:'',base:-s.rdIdx*rdW()}},{passive:true});
+view.addEventListener('touchmove',e=>{if(!rdT)return;const p=e.touches[0],dx=p.clientX-rdT.x,dy=p.clientY-rdT.y;if(!rdT.axis){if(Math.abs(dx)<8&&Math.abs(dy)<8)return;rdT.axis=Math.abs(dx)>Math.abs(dy)?'x':'y'}if(rdT.axis!=='x')return;if(e.cancelable)e.preventDefault();const edge=(dx>0&&s.rdIdx===0)||(dx<0&&s.rdIdx===ROAD.length-1);rdPos(rdT.base+(edge?dx*.3:dx),false)},{passive:false});
+view.addEventListener('touchend',e=>{if(!rdT)return;const o=rdT;rdT=null;if(o.axis!=='x')return;const dx=e.changedTouches[0].clientX-o.x,fast=Math.abs(dx)/Math.max(1,Date.now()-o.at)>.35&&Math.abs(dx)>24;rdTo(s.rdIdx+((dx<-rdW()*.22||(fast&&dx<0))?1:(dx>rdW()*.22||(fast&&dx>0))?-1:0))},{passive:true});
+view.addEventListener('touchcancel',()=>{if(rdT){rdT=null;rdTo(s.rdIdx)}},{passive:true});
+view.addEventListener('focusin',e=>{const c=e.target.closest&&e.target.closest('.rdcard');if(!c)return;const sw=document.getElementById('rdSwipe');if(sw)sw.scrollLeft=0;const i=+c.dataset.rdc;if(i!==s.rdIdx)rdTo(i)});
+document.addEventListener('keydown',e=>{if(s.tab!=='road'||s.rdTask||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if(e.key==='ArrowRight')rdTo(s.rdIdx+1);else if(e.key==='ArrowLeft')rdTo(s.rdIdx-1)});
 addEventListener('resize',()=>{if(s.tab==='road')rdAfter()});
-function rdTo(i){const sw=document.getElementById('rdSwipe');if(!sw)return;const c=sw.children[i];if(!c)return;s.rdIdx=i;sw.style.height=c.offsetHeight+'px';sw.scrollTo({left:i*(c.offsetWidth+12),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});rdSync(true);const top=sw.getBoundingClientRect().top;if(top<0)scrollBy({top:top-96,behavior:'auto'})}
+function rdSetCity(v){const p={...rdP()};if(v)p.city=v;else delete p.city;store.set('roadPrefs',p);render()}
 function rdVar(x,p){const ok=v=>!v.on||Object.keys(v.on).every(k=>!p[k]||p[k]===v.on[k]);return (x.vars||[]).filter(ok)}
 function rdList(a,cls){return `<ul class="${cls}">${a.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`}
 const RD_GO={health:()=>{s.abuSeg='health';go('timeline')},methods:()=>{s.abuSeg='methods';go('timeline')},labor:()=>go('labor'),lists:()=>go('lists'),wife:()=>{s.wifeSeg='log';go('lines')},momcare:()=>{s.wifeSeg='care';go('lines')},ask:()=>{s.learnSeg='ask';go('learn')}};
 function rdOpen(id){const x=ROAD_ITEMS.find(i=>i.id===id);if(!x)return;const p=rdP(),on=!!s.tasks[x.key],[kn,kc]=RD_KIND[x.k],vs=rdVar(x,p),box=document.getElementById('rdSheet');s.rdTask=id;
  document.getElementById('rdPanel').innerHTML=`<div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><div><p class="rdrange" style="margin:0">第 ${x.st.i+1} 站・${esc(x.st.t)}</p><h2>${esc(x.t)}</h2></div><button type="button" class="rdx" data-rdclose aria-label="關閉">×</button></div>
-  <p class="rdmeta"><span class="rdtag" style="--k:${kc}">${kn}</span><span>${esc(x.who||'爸媽')}</span><span>${esc(x.at)}</span>${x.dl?`<b>${s.born?'':'估算 '}期限 ${rdFmt(rdDue(x))}</b>`:''}</p>
-  ${x.only&&!Object.keys(x.only).every(k=>p[k])?`<p class="rdlimit">限${esc([x.only.city==='tp'?'臺北市':x.only.city==='other'?'其他縣市':'',x.only.job==='gov'?'公教人員':''].filter(Boolean).join('、'))}適用</p>`:''}
+  <p class="rdmeta"><span class="rdtag" style="--k:${kc}">${kn}</span><span>${esc(x.who||'爸媽')}</span><span>${esc(x.at)}</span>${rdDue(x)?`<b>${s.born?'':'估算 '}期限 ${rdFmt(rdDue(x))}</b>`:''}</p>
+  ${x.only&&x.only.city==='tp'?'<p class="rdlimit">臺北市專屬項目</p>':x.only&&x.only.job==='gov'&&!p.job?'<p class="rdlimit">公教人員適用</p>':''}
+  ${x.id==='b1-city'?rdCityBlock(p):''}
+  ${x.id==='b1-town'?rdTownBlock(p):''}
   ${x.why?`<section><h3>為什麼要做</h3><p>${esc(x.why)}</p></section>`:''}
   ${x.where?`<section><h3>去哪裡辦</h3><p>${esc(x.where)}</p></section>`:''}
   ${x.facts?`<section><h3>重點數字</h3>${rdList(x.facts,'rdfacts')}</section>`:''}
@@ -2967,16 +3025,20 @@ function rdOpen(id){const x=ROAD_ITEMS.find(i=>i.id===id);if(!x)return;const p=r
   ${x.src?`<section><h3>官方與參考來源</h3><div class="rdsrc">${x.src.map(k=>RS[k]?`<a href="${esc(RS[k][1])}" target="_blank" rel="noopener">${esc(RS[k][0])}</a>`:'').join('')}</div></section>`:''}
   <p class="note" style="margin:0">查證至 ${RD_CHECKED}，送件前請以主管機關最新公告為準。</p>`;
  box.hidden=false;document.getElementById('rdPanel').scrollTop=0}
+function rdTownBlock(p){const c=rdCity(p),l=c&&RD_TOWNS[c.id];if(!c)return `<section class="rdvar"><h3>先選戶籍地</h3>${rdCitySel('rdCity3',p)}</section>`;return l?`<section class="rdvar"><h3>${esc(c.n)}可以先看</h3><div class="rdsrc">${l.map(([n,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('')}</div><p class="note" style="margin:0">這些只是部分例子，你的鄉鎮有沒有補助，還是要問公所。</p></section>`:`<section class="rdvar"><h3>${esc(c.n)}</h3><p>各公所規定不同，這裡還沒有整理好的官方清單，請直接問戶籍地公所。</p></section>`}
+function rdCityBlock(p){const c=rdCity(p);if(!c)return `<section class="rdvar"><h3>先選戶籍地</h3><p>選好就會顯示你縣市的金額、條件和期限。</p>${rdCitySel('rdCity2',p)}</section>`;return `<section class="rdvar rdc"><h3>${esc(c.n)}${c.ok?'':'・尚未對照官方頁面'}</h3>${rdList(c.amt,'rdfacts')}<p><b>設籍條件</b>　${esc(c.need)}</p><p><b>期限</b>　${esc(c.when)}</p><p><b>去哪裡辦</b>　${esc(c.where)}</p>${c.note?`<p class="rdtip">${esc(c.note)}</p>`:''}${c.ok?'':'<p class="rdlimit">這個縣市的官方頁面我讀不到，資料來自 2026 年的民間整理，申請前一定要打給戶政事務所確認。</p>'}<a class="btn light sm" href="${esc(c.url)}" target="_blank" rel="noopener">看官方說明 ›</a>${rdCitySel('rdCity2',p)}</section>`}
 function rdClose(){document.getElementById('rdSheet').hidden=true;s.rdTask=null}
 view.addEventListener('click',e=>{const t=e.target.closest('[data-rdopen],[data-rdjump],[data-rdp],[data-rdk]');if(!t)return;
  if(t.dataset.rdopen){rdOpen(t.dataset.rdopen);return}
  if(t.dataset.rdjump){rdTo(+t.dataset.rdjump);return}
  if(t.dataset.rdk){s.rdKind=t.dataset.rdk;render();return}
  if(t.dataset.rdp){const [k,v]=t.dataset.rdp.split(':'),p={...rdP()};if(p[k]===v)delete p[k];else p[k]=v;store.set('roadPrefs',p);render()}});
-view.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('rdprefs')){s.rdPrefOpen=e.target.open;if(s.tab==='road')rdSync()}},true);
+view.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('rdprefs'))s.rdPrefOpen=e.target.open},true);
+view.addEventListener('change',e=>{if(e.target.dataset&&'rdcity' in e.target.dataset)rdSetCity(e.target.value)});
 document.getElementById('rdSheet').addEventListener('click',e=>{const b=e.currentTarget;if(e.target===b||e.target.closest('[data-rdclose]')){rdClose();return}
  const d=e.target.closest('[data-rddone]');if(d){const x=ROAD_ITEMS.find(i=>i.id===d.dataset.rddone),on=!s.tasks[x.key];s.tasks[x.key]=on;store.set('tasks',s.tasks);if(on){confetti(d);toast('+10 點，好爸爸')}rdClose();render();return}
  const g=e.target.closest('[data-rdgo]');if(g){const f=RD_GO[g.dataset.rdgo];rdClose();if(f)f()}});
+document.getElementById('rdSheet').addEventListener('change',e=>{if(e.target.dataset&&'rdcity' in e.target.dataset){const id=s.rdTask;rdSetCity(e.target.value);rdOpen(id)}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&s.rdTask)rdClose()});
 function render(){
   if(!V[s.tab]||s.tab==='_unused')s.tab='today';
