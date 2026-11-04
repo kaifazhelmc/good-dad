@@ -715,7 +715,7 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
 .rdrow.done .rdopen b{color:var(--muted);text-decoration:line-through}.rdgo{color:var(--muted);font-size:18px;flex:none}
 .rdtag{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:999px;color:var(--ink);background:color-mix(in srgb,var(--k) 26%,transparent)}.rdwhen.late{color:var(--coral-ink);font-weight:700}.rdwhen.soon{color:var(--coral-ink);font-weight:700}
 .rdnext{align-self:flex-end;margin-top:6px}
-.rdprefbox{gap:6px;padding:12px 16px}.rdcityrow{display:flex;align-items:center;justify-content:space-between;gap:12px}.rdcitysel{flex:1;max-width:60%;min-height:40px;border:0;border-radius:12px;background:var(--bg);color:var(--ink);padding:0 12px;font:inherit;font-size:16px}.rdvar .rdcitysel{max-width:none;width:100%;box-sizing:border-box;background:var(--surface)}.rdc p{font-size:14.5px}.rdc .btn{align-self:flex-start}.rdprefs{display:block}.rdprefs summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;min-height:32px}.rdprefs summary small{color:var(--muted);font-size:12px}.rdprow{display:flex;flex-direction:column;gap:5px;margin-top:6px}.rdprow>span{font-size:12px;color:var(--muted)}.rdprow .row{gap:6px}
+.rdcal{gap:5px;padding:13px 16px}.rdcal b{font-size:15px}.rdcal small{color:var(--muted);font-size:13px}.rdcal .btn{align-self:flex-start;margin-top:4px}.rdcal.on{outline:2px solid var(--coral)}.rdprefbox{gap:6px;padding:12px 16px}.rdcityrow{display:flex;align-items:center;justify-content:space-between;gap:12px}.rdcitysel{flex:1;max-width:60%;min-height:40px;border:0;border-radius:12px;background:var(--bg);color:var(--ink);padding:0 12px;font:inherit;font-size:16px}.rdvar .rdcitysel{max-width:none;width:100%;box-sizing:border-box;background:var(--surface)}.rdc p{font-size:14.5px}.rdc .btn{align-self:flex-start}.rdprefs{display:block}.rdprefs summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;min-height:32px}.rdprefs summary small{color:var(--muted);font-size:12px}.rdprow{display:flex;flex-direction:column;gap:5px;margin-top:6px}.rdprow>span{font-size:12px;color:var(--muted)}.rdprow .row{gap:6px}
 .rdsheet{z-index:20}.rdsheet .panel{gap:12px}.rdsheet .panel h2{font-size:22px;line-height:1.25}.rdsheet section{display:flex;flex-direction:column;gap:5px}.rdsheet h3{margin:0;font-size:13px;color:var(--muted)}.rdsheet p{margin:0}
 .rdx{border:0;background:var(--bg);width:40px;height:40px;border-radius:50%;font-size:22px;line-height:1;flex:none}
 .rdmeta{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:13px;color:var(--muted);align-items:center}.rdmeta b{color:var(--coral-ink)}
@@ -1282,6 +1282,7 @@ function focusItems(){
     else it.push({p:6,ic:'🩺',t:'記下下次產檢日',sub:'填好之後這裡會倒數提醒',act:'data-gowife="log" data-ckset="1"'})}
   else{const r=vacRows().find(x=>!x.done&&dayDiff(t,x.date)<=14);if(r){const n=dayDiff(t,r.date);it.push({p:n<=3?1:3,ic:'💉',t:n<0?'疫苗該打了':n===0?'今天打疫苗':n+' 天後打疫苗',sub:r.label+'・'+r.items.join('、'),act:'data-goabu="health"'})}
     const lf=lastFeed();if(lf&&nowMs()-lf.t>3*36e5)it.push({p:2,ic:'🍼',t:'上次餵奶是 '+agoTxt(lf.t),sub:'幫忙準備，或記一下這次',act:'data-goabu="log"'})}
+  if(s.born&&rdCalOk()&&store.get('roadCal','')!==s.date)it.push({p:0,ic:'📅',t:'把出生後的期限排進行事曆',sub:'報戶口、補助、疫苗一次排好',act:'data-go="road"'});
   rdHot().slice(0,1).forEach(o=>it.push({p:o.n<=7?1:3,ic:'📮',t:o.x.t,sub:o.n<0?'已過期限，盡快處理':o.n===0?'今天到期':'剩 '+o.n+' 天',act:`data-rdopen="${o.x.id}"`}));
   const due=(s.todos||[]).filter(x=>!x.done&&x.due&&x.due<=addDays(t,1));
   if(due.length)it.push({p:2,ic:'📝',t:due.length+' 項待辦今明到期',sub:due.slice(0,2).map(x=>x.t).join('、'),act:'data-go="lists"'});
@@ -2976,11 +2977,18 @@ function rdRow(x){const on=!!s.tasks[x.key],du=rdDue(x),late=!on&&du&&dayDiff(to
  return `<div class="task rdrow${on?' done':''}"><input type="checkbox" id="t-${x.key}" data-task="${x.key}"${on?' checked':''} aria-label="完成：${esc(x.t)}"><button type="button" class="rdopen" data-rdopen="${x.id}"><b>${esc(x.t)}</b><small><span class="rdtag" style="--k:${kc}">${kn}</span>${rdDl(x)||x.id==='b1-city'?`<span class="rdwhen${late?' late':soon?' soon':''}">${esc(rdDueTxt(x))}</span>`:`<span class="rdwhen">${esc(x.at)}</span>`}</small></button><span class="rdgo" aria-hidden="true">›</span></div>`}
 function rdCard(st){const [d,n]=rdStat(st),k=s.rdKind||'all',it=st.items.filter(x=>rdShow(x)&&(k==='all'||x.k===k)),nx=ROAD[st.i+1];
  return `<article class="rdcard" data-rdc="${st.i}" style="--c:${st.c}"><div class="rdch"><span class="rdno">第 ${st.i+1} 站／${ROAD.length}</span>${st.i===rdNow()?'<span class="rdhere">你在這裡</span>':''}</div><h2>${esc(st.t)}</h2><p class="rdrange">${st.sub?esc(st.sub)+'・':''}${esc(rdRange(st))}</p><p class="rdgist">${esc(st.gist)}</p><div class="rdbar" role="img" aria-label="完成 ${d}／${n}"><i style="width:${n?Math.round(d/n*100):0}%"></i></div><p class="rdrange" style="margin:0">完成 ${d}／${n}</p><div class="tasks">${it.length?it.map(rdRow).join(''):'<p class="note" style="margin:0">這一站沒有這個分類的項目。</p>'}</div>${nx?`<button type="button" class="btn light sm rdnext" data-rdjump="${st.i+1}">下一站：${esc(nx.t)} ›</button>`:''}</article>`}
+const RD_CAL_FROM='2026-11-05',RD_CAL_TO='2027-01-31';
+function rdCalOk(){return s.date>=RD_CAL_FROM&&s.date<=RD_CAL_TO}
+function rdCalTile(){const done=store.get('roadCal','')===s.date;
+ if(!s.born)return `<section class="tile span2 rdcal"><p class="k">行事曆</p><b>出生後一鍵排好所有期限</b><small>到設定改成「已出生」，這裡會出現按鈕，把報戶口、補助、疫苗和健檢一次排進行事曆。</small><a class="btn light sm" href="cal/test.ics">先試一次</a></section>`;
+ if(!rdCalOk())return `<section class="tile span2 rdcal"><p class="k">行事曆</p><small>這個出生日還沒有現成的行事曆檔，跟 Claude 說出生日就能幫你排。</small></section>`;
+ return `<section class="tile span2 rdcal${done?'':' on'}"><p class="k">行事曆</p><b>${done?'已經加入過了':'把出生後的期限全部排進行事曆'}</b><small>${done?'再按一次可能會重複。':'接下來 iPhone 會問要不要全部加入，選「全部加入」就完成。'}</small><a class="btn${done?' light':''} sm" href="cal/${esc(s.date)}.ics" data-rdcal="1">${done?'重新加入':'一鍵加入行事曆'}</a></section>`}
 function rdPick(k,l,opts,p){return `<div class="rdprow"><span>${l}</span><div class="row">${opts.map(([v,n])=>`<button type="button" class="chip rdchip" data-rdp="${k}:${v}" aria-pressed="${p[k]===v}">${n}</button>`).join('')}</div></div>`}
 function roadHTML(){if(s.rdIdx==null)s.rdIdx=rdNow();const p=rdP(),now=rdNow(),hot=rdHot().slice(0,2),k=s.rdKind||'all',set2=['ins','job'].filter(x=>p[x]).length;
  const prefs=`<div class="tile span2 rdprefbox"><label class="rdcityrow"><b>戶籍地</b>${rdCitySel('rdCity',p)}</label><details class="rdprefs"${s.rdPrefOpen?' open':''}><summary><b>保險與工作</b><small>${set2?`已選 ${set2}／2`:'點開設定，只留適用項目 ›'}</small></summary>${rdPick('ins','媽媽的保險',RD_INS,p)}${rdPick('job','爸爸的工作',RD_JOB,p)}</details></div>`;
  return `<div class="bento rdwrap"><div class="span2 row between"><button type="button" class="btn light sm" data-go="today">‹ 回首頁</button><span class="rdswipehint">左右滑看每一站</span></div>
   ${hot.length?`<section class="tile span2 t-rose rdhot"><p class="k">快到期</p>${hot.map(o=>`<button type="button" class="rdhotrow" data-rdopen="${o.x.id}"><b>${esc(o.x.t)}</b><span>${esc(rdDueTxt(o.x))} ›</span></button>`).join('')}</section>`:''}
+  ${rdCalTile()}
   <nav class="rdline span2" id="rdLine" aria-label="階段">${ROAD.map((st,i)=>{const [d,n]=rdStat(st);return `<button type="button" class="rdstep${i===now?' here':''}${n&&d===n?' full':''}" data-rdjump="${i}" aria-current="${i===s.rdIdx}" style="--c:${st.c}"><i>${n&&d===n?'✓':i+1}</i><span>${esc(st.no)}</span></button>`}).join('')}</nav>
   ${prefs}
   <div class="span2 rdkinds" role="group" aria-label="分類"><button type="button" class="chip rdchip" data-rdk="all" aria-pressed="${k==='all'}">全部</button>${Object.entries(RD_KIND).map(([key,[n]])=>`<button type="button" class="chip rdchip" data-rdk="${key}" aria-pressed="${k===key}">${n}</button>`).join('')}</div>
@@ -3028,7 +3036,7 @@ function rdOpen(id){const x=ROAD_ITEMS.find(i=>i.id===id);if(!x)return;const p=r
 function rdTownBlock(p){const c=rdCity(p),l=c&&RD_TOWNS[c.id];if(!c)return `<section class="rdvar"><h3>先選戶籍地</h3>${rdCitySel('rdCity3',p)}</section>`;return l?`<section class="rdvar"><h3>${esc(c.n)}可以先看</h3><div class="rdsrc">${l.map(([n,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('')}</div><p class="note" style="margin:0">這些只是部分例子，你的鄉鎮有沒有補助，還是要問公所。</p></section>`:`<section class="rdvar"><h3>${esc(c.n)}</h3><p>各公所規定不同，這裡還沒有整理好的官方清單，請直接問戶籍地公所。</p></section>`}
 function rdCityBlock(p){const c=rdCity(p);if(!c)return `<section class="rdvar"><h3>先選戶籍地</h3><p>選好就會顯示你縣市的金額、條件和期限。</p>${rdCitySel('rdCity2',p)}</section>`;return `<section class="rdvar rdc"><h3>${esc(c.n)}${c.ok?'':'・尚未對照官方頁面'}</h3>${rdList(c.amt,'rdfacts')}<p><b>設籍條件</b>　${esc(c.need)}</p><p><b>期限</b>　${esc(c.when)}</p><p><b>去哪裡辦</b>　${esc(c.where)}</p>${c.note?`<p class="rdtip">${esc(c.note)}</p>`:''}${c.ok?'':'<p class="rdlimit">這個縣市的官方頁面我讀不到，資料來自 2026 年的民間整理，申請前一定要打給戶政事務所確認。</p>'}<a class="btn light sm" href="${esc(c.url)}" target="_blank" rel="noopener">看官方說明 ›</a>${rdCitySel('rdCity2',p)}</section>`}
 function rdClose(){document.getElementById('rdSheet').hidden=true;s.rdTask=null}
-view.addEventListener('click',e=>{const t=e.target.closest('[data-rdopen],[data-rdjump],[data-rdp],[data-rdk]');if(!t)return;
+view.addEventListener('click',e=>{const c=e.target.closest('[data-rdcal]');if(c){store.set('roadCal',s.date);setTimeout(render,600);return}const t=e.target.closest('[data-rdopen],[data-rdjump],[data-rdp],[data-rdk]');if(!t)return;
  if(t.dataset.rdopen){rdOpen(t.dataset.rdopen);return}
  if(t.dataset.rdjump){rdTo(+t.dataset.rdjump);return}
  if(t.dataset.rdk){s.rdKind=t.dataset.rdk;render();return}
@@ -3320,7 +3328,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes','contractions','notify','blog','homeHide','homeCfg','roadPrefs'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes','contractions','notify','blog','homeHide','homeCfg','roadPrefs','roadCal'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
