@@ -689,6 +689,37 @@ nav.tabbar button[aria-current="page"] span{font-weight:700}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hero::after,:root:not([data-theme="light"]) .lvhero::after,:root:not([data-theme="light"]) .askbox::after,:root:not([data-theme="light"]) .cktile::after{background:rgba(20,5,25,.32)}}
 :root[data-theme="dark"] .hero::after,:root[data-theme="dark"] .lvhero::after,:root[data-theme="dark"] .askbox::after,:root[data-theme="dark"] .cktile::after{background:rgba(20,5,25,.32)}
 .askbox .chip{background:rgba(255,255,255,.18);text-shadow:0 1px 2px rgba(0,0,0,.3)}
+
+/* 爸爸路線圖 */
+.rdtile{display:flex;flex-direction:column;gap:5px;text-align:left;border:0;width:100%;font:inherit;color:inherit}
+.rdtile b{font-family:var(--font-display);font-weight:400;font-size:20px}.rdtile small{color:var(--muted);font-size:13px}.rdtile .rdsm{font-size:12px}
+.rdmini{display:flex;align-items:center;gap:0;margin:5px 0 3px}.rdmini i{flex:1;height:5px;background:var(--line);position:relative}.rdmini i:first-child{border-radius:9px 0 0 9px}.rdmini i:last-child{border-radius:0 9px 9px 0}
+.rdmini i.p{background:var(--mint-d)}.rdmini i.c{background:var(--coral);height:11px;border-radius:9px}
+.rdwrap{gap:10px}.rdswipehint{font-size:12px;color:var(--muted)}
+.rdhot{padding:12px 16px;gap:4px}.rdhotrow{display:flex;justify-content:space-between;gap:10px;border:0;background:none;padding:6px 0;min-height:36px;text-align:left;font-size:14px}.rdhotrow span{flex:none;color:var(--coral-ink);font-weight:700}
+.rdline{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:4px 16px;position:relative;scroll-behavior:smooth}.rdline::-webkit-scrollbar,.rdswipe::-webkit-scrollbar,.rdkinds::-webkit-scrollbar{display:none}
+.rdstep{flex:0 0 62px;border:0;background:none;padding:2px 0;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;font-size:12px;color:var(--muted)}
+.rdstep::before{content:"";position:absolute;top:17px;left:-50%;width:100%;height:3px;background:var(--line);z-index:0}.rdstep:first-child::before{display:none}
+.rdstep i{font-style:normal;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:3px solid var(--line);font-weight:700;font-size:13px;position:relative;z-index:1;color:var(--ink);box-sizing:border-box}
+.rdstep.here i{border-color:var(--coral)}.rdstep.full i{background:var(--mint-d);border-color:var(--mint-d);color:#fff}
+.rdstep[aria-current="true"]{color:var(--ink);font-weight:700}.rdstep[aria-current="true"] i{background:var(--ink);border-color:var(--ink);color:var(--bg);transform:scale(1.12)}
+.rdkinds{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding-inline:16px}.rdchip{background:var(--surface);min-height:36px}.tile .rdchip{background:var(--bg)}.rdchip[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.rdswipe{display:flex;gap:12px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px;scrollbar-width:none;align-items:flex-start;transition:height .2s ease;min-width:0;overscroll-behavior-x:contain}
+.rdcard{flex:0 0 calc(100% - 22px);box-sizing:border-box;scroll-snap-align:start;scroll-snap-stop:always;background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:7px;border-top:5px solid var(--c);min-width:0}
+.rdcard h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:24px;line-height:1.2}.rdch{display:flex;justify-content:space-between;align-items:center;min-height:22px}.rdno{font-size:12px;font-weight:700;color:var(--muted)}
+.rdhere{font-size:12px;font-weight:700;background:var(--coral);color:#fff;border-radius:999px;padding:1px 10px}
+.rdrange{font-size:12px;color:var(--muted);margin:0}.rdgist{margin:2px 0 4px;font-size:14px}.rdbar{height:6px;background:var(--bg);border-radius:9px;overflow:hidden}.rdbar i{display:block;height:100%;background:var(--mint-d);border-radius:9px}
+.rdrow{padding:9px 8px 9px 11px;gap:9px}.rdopen{flex:1;min-width:0;border:0;background:none;padding:2px 0;text-align:left;display:flex;flex-direction:column;gap:3px;min-height:40px;justify-content:center}.rdopen b{font-size:14px;font-weight:700;line-height:1.35}.rdopen small{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.rdrow.done .rdopen b{color:var(--muted);text-decoration:line-through}.rdgo{color:var(--muted);font-size:18px;flex:none}
+.rdtag{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:999px;color:var(--ink);background:color-mix(in srgb,var(--k) 26%,transparent)}.rdwhen.late{color:var(--coral-ink);font-weight:700}.rdwhen.soon{color:var(--coral-ink);font-weight:700}
+.rdnext{align-self:flex-end;margin-top:6px}
+.rdprefs{gap:8px;padding:12px 16px}.rdprefs summary{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer;min-height:32px}.rdprefs summary small{color:var(--muted);font-size:12px}.rdprow{display:flex;flex-direction:column;gap:5px;margin-top:6px}.rdprow>span{font-size:12px;color:var(--muted)}.rdprow .row{gap:6px}
+.rdsheet{z-index:20}.rdsheet .panel{gap:12px}.rdsheet .panel h2{font-size:22px;line-height:1.25}.rdsheet section{display:flex;flex-direction:column;gap:5px}.rdsheet h3{margin:0;font-size:13px;color:var(--muted)}.rdsheet p{margin:0}
+.rdx{border:0;background:var(--bg);width:40px;height:40px;border-radius:50%;font-size:22px;line-height:1;flex:none}
+.rdmeta{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:13px;color:var(--muted);align-items:center}.rdmeta b{color:var(--coral-ink)}
+.rdlimit{font-size:13px;background:var(--sky);border-radius:12px;padding:6px 12px}
+.rdfacts,.rdol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:14.5px}.rdvar{background:var(--bg);border-radius:16px;padding:12px 14px}.rdvar h3{color:var(--ink);font-size:14px}
+.rdtip{background:var(--lemon);border-radius:14px;padding:10px 14px;font-size:14px}.rdsrc{display:flex;flex-direction:column;gap:2px}.rdsrc a{color:var(--sky-d);font-size:14px;padding:5px 0}
 </style>
 <script>try{if(sessionStorage.getItem("gd_splash"))document.documentElement.classList.add("nosplash");sessionStorage.setItem("gd_splash","1")}catch(e){}</script>
 <style id="splashCss">
@@ -771,6 +802,7 @@ window.__hideSplash=function(){setTimeout(hide,Math.max(0,1500-(Date.now()-t0)))
   </form>
 </div>
 
+<div class="sheet rdsheet" id="rdSheet" hidden><div class="panel" id="rdPanel" role="dialog" aria-modal="true" aria-label="項目說明"></div></div>
 <script>
 (function(){
 const DAY=864e5;
@@ -1235,7 +1267,7 @@ function syncTip(){let su=null,st='loading';try{su=syncUser;st=syncState}catch(_
   return `<section class="tile span2 t-lemon"><p class="k">提醒</p><h2 style="font-size:18px">資料目前只存在這支手機</h2><p class="note" style="margin:0;color:var(--ink)">換手機或清掉瀏覽器資料就會不見。登入帳號會自動同步，也能讓老婆一起看；或到設定複製備份。</p>
    <div class="row"><button type="button" class="btn coral sm" data-synctip="open">登入或備份</button><button type="button" class="btn light sm" data-synctip="hide">不再提醒</button></div></section>`}
 // ========== 新版首頁 ==========
-const HOME_CORE=[['today','今日焦點'],['quick','快捷鍵'],['hub','好爸爸任務（簽到、任務、遊戲）'],['tasks','這階段該做的事'],['daily','今日推薦（話術、寶寶、媽媽）']];
+const HOME_CORE=[['today','今日焦點'],['road','爸爸路線圖'],['quick','快捷鍵'],['hub','好爸爸任務（簽到、任務、遊戲）'],['tasks','這階段該做的事'],['daily','今日推薦（話術、寶寶、媽媽）']];
 const HOME_EXTRA=[['ask','攻略搜尋列'],['shape','寶寶身形'],['focus','本週重點'],['shop','該買了'],['video','推薦影片'],['threads','社群精選']];
 function homeCfg(){const c=store.get('homeCfg',null)||{};const o={};HOME_CORE.forEach(([k])=>o[k]=c[k]!==false);HOME_EXTRA.forEach(([k])=>o[k]=c[k]===true);return o}
 function homeCardsBox(){const c=homeCfg(),row=([k,l])=>`<label class="hcitem"><input type="checkbox" data-hc="${k}"${c[k]?' checked':''}> ${l}</label>`;
@@ -1248,6 +1280,7 @@ function focusItems(){
     else it.push({p:6,ic:'🩺',t:'記下下次產檢日',sub:'填好之後這裡會倒數提醒',act:'data-gowife="log" data-ckset="1"'})}
   else{const r=vacRows().find(x=>!x.done&&dayDiff(t,x.date)<=14);if(r){const n=dayDiff(t,r.date);it.push({p:n<=3?1:3,ic:'💉',t:n<0?'疫苗該打了':n===0?'今天打疫苗':n+' 天後打疫苗',sub:r.label+'・'+r.items.join('、'),act:'data-goabu="health"'})}
     const lf=lastFeed();if(lf&&nowMs()-lf.t>3*36e5)it.push({p:2,ic:'🍼',t:'上次餵奶是 '+agoTxt(lf.t),sub:'幫忙準備，或記一下這次',act:'data-goabu="log"'})}
+  rdHot().slice(0,1).forEach(o=>it.push({p:o.n<=7?1:3,ic:'📮',t:o.x.t,sub:o.n<0?'已過期限，盡快處理':o.n===0?'今天到期':'剩 '+o.n+' 天',act:`data-rdopen="${o.x.id}"`}));
   const due=(s.todos||[]).filter(x=>!x.done&&x.due&&x.due<=addDays(t,1));
   if(due.length)it.push({p:2,ic:'📝',t:due.length+' 項待辦今明到期',sub:due.slice(0,2).map(x=>x.t).join('、'),act:'data-go="lists"'});
   [['birthday','她的生日','🎂'],['anniversary','結婚紀念日','💍'],['metday','認識紀念日','💞']].forEach(([k,l,ic])=>{const n=daysUntil(w[k],true);if(n!=null&&n<=7)it.push({p:n<=1?1:3,ic,t:n===0?'今天是'+l:l+' '+n+' 天後',sub:'想好怎麼過了嗎？',act:'data-gowife="info"'})});
@@ -1277,7 +1310,7 @@ function dailyCarousel(){
   </div></div>`}
 function homeHTML(){
   const L=V._legacy(),c=homeCfg(),out=[heroHTML(),momAlertTile(),syncTip()];
-  if(c.today)out.push(focusCard());if(c.quick)out.push(quickGrid());if(c.ask)out.push(L.ask());if(c.hub)out.push(hubCard());
+  if(c.today)out.push(focusCard());if(c.road)out.push(roadTile());if(c.quick)out.push(quickGrid());if(c.ask)out.push(L.ask());if(c.hub)out.push(hubCard());
   if(c.tasks)out.push(L.tasks());if(c.daily)out.push(dailyCarousel());
   for(const [k] of HOME_EXTRA){if(k!=='ask'&&c[k]){const f=L[k];if(f)out.push(f())}}
   return `<div class="bento">${out.join('')}</div>`}
@@ -1372,6 +1405,7 @@ function searchHTML(){
      ['知識文章',KNOW.filter(k=>has(k.t)||has(k.b)).slice(0,8).map(k=>({t:k.t,sub:k.b,act:`data-sgo="read" data-sq="${esc(k.t)}"`}))],
      ['我的筆記',(s.notes||[]).filter(n=>has(n.title)||has(n.text)||has((n.points||[]).join(''))).slice(0,8).map(n=>({t:n.title,sub:(n.points||[]).slice(0,2).join('・'),act:`data-nopen="${n.id}" data-sgo="notes"`}))],
      ['我的待辦',(s.todos||[]).filter(t=>has(t.t)).slice(0,8).map(t=>({t:t.t,sub:t.done?'已完成':(t.due||'未完成'),act:'data-go="lists"'}))],
+     ['爸爸路線圖',ROAD_ITEMS.filter(x=>has(x.t)||has(x.why)||has((x.facts||[]).join(''))||has((x.steps||[]).join(''))).slice(0,8).map(x=>({t:x.t,sub:'第 '+(x.st.i+1)+' 站・'+x.st.t,act:`data-rdopen="${x.id}"`}))],
      ['階段待辦',Object.entries(TASKS).flatMap(([st,l])=>l.map(x=>[st,x])).filter(([,x])=>has(x[0])).slice(0,8).map(([st,x])=>({t:x[0],sub:stageOf(st).title,act:'data-go="lists"'}))],
      ['購物清單',SHOP.filter(x=>has(x[1])||has(x[5])).slice(0,8).map(x=>({t:x[1],sub:x[3]+'・'+x[4],act:'data-go="lists"'}))],
      ['甜蜜話術',LINES.filter(l=>has(l[1])).slice(0,6).map(l=>({t:personal(l[1]),sub:l[0],act:'data-gowife="lines"'}))]
@@ -2418,6 +2452,7 @@ const V={
  },
  level(){return levelHTML()},
  labor(){return laborHTML()},
+ road(){return roadHTML()},
  search(){return searchHTML()},
  game(){return gameHTML()},
  _unused(){return ''}
@@ -2735,6 +2770,213 @@ async function ask(q){
 }
 
 const view=document.getElementById('view');
+// ---------- 爸爸路線圖：各階段該辦的事與教學 ----------
+const RD_CHECKED='2026/11/04';
+const RS={
+ ris:['內政部 線上出生登記','https://www.ris.gov.tw/apply-registration/app/awf060201/description'],
+ tpreg:['臺北市 出生登記須知','https://www-ws.gov.taipei/001/Upload/427/relfile/18398/9008/6895740d-f7ab-48b6-b17c-be3aaaa175fb.pdf'],
+ name:['姓名條例','https://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=D0030011'],
+ nhi60:['衛福部 新生兒 60 日內就醫','https://www.mohw.gov.tw/cp-3160-25295-1.html'],
+ tpbirth:['臺北市 生育補助','https://born.taipei/cp.aspx?n=4BB21D19B8E70CE0'],
+ tplaw:['臺北市生育補助發放辦法','https://laws.gov.taipei/Law/LawSearch/LawArticleContent/FL081869'],
+ allow:['臺北市 中央育兒津貼','https://born.taipei/cp.aspx?n=D09F474ADBB425A8'],
+ allowQ:['衛福部 育兒津貼起算','https://www.mohw.gov.tw/cp-4062-43078-1.html'],
+ twbaby:['育兒津貼線上申請','https://twbaby.sfaa.gov.tw'],
+ k12:['2–未滿 5 歲津貼線上申請','https://e-service.k12ea.gov.tw/'],
+ blibirth:['勞保局 每胎補到 10 萬','https://events.bli.gov.tw/Activities/202601_04/'],
+ molqa:['勞動部 生育補助問答','https://www.mol.gov.tw/media/dgaoa15j/%E5%B8%B8%E8%A6%8B%E5%95%8F%E7%AD%94q-a.pdf?mediaDL=true'],
+ dosi:['衛福部 國保與未投保者 10 萬','https://dep.mohw.gov.tw/DOSI/cp-3544-86293-102.html'],
+ gi:['公教人員保險法','https://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=S0070001'],
+ gi10:['公保差額補助說明','https://ccs.cyc.edu.tw/modules/tadnews/index.php?nsn=8322'],
+ gov2:['公教人員各項補助簡明表（107 年版）','https://www.penghu.gov.tw/uploaddowndoc?file=unit02%2F201805151643340.pdf&filedisplay=%E7%8F%BE%E8%A1%8C%E5%85%AC%E6%95%99%E4%BA%BA%E5%93%A1%E5%90%84%E9%A0%85%E8%A3%9C%E5%8A%A9%E8%A6%8F%E5%AE%9A%E7%B0%A1%E6%98%8E%E8%A1%A8.pdf&flag=pdf'],
+ leave:['公務人員請假規則','https://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=S0110016'],
+ mol:['勞動部 產假與陪產假','https://www.mol.gov.tw/topic/6026/49654/49670/49673/'],
+ lwop:['公務人員留職停薪辦法','https://law.moj.gov.tw/LawClass/LawAll.aspx?PCode=S0020028'],
+ bot:['臺灣銀行 公保育嬰津貼','https://www.bot.com.tw/Images//File/GetFileId/b0498659-4d8f-4b5d-9afd-6d009a5e7293'],
+ draft:['聯合報 考試院草案','https://udn.com/news/story/6656/9560092'],
+ flex:['勞動部 彈性育嬰留停','https://www.mol.gov.tw/1607/1632/1640/83137/'],
+ bli:['勞保局 育嬰津貼問答','https://www.bli.gov.tw/0109378.html'],
+ anc:['國健署 產檢項目','https://www.hpa.gov.tw/Pages/List.aspx?nodeid=194'],
+ pre:['臺北市 孕前健檢','https://born.taipei/cp.aspx?n=5E6FB49CBE1207E0'],
+ ivf:['臺北市 試管嬰兒補助','https://born.taipei/cp.aspx?n=B86B77F647C671FB'],
+ ride:['臺北市 好孕 2U 專車','https://born.taipei/cp.aspx?n=D98ABCB51B230AAE'],
+ down:['臺北市 唐氏症與子癇前症篩檢','https://born.taipei/cp.aspx?n=3A14D83EADCB4817'],
+ park:['臺北市 孕婦與幼兒家庭停車位','https://born.taipei/cp.aspx?n=6B311837D1850B0E'],
+ mombook:['孕婦健康手冊','https://www.hpa.gov.tw/Pages/EBook.aspx?nodeid=1142'],
+ kidbook:['兒童健康手冊','https://www.hpa.gov.tw/Pages/EBook.aspx?nodeid=1139'],
+ tdap:['衛福部 孕婦百日咳疫苗','https://www.mohw.gov.tw/cp-16-81346-1.html'],
+ seat:['衛福部 兒童汽車座椅','https://mohw.gov.tw/cp-16-69796-1.html'],
+ screen:['聯合報 新生兒篩檢全額公費','https://udn.com/news/story/7266/9498884'],
+ hear:['臺北市 新生兒聽力篩檢','https://born.taipei/cp.aspx?n=785F58ABC5909459'],
+ heart:['臺北市 先天心臟病篩檢','https://born.taipei/cp.aspx?n=F6D7DAF88BFF89F4'],
+ kid:['衛福部 兒童預防保健','https://mohw.gov.tw/cp-16-83521-1.html'],
+ rota:['臺北市 輪狀病毒疫苗補助','https://born.taipei/cp.aspx?n=18EA8FFE3EE80CBC'],
+ rota116:['疾管署 115 年公費疫苗政策','https://www.cdc.gov.tw/Bulletin/Detail/6LQXMZbU5Pcp4YFV5BSkDw?typeid=9'],
+ med:['臺北市 兒童醫療補助','https://born.taipei/cp.aspx?n=5B39C05FDAD35C72'],
+ nursery:['臺北市 公托登記說明','https://welfare.gov.taipei/Nursery/files/公辦民營托嬰機構登記說明懶人包.pdf'],
+ pub:['臺北市 公共及準公共托育補助','https://born.taipei/cp.aspx?n=D5CC1C83BA7E2D93'],
+ friend:['臺北市 友善托育補助','https://born.taipei/cp.aspx?n=5B7EB1825F8DDCF3'],
+ coop:['臺北市 協力照顧補助','https://born.taipei/cp.aspx?n=841B3FD23DC2B336'],
+ kg:['臺北市 非營利與準公共幼兒園','https://born.taipei/cp.aspx?n=D3A6D8A6751D0901'],
+ five:['臺北市 5 歲幼兒學費補助','https://born.taipei/cp.aspx?n=C9D4553416EBECF8'],
+ dev:['臺北市 學齡前發展檢核表','https://born.taipei/cp.aspx?n=47FCA98829CC51C0'],
+ eye:['臺北市 學齡前社區篩檢與護眼','https://born.taipei/cp.aspx?n=27014DF9498E8806'],
+ taipei:['臺北市 助您好孕總覽','https://born.taipei/']
+};
+const RD_KIND={doc:['手續','var(--sky-d)'],money:['領錢','var(--lemon-d)'],health:['健康','var(--mint-d)'],prep:['準備','var(--lilac-d)'],care:['陪伴','var(--rose-d)']};
+const RI=(id,k,t,at,o={})=>({id,k,t,at,...o});
+const ROAD=[
+ {id:'plan',no:'備孕',t:'備孕準備',from:null,to:-281,c:'var(--lilac-d)',gist:'還沒懷孕也能先做。兩個人先把身體和錢對齊。',items:[
+  RI('pre-check','health','夫妻一起做孕前健檢','決定要懷孕時',{who:'爸媽',only:{city:'tp'},why:'先知道雙方身體狀況，有問題可以早點處理。',where:'臺北市特約醫療機構，名單在衛生局「助您好孕」專區。',steps:['帶身分證明文件和健保卡去掛號。','現場直接抵免，不用另外申請。'],facts:['男性補助 875 元，7 項','女性補助 1,800 元，10 項','AMH 加選，定額補助 500 元','終身補助 1 次，不含掛號與診察費'],tip:'限 18 歲以上、尚未生第 1 胎，本人或配偶設籍臺北市。',src:['pre','taipei']}),
+  RI('pre-money','prep','確認兩人的保險和戶籍','懷孕前',{who:'爸媽',why:'之後能領什麼錢，大多由媽媽的保險別和戶籍決定。有些補助要連續設籍一段時間，臨時遷戶籍可能來不及。',steps:['確認媽媽是勞保、公保、國保、農保或沒有投保。','確認戶籍地，以及打算讓寶寶設籍哪裡。','把答案填進這頁上方的「我家狀況」，路線會自動調整。'],tip:'臺北市生育補助要從出生日或預產日前 10 個月連續設籍，新北市、基隆市可併計。',src:['tpbirth']}),
+  RI('pre-ivf','money','有需要時查試管嬰兒補助','備孕一段時間後',{who:'爸媽',why:'中央和縣市都有補助，療程費用可以省不少。',steps:['先和不孕症門診討論是否需要。','補助條件常調整，看官方頁面最新版本。'],src:['ivf']})]},
+ {id:'t1',no:'孕初',t:'懷孕初期',from:-280,to:-183,sub:'第 1–13 週',c:'var(--lilac-d)',gist:'最容易累和孕吐。先把產檢節奏和請假方式搞清楚。',items:[
+  RI('t1-first','health','陪第一次產檢，拿孕婦健康手冊','第 8 週前後',{who:'爸媽',why:'手冊是之後每次產檢和申請補助都會用到的憑證。',where:'產檢醫院或診所。',steps:['帶媽媽的身分證和健保卡。','確認預產期後，到「設定」更新。','手機拍下手冊封面和重要頁面，兩個人都存一份。'],src:['mombook','anc']}),
+  RI('t1-cal','prep','把 14 次公費產檢排進行事曆','現在',{who:'爸爸',why:'14 次是國健署建議的時程，先排好才知道哪幾天要請假。',facts:['第 8、12、16、20、24、28 週','第 30、32、34、36 週','第 37、38、39、40 週','一般超音波：8–16 週、約 20 週、32 週後'],steps:['把週數換算成日期放進行事曆。','優先陪的幾次：超音波、妊娠糖尿病篩檢。'],src:['anc'],go:['wife','記下次產檢']}),
+  RI('t1-leave','doc','搞懂陪產檢假怎麼請','第一次產檢前',{who:'爸爸',why:'陪產檢和陪產假是同一包 7 天，產檢用掉多少，生產時就少多少。',vars:[{on:{job:'gov'},h:'爸爸是公務員',b:['陪產檢及陪產假共 7 日，可分次，也可以小時計。','陪產檢用在配偶懷孕期間。','陪產假要在分娩當日及前後合計 15 日內（含例假日）請完。']},{on:{job:'labor'},h:'爸爸是一般受僱者',b:['陪產檢及陪產假共 7 日，薪資照給。','陪產假要在分娩前後合計 15 日內請完。','可選全日、半日或小時，選定後不能改，以小時計是 56 小時。','公司可要求媽媽手冊或出生證明等證明。']}],tip:'建議留 3–5 天給生產和出院，其他才用在產檢。這是分配建議，不是規定。',src:['leave','mol']}),
+  RI('t1-down','health','討論唐氏症與子癇前症篩檢','第 9–13 週',{who:'爸媽',only:{city:'tp'},why:'這些篩檢有週數限制，過了就不能做同一項。',where:'臺北市特約醫療機構，不用另外申請。',facts:['初期唐氏症篩檢：9–13 週，補助 2,200 元','中期唐氏症篩檢：15–20 週，補助 1,000 元','NIPT：10–20 週，定額補助 2,500 元','子癇前症篩檢：10–13 週，定額補助 800 元'],tip:'唐氏症篩檢每胎擇一項補助。設籍臺北市的婦女或配偶適用。',src:['down']}),
+  RI('t1-ride','money','申請好孕 2U 專車乘車金','領到手冊後',{who:'爸爸幫辦',only:{city:'tp'},why:'產檢、就醫都能用，趁早申請可以用比較久。',where:'臺北服務通線上申請，或合作院所、12 區健康服務中心、區公所。',steps:['準備申請表、媽媽身分證。','附孕婦健康手冊，或 1 個月內的診斷證明。','線上申請要附最近一次產檢收據，臨櫃親辦免附。'],facts:['每次懷孕 10,000 元乘車金','單趟最高折 250 元','可使用到預產期後 1 年'],tip:'臺北市另有孕婦及 6 歲以下兒童家庭停車位，條件看官方頁面。',src:['ride','park']}),
+  RI('t1-care','care','接手會讓她不舒服的家事','現在',{who:'爸爸',why:'孕吐和疲倦很難預期，主動接手比等她開口好。',steps:['問她哪些氣味最受不了，先避開。','倒垃圾、煮飯、買東西先由你負責。','出血或腹痛別等，馬上聯絡產檢醫院。'],go:['momcare','看照顧老婆']})]},
+ {id:'t2',no:'孕中',t:'懷孕中期',from:-182,to:-85,sub:'第 14–27 週',c:'var(--lilac-d)',gist:'最舒服的階段。大事趁現在決定：醫院、月子、預算。',items:[
+  RI('t2-ultra','health','陪做第 20 週前後超音波','約第 20 週',{who:'爸媽',why:'這次通常看得比較仔細，也是你第一次很有感的時刻。',steps:['排好假一起去。','事先把想問醫師的問題列下來。'],src:['anc']}),
+  RI('t2-gdm','health','妊娠糖尿病與貧血篩檢','第 24–28 週',{who:'爸媽',why:'都屬公費項目，結果會影響後面的飲食和追蹤。',steps:['問清楚要不要空腹、要待多久。','前一晚提醒她，當天陪同。'],src:['anc']}),
+  RI('t2-hospital','prep','決定生產醫院和月子方式','第 20 週左右',{who:'爸媽',why:'熱門的月子中心可能很早就滿，先問才有選擇。',steps:['確認生產醫院是否就是產檢醫院。','比較月子中心、到府月嫂、家人幫忙。','列預算，把押金和退費條件問清楚。','把決定寫進 App 的老婆資料。'],go:['ask','問月子中心怎麼挑']}),
+  RI('t2-class','prep','報名爸媽教室','第 24 週後',{who:'爸媽',why:'先學過抱、洗、拍嗝和陪產，生的時候比較不會慌。',steps:['問產檢醫院有沒有開課。','優先選有陪產或新生兒照顧實作的課程。']}),
+  RI('t2-shop','prep','先買大件：床、汽座、推車','第 24 週後',{who:'爸媽',why:'大件要比價和等貨，太晚買只能將就。',steps:['看 App 的購物清單。','先列預算，再看要不要收二手。','汽車安全座椅建議買新品，或確認二手品未過使用年限、沒有撞過。'],go:['lists','看購物清單']}),
+  RI('t2-flu','health','流感季問問孕婦疫苗','流感季',{who:'爸媽',why:'孕婦感染流感比較容易嚴重，通常在產檢時可以順便問。',steps:['產檢時問醫師當季建議。'],tip:'要不要打、什麼時候打，以產檢醫師的建議為準。'})]},
+ {id:'t3',no:'孕後',t:'懷孕後期',from:-84,to:-22,sub:'第 28–36 週',c:'var(--peach-d)',gist:'開始倒數。名字、汽座、待產包都在這段完成。',items:[
+  RI('t3-name','prep','一起想好寶寶名字和從姓','第 30 週起',{who:'爸媽',why:'報戶口要填名字，也要先以書面約定從父姓或母姓。先想好，生完就不用趕。',steps:['每人先列 5 個，再一起討論。','查字有沒有在字典裡，避開電腦難打的罕用字。','從姓要由父母書面約定，可寫在出生證明書或約定書。'],facts:['用字要在辭源、辭海、康熙或教育部國語辭典裡','姓和名中間不能有空格或符號','因「文字粗俗不雅、特殊原因」改名最多 3 次','未成年第 2 次要等成年'],src:['name','tpreg']}),
+  RI('t3-tdap','health','問醫師要不要打百日咳疫苗','第 28–36 週',{who:'爸媽',why:'媽媽的抗體可以傳給寶寶，保護打疫苗前的那段時間。',steps:['在產檢時問醫師。','確認費用和接種地點。'],tip:'官方建議每次懷孕接種一劑。是否公費請以接種時的公告為準。',src:['tdap']}),
+  RI('t3-seat','prep','把汽車安全座椅裝好','第 34 週前',{who:'爸爸',why:'出院回家第一趟就要用，當天才裝最手忙腳亂。',steps:['照說明書裝在後座。','裝完搖一搖，確認穩固。','綁帶繫緊，胸前留約一指寬。','實際練習扣一次。'],facts:['2 歲以下：後座、後向座椅或攜帶式嬰兒床','2–4 歲以下且 18 公斤以下：後座幼童用座椅','4 歲以下都要用兒童安全座椅'],src:['seat']}),
+  RI('t3-bag','prep','備好待產包和證件袋','第 34 週前',{who:'爸爸',why:'破水和陣痛不會先通知你。證件放一包，報戶口也用得到。',steps:['用 App 的待產包清單逐項打勾。','證件袋：雙方身分證、健保卡、孕婦手冊、戶口名簿、印章。','把包包放門口或車上。'],go:['labor','打開生產當天模式']}),
+  RI('t3-bank','prep','先備好要用的帳戶和憑證','第 36 週前',{who:'爸媽',why:'補助都要帳戶資料，自然人憑證則可以線上報戶口。',steps:['影印媽媽的存摺封面（臺北市生育補助撥給媽媽）。','確認有郵局或臺北富邦帳戶（臺北市育兒津貼郵寄、親送用）。','有自然人憑證的話，確認密碼和讀卡機可用。']}),
+  RI('t3-handoff','doc','安排陪產假和工作交接','第 36 週前',{who:'爸爸',why:'寶寶可能提早來，工作要在你臨時消失時也轉得動。',steps:['告訴主管預產期和可能的請假區間。','確認職務代理人，列交接清單。','把生產當天要通知誰寫下來。']}),
+  RI('t3-gbs','health','乙型鏈球菌篩檢','第 35 週–未滿 38 週',{who:'爸媽',why:'結果會影響生產時要不要用抗生素，保護寶寶。',steps:['確認產檢當天會做。','報告結果記在手冊，待產時告訴醫護人員。'],src:['anc']})]},
+ {id:'t4',no:'待產',t:'待產衝刺',from:-21,to:-1,sub:'第 37 週到生',c:'var(--peach-d)',gist:'隨時可能生。手機別靜音，路線跑過一次。',items:[
+  RI('t4-weekly','health','每週陪產檢','第 37–40 週',{who:'爸媽',why:'這段每週都要檢查，也是問清楚生產安排的最後機會。',steps:['問清楚：什麼狀況要直接去急診。','確認過了預產期的處理方式。'],src:['anc']}),
+  RI('t4-route','prep','實際跑一次去醫院的路線','第 37 週',{who:'爸爸',why:'半夜找入口、找停車位最容易慌。',steps:['白天開一次，確認半夜入口和停車。','存好產房電話。','準備沒車時的備案。'],go:['labor','打開生產當天模式']}),
+  RI('t4-signs','prep','認清楚何時該出發','現在',{who:'爸爸',why:'落紅、破水、規律陣痛，各自要做的事不同。',steps:['用 App 的陣痛計時記錄間隔。','破水、大量出血或胎動明顯變少，直接聯絡醫院。','其他狀況照醫院交代的時機出發。'],go:['labor','打開生產當天模式']}),
+  RI('t4-home','care','把家裡準備好','現在',{who:'爸爸',why:'回家第一週你們不會有力氣整理。',steps:['清洗嬰兒衣物和床單。','冰箱備好即食餐，整理家裡動線。','把奶瓶、尿布台等用品就定位。']})]},
+ {id:'b0',no:'出生',t:'生產與住院',from:0,to:6,sub:'出生第 1 週',c:'var(--coral)',gist:'你的工作：陪她、顧寶寶、把文件拿齊。',items:[
+  RI('b0-leave','doc','請陪產假','生產當下',{who:'爸爸',why:'陪產假只能在分娩前後合計 15 日內使用，過了就沒了。',steps:['一確定要生就通知主管和代理人。','補登請假，備好出生證明等佐證。','把剩下天數安排在媽媽出院後最累的時候。'],src:['leave','mol']}),
+  RI('b0-cert','doc','拿出生證明書並核對','出院前',{who:'爸爸',why:'這是報戶口和申請補助的核心文件，資料錯了要回頭更正。',steps:['核對父母姓名、出生日期、性別。','若名字已定，用正楷填寫。','從姓約定欄由法定代理人簽名或蓋章。','拍照備份，正本收好。'],src:['tpreg']}),
+  RI('b0-vac','health','確認 B 肝疫苗與兒童健康手冊','出生 24 小時內',{who:'爸爸',why:'B 型肝炎第 1 劑要在出生後盡快接種，手冊會記錄之後所有的檢查和疫苗。',steps:['跟護理師確認接種時間。','拿到兒童健康手冊，出院時帶走。','問清楚大便卡和黃疸的觀察方式。'],src:['kidbook'],go:['health','看疫苗時程']}),
+  RI('b0-screen','health','確認新生兒篩檢','出生後 48 小時至 7 天',{who:'爸爸',dl:{d:6},why:'這些疾病外表看不出來，要靠篩檢及早發現。',where:'通常由出生醫院安排，住院期間主動確認。',facts:['腳跟血篩檢：2026 年 7 月起全額公費，共 22 項','新增脊髓性肌肉萎縮症（SMA）','報告陽性不等於確診，要再到確診醫院檢查'],tip:'不要為了投保延後或不做篩檢。',src:['screen']}),
+  RI('b0-heart','health','先天性心臟病篩檢','出生 7 日內',{who:'爸爸',dl:{d:6},only:{city:'tp'},why:'血氧篩檢不痛，可以及早發現危急型心臟病。',where:'臺北市特約院所出生者可在院內做；其他情況可到聯合醫院和平婦幼院區。',steps:['住院時問有沒有做。','沒做就在 7 日內安排，出院前確認。'],src:['heart']}),
+  RI('b0-hear','health','新生兒聽力篩檢','出生 3 個月內',{who:'爸爸',dl:{m:3},why:'聽力影響語言發展，越早發現越好。',where:'國健署公告的特約院所，多數生產醫院出院前會安排。',steps:['出院前問有沒有做。','把結果記在兒童健康手冊。'],tip:'檢查費用由政府負擔。',src:['hear']}),
+  RI('b0-home','care','讓媽媽優先睡覺','整週',{who:'爸爸',why:'傷口痛加上荷爾蒙變化，她現在最需要休息和肯定。',steps:['幫她擋掉探訪，訪客先問過她。','學會換尿布、拍嗝、包巾。','大量出血、發燒、劇烈頭痛、小腿腫痛，或說出想傷害自己的話，馬上就醫。'],go:['momcare','看照顧老婆']})]},
+ {id:'b1',no:'報戶口',t:'出生 60 天內',from:7,to:59,sub:'報戶口、領補助',c:'var(--coral)',gist:'最重要的一站。一次到戶政事務所，可以順便辦好幾件事。',items:[
+  RI('b1-reg','doc','辦出生登記（報戶口）','出生 60 日內',{who:'爸媽任一方',dl:{d:59},why:'所有補助和健保都卡在這一步。沒辦好，後面的事都不能跑。',where:'戶政事務所，或內政部線上申辦。',vars:[{h:'方法 A：臨櫃辦理（臺北市約 90 分鐘）',b:['到戶政事務所抽號。','交出文件，當場填申請。','換領戶口名簿每份 30 元。','順便提出下面的健保、生育補助等申請。']},{h:'方法 B：線上辦理（約 2 日）',b:['需要自然人憑證，申請人是父或母。','父母都要在臺有戶籍，寶寶在臺灣出生，並與父或母同戶。','已婚要下載從姓約定書，簽好拍照上傳。','不用紙本出生證明，由國健署通報。','超過 60 日只能親自臨櫃。']}],docs:['戶口名簿','出生證明書正本','子女從姓約定書（出生證明已寫可免）','申請人身分證及印章或簽名','委託書（委託別人辦時）'],src:['ris','tpreg']}),
+  RI('b1-nhi','doc','幫寶寶加保並申請健保卡','跟出生登記一起',{who:'爸媽任一方',dl:{d:59},why:'出生 60 日內可用父母健保卡就醫，超過還沒辦，就可能要先自費再申請核退。',where:'辦出生登記時在戶政事務所一起申請。',steps:['櫃檯說要同時辦新生兒健保加保和健保卡。','線上出生登記結案後，也可一併申請。','決定寶寶依附爸爸或媽媽。'],src:['ris','nhi60']}),
+  RI('b1-gi','money','媽媽領生育給付（每胎補到 10 萬）','出生後盡快',{who:'媽媽，爸爸代跑',why:'115 年 1 月 1 日起生產適用，不同保險的申請路徑不一樣，選錯會白跑。',vars:[{on:{ins:'labor'},h:'媽媽有勞保',b:['生育給付加補助合計每胎 10 萬，雙胞胎加倍。','申請給付就好，補助會合併發給。','擇一申請：戶政通報、勞保局線上、書面、投保單位線上。','分娩翌日起 5 年內申請，請擇一，別重複送件。','男性勞工不能請領這項補助。']},{on:{ins:'gov'},h:'媽媽有公保',b:['公保給 2 個月生育給付，未達 10 萬由政府補差額。','差額不用另外申請，由臺灣銀行併發。','向媽媽服務機關的人事單位申請。']},{on:{ins:'nat'},h:'媽媽是國保',b:['生育給付 42,206 元，加給 57,794 元，合計 10 萬。','擇一：辦出生登記時在戶政一站式申請、勞保局線上、郵寄或臨櫃。']},{on:{ins:'farm'},h:'媽媽有農保',b:['向所屬農會申請。','勞保局說明農保也有補到每胎 10 萬。','細節洽農業部 02-2381-2991。']},{on:{ins:'none'},h:'媽媽沒有參加社會保險',b:['直接發給 10 萬。','擇一：戶政一站式、勞保局線上、郵寄或臨櫃。','洽詢：衛福部 02-8590-6666。']}],src:['blibirth','molqa','gi','gi10','dosi']}),
+  RI('b1-tp','money','申請臺北市生育補助','出生次日起 60 日內',{who:'媽媽，可委託',dl:{d:59},only:{city:'tp'},why:'最容易錯過的一筆，期限比中央短很多。',where:'出生登記地或新生兒設籍地的戶政事務所，報戶口時一起辦。',facts:['第 1 名 4 萬元','第 2 名 4.5 萬元','第 3 名以上 5 萬元'],docs:['申請書','媽媽身分證明文件','印章或簽名','媽媽的存摺影本','代辦時加受託人身分證明和委託書'],tip:'父或母要從出生日或預產日前 10 個月起連續設籍到申請時，新北市、基隆市可併計，申請時須設籍臺北市。有正當理由並經核准可延長。',src:['tpbirth','tplaw']}),
+  RI('b1-city','money','查戶籍地的生育津貼','報戶口前',{who:'爸媽',dl:{d:59},only:{city:'other'},why:'各縣市金額和設籍條件不同，通常要在報戶口時一起申請。',steps:['打給戶籍地戶政事務所，問金額、設籍條件和期限。','確認要帶哪些文件。'],tip:'路線圖目前只細寫臺北市，其他縣市請以當地公告為準。'}),
+  RI('b1-dad','money','爸爸是公教人員：問生育補助','生育事實日起 3 個月內',{who:'爸爸',dl:{m:3},only:{job:'gov'},why:'夫妻只能領一份，而且媽媽若有其他社會保險要先走那邊，別等過期才問。',where:'服務機關人事單位。',facts:['標準：事實發生當月 2 個月薪俸額','媽媽有健保以外的社保：先依該保險申請','該保險給付低於標準時，才可附證明申請差額','夫妻同為公教只能領一份，要填切結書'],docs:['申請表','出生證明書正本','戶口名簿影本，或戶籍謄本正本'],tip:'這份簡明表是 107 年版，113 年規定有修正。媽媽領到 10 萬後還有沒有差額，請先問人事。',src:['gov2']}),
+  RI('b1-allow','money','申請育兒津貼','出生 60 日內最保險',{who:'爸媽任一方',dl:{d:59},why:'每月領到 2 歲。晚申請會少領，年底出生更要注意。',where:'twbaby 線上申請，或郵寄、親送戶籍地區公所社會課。',facts:['第 1 胎每月 5,000 元','第 2 胎每月 6,000 元','第 3 胎以上每月 7,000 元','初審約需 1.5 個月，過了才追溯發放','可與育嬰留停津貼同時領'],docs:['申請表','申請人和寶寶身分證明影本（如戶口名簿）','父或母名下存摺影本（臺北市為郵局或臺北富邦）'],tip:'11 月 2 日到 12 月 31 日出生，60 日內完成登記並申請，可追溯到出生月。超過又跨年，就只從申請年 1 月起算。送托公共或準公共托育者不能領，也不能與臺北市育兒津貼併領。',src:['allow','allowQ','twbaby']}),
+  RI('b1-med','doc','申請臺北市兒童醫療補助資格','報戶口後',{who:'爸爸',only:{city:'tp'},why:'設籍臺北市未滿 6 歲的孩子，看診可依規定享有補助，輪狀病毒疫苗補助也要先有這個資格。',where:'任一區健康服務中心。第 3 胎以上到戶政事務所。',docs:['寶寶與父母一方的戶口名簿正本'],tip:'第一類：父母一方設籍且實際居住臺北市滿 10 個月。',src:['med']}),
+  RI('b1-nursery','prep','有打算送托就登記公托','報戶口後',{who:'爸媽',only:{city:'tp'},why:'臺北市公托依申請先後給號，早一天排就早一個順位。',where:'線上隨時登記，可在臺北市托育地圖查名額與等候人數。',steps:['確認父母都連續設籍臺北市滿 6 個月，且期間沒有遷出入。','寶寶完成出生登記，取得身分證字號。','線上登記，免帶文件。','用簡訊或 email 收審查結果，之後用候補連結查順位。'],tip:'收托年齡是滿 2 個月到未滿 2 歲，在托者可讀到入幼兒園或 2 歲專班。',src:['nursery']}),
+  RI('b1-kid1','health','第 1 次兒童預防保健','出生至 2 個月',{who:'爸媽',dl:{m:2},why:'7 歲前共 7 次公費健檢，再加 6 次發展篩檢，第一次就在這段時間。',steps:['帶兒童健康手冊和健保卡。','滿 1 個月順便打 B 肝第 2 劑。','把想問的問題記在手機。'],src:['kid'],go:['health','看疫苗時程']}),
+  RI('b1-mom','care','陪她度過月子期','整段',{who:'爸爸',why:'連續低落、失眠或沒胃口超過兩週，要陪她就醫，不要靠硬撐。',vars:[{on:{ins:'labor'},h:'媽媽是一般受僱者',b:['產假 8 星期，受僱滿 6 個月全薪，未滿半薪。']},{on:{ins:'gov'},h:'媽媽是公務員',b:['娩假 42 日，要一次請完。','產前假 8 日可分次，不能保留到分娩後。']}],steps:['夜奶至少接一班。','幫她擋掉長輩意見。','她的情緒狀況，每週問一次。'],src:['mol','leave'],go:['momcare','看照顧老婆']})]},
+ {id:'m1',no:'2–6月',t:'2–6 個月',from:60,to:179,sub:'疫苗、托育、回職場',c:'var(--mint-d)',gist:'開始打很多疫苗。誰帶小孩要在這時決定。',items:[
+  RI('m1-vac','health','排 2、4、5、6 個月疫苗','照時程',{who:'爸媽',why:'這段疫苗最密集，錯過要重排。',steps:['App 會依出生日算好日期。','打完拍照記在手冊。'],go:['health','看疫苗時程']}),
+  RI('m1-rota','health','決定是否打輪狀病毒疫苗','6 週起',{who:'爸媽',why:'有週數限制，超過就不能打，補助也不發。',facts:['第 1 劑滿 6 週起，每劑至少隔 4 週','Rotarix 2 劑：2、4 個月，24 週前打完','RotaTeq 3 劑：2、4、6 個月，32 週前打完','臺北市第 1、3 類：每劑補助 1,050 元或 700 元'],tip:'行政院已同意納入公費，預計 116 年實施。實際開始日和適用對象還要看疾管署公告，打之前先問。',src:['rota','rota116']}),
+  RI('m1-kid2','health','第 2、3 次兒童預防保健','2–4 個月、4–10 個月',{who:'爸媽',why:'順便做發展評估。可以跟打疫苗排同一天。',steps:['帶手冊和健保卡。','手冊裡有寶寶發展項目，先看一遍。'],src:['kid']}),
+  RI('m1-who','prep','決定誰帶：自己帶、保母或托嬰','滿 2 個月前後',{who:'爸媽',why:'會影響補助、育嬰留停，也會影響兩個人的工作。',vars:[{h:'中央補助（臺北市一般家庭，每週托 30 小時以上）',b:['公辦民營托嬰、社區公共托育家園：每月 7,000 元。','私立托嬰、居家保母（準公共）：每月 13,000 元。','領托育補助就不能領育兒津貼。']},{on:{city:'tp'},h:'臺北市加碼（友善托育）',b:['寶寶及父母都設籍臺北市，送托也在臺北市。','公托每月 2,500 元、家園 6,000 元、準公共 8,000 元。','官方頁面另列胎次金額，申請前請再問。','合計不超過實際支付金額。']},{on:{city:'tp'},h:'臺北市協力照顧',b:['綜所稅稅率未達 20%，每週 30 小時以上。','每月 2,000–3,000 元，弱勢家庭 4,000–5,000 元。']}],tip:'金額以托育單位當期公告和申請表為準，洽詢 1999 分機 1624、1625。',src:['pub','friend','coop']}),
+  RI('m1-leave','doc','決定誰請育嬰留停','有需要時',{who:'爸媽',why:'津貼每人最多 6 個月，規則也不同，先算好再請。',vars:[{on:{job:'gov'},h:'公務員',b:['養育 3 足歲以下子女，機關不得拒絕，最長到滿 3 足歲。','公保年資滿 1 年並續保，津貼 6 成，加發 2 成，最長 6 個月。','夫妻都有公保，同期請可同時領。','向服務機關申請，每月 25 日入帳。','續保或退保要在生效日起 60 日內選定，選了不能改。','屆滿前 20 日內申請復職，逾期可能視同辭職。','目前法規沒看到「以日申請」，要先問人事。']},{on:{job:'labor'},h:'一般受僱者',b:['子女未滿 3 歲，津貼 6 成加薪資補助 2 成，合計 8 成，最長 6 個月。','115 年起可以日申請，每人上限 30 日，雙親合計 60 日。','一般要在 5 日前提出，孩子生病、停托可在 1 日前申請。','可累積多日一次申請，2 年內要提出。']}],tip:'考試院 2026 年 6 月通過草案，擬放寬公教津貼到子女未滿 7 歲、最長 9 個月。還沒施行，先別照這個規劃。',src:['lwop','bot','draft','flex','bli']}),
+  RI('m1-care','care','把家務分工寫下來','現在',{who:'爸媽',why:'口頭說「我會幫忙」最容易變成沒做。',steps:['列出每天的家務，各自認領。','每週給她半天真正的休息。'],go:['momcare','看照顧老婆']})]},
+ {id:'m2',no:'半歲',t:'6–12 個月',from:180,to:364,sub:'副食品、爬行',c:'var(--mint-d)',gist:'寶寶開始會動。家裡安全和副食品是重點。',items:[
+  RI('m2-vac','health','6、12 個月疫苗與流感','照時程',{who:'爸媽',why:'滿 6 個月起每年流感季也要接種，第一次要打 2 劑。',go:['health','看疫苗時程']}),
+  RI('m2-kid','health','第 4 次兒童預防保健','10 個月至 1 歲半',{who:'爸媽',why:'順便看動作和語言發展。',steps:['帶兒童健康手冊和健保卡。','可和疫苗排同一天。'],src:['kid']}),
+  RI('m2-food','care','開始副食品','滿 6 個月左右',{who:'爸媽',why:'你接手其中一餐，就是很實際的分擔。',steps:['先問過小兒科醫師。','一次加一種新食材。','週末備好一週份量。'],go:['methods','看育嬰方式']}),
+  RI('m2-safe','prep','把家裡改成防爬模式','會爬之前',{who:'爸爸',why:'寶寶的速度會超乎你預期。',steps:['裝插座蓋、桌角防撞、安全門。','藥品和清潔劑放高處上鎖。','固定會倒的家具。']}),
+  RI('m2-tax','doc','報稅時別忘了列寶寶','隔年 5 月',{who:'爸媽',why:'孩子可以列報扶養，也有幼兒學前特別扣除額可看。',steps:['用當年度報稅軟體試算。','比較夫妻合併或分開計稅。'],tip:'扣除額規定每年可能調整，以財政部當年公告為準。'})]},
+ {id:'y1',no:'1歲',t:'1–2 歲',from:365,to:729,sub:'學步、語言',c:'var(--sky-d)',gist:'開始有主見了。津貼快到期，也要先想下一步。',items:[
+  RI('y1-vac','health','12、15、18 個月疫苗','照時程',{who:'爸媽',why:'項目比較多，別漏掉。',go:['health','看疫苗時程']}),
+  RI('y1-kid','health','第 5 次預防保健與發展篩檢','1 歲半至 2 歲',{who:'爸媽',why:'發展篩檢可和預防保健同一次做，黃色和綠色紀錄卡都帶著。',steps:['先填手冊的發展項目。','語言或互動讓你擔心時，直接問醫師。'],src:['kid','dev']}),
+  RI('y1-rule','care','兩個人先對齊教養規則','現在',{who:'爸媽',why:'孩子會測試界線，爸媽不一致最容易吵架。',steps:['挑一條規則，說好一起做一週。','有不同意見私下談。'],go:['methods','看育嬰方式']}),
+  RI('y1-next','prep','滿 2 歲前換軌補助','1 歲 10 個月',{who:'爸媽',why:'衛福部津貼只到未滿 2 歲，2 歲起改由教育部申請，要另外辦。',steps:['決定 2 歲後要讀幼兒園、托嬰續托或自己帶。','預先找好線上申請網址。'],src:['allow','k12']})]},
+ {id:'y2',no:'2歲',t:'2–3 歲',from:730,to:1094,sub:'幼兒園、如廁',c:'var(--sky-d)',gist:'幼兒園要開始看了。有請育嬰留停的也要算好復職。',items:[
+  RI('y2-allow','money','申請教育部育兒津貼','滿 2 歲時',{who:'爸媽',why:'從受理當月起算，晚申請就少領。',where:'區公所社會課，或線上。',facts:['第 1 胎每月 5,000 元','第 2 胎每月 6,000 元','第 3 胎以上每月 7,000 元'],tip:'適用讀私立幼兒園（非非營利、準公共）或沒就學的孩子，不能與臺北市育兒津貼併領。',src:['allow','k12']}),
+  RI('y2-kg','prep','參觀並登記幼兒園','每年招生期',{who:'爸媽',why:'公幼和非營利幼兒園要照招生時程，錯過要等下一輪。',steps:['留意教育局當年招生公告。','比較公幼、非營利、準公共、私幼。','實際參觀，看師生比和午休環境。'],facts:['臺北市非營利：第 1 胎每月上限 2,000 元','臺北市準公共：第 1 胎每月上限 3,000 元','第 2 胎起更低，不含課後、保險、交通等費用'],src:['kg']}),
+  RI('y2-vac','health','27 個月疫苗與第 6 次預防保健','2–3 歲',{who:'爸媽',why:'日本腦炎和 A 肝的下一劑都在這時候。',go:['health','看疫苗時程'],src:['kid']}),
+  RI('y2-back','doc','育嬰留停的人算好復職日','滿 3 歲前',{who:'請假的一方',only:{job:'gov'},why:'公務員育嬰留停最長到孩子滿 3 足歲。屆滿前 20 日內要申請復職，逾期可能視同辭職。',steps:['機關會在屆滿前 30 日通知，自己也記進行事曆。','提早安排孩子的托育銜接。'],src:['lwop']}),
+  RI('y2-toilet','care','開始如廁訓練','看孩子準備度',{who:'爸媽',why:'不急，孩子準備好才有用。',steps:['先觀察能不能表達、能不能憋尿。','失敗不責備，兩個人說法要一致。'],go:['methods','看育嬰方式']})]},
+ {id:'y3',no:'3歲',t:'3–5 歲',from:1095,to:1824,sub:'上學、視力',c:'var(--sky-d)',gist:'開始團體生活。視力和第 7 次健檢別忘了。',items:[
+  RI('y3-kid','health','第 7 次預防保健','3 歲至未滿 7 歲',{who:'爸媽',why:'最後一次公費健檢，不要等到要上小學才想起來。',steps:['帶兒童健康手冊和健保卡。','順便把視力、牙齒的問題問一問。'],src:['kid']}),
+  RI('y3-eye','health','學齡前視力與社區篩檢','每年',{who:'爸媽',why:'弱視和斜視越早發現越好處理。',steps:['配合幼兒園的視力檢查。','限制 3C 使用時間。'],src:['eye']}),
+  RI('y3-school','care','適應幼兒園','上學第一個月',{who:'爸媽',why:'前幾週分離哭鬧很常見，爸媽要有一致的說法。',steps:['固定上學流程，道別不要偷溜。','放學先聽孩子說，不急著問學了什麼。']})]},
+ {id:'y5',no:'入學',t:'5 歲到上小學',from:1825,to:2555,sub:'學費、學區',c:'var(--sky-d)',gist:'路線圖最後一站，準備交棒給小學。',items:[
+  RI('y5-fee','money','領 5 歲幼兒學費補助','入學當學期',{who:'爸媽',why:'私幼的臺北市補助有申請期，錯過要等下學期。',facts:['公立每月家長負擔上限 1,000 元','非營利 2,000 元、準公共 3,000 元','私幼教育部：第 1 胎每月 5,000 元','臺北市加碼：每月 7,543–17,543 元，依家庭所得'],steps:['讀臺北市私幼：由幼兒園協助申請。','讀外縣市私幼：家長線上或臨櫃向教育局申請。','申請期：9/1–10/15、3/1–4/15。'],tip:'7 月有領 2–未滿 5 歲育兒津貼者，不用重新申請教育部補助。',src:['five']}),
+  RI('y5-vac','health','入小學前疫苗','5 歲至入國小前',{who:'爸媽',why:'白喉破傷風百日咳小兒麻痺混合疫苗和 MMR 第 2 劑，入學會檢查接種紀錄。',go:['health','看疫苗時程']}),
+  RI('y5-school','doc','確認學區和新生入學','入學前一年',{who:'爸媽',why:'學區依戶籍決定，熱門學校還可能有設籍時間的限制。',steps:['確認戶籍地對應學區。','留意區公所或學校發的新生入學通知。','想跨區或讀私校，提早查招生規定。']}),
+  RI('y5-end','care','帶孩子參觀小學','入學前暑假',{who:'爸媽',why:'先走過上學路線，孩子第一天比較不怕。',steps:['實際走一趟上學路線。','練習自己上廁所、收書包。','恭喜你，這條路線跑完了。'],})]}
+];
+ROAD.forEach((st,i)=>{st.i=i;st.items.forEach(x=>{x.st=st;x.key='road-'+x.id})});
+const ROAD_ITEMS=ROAD.flatMap(st=>st.items);
+const RD_INS=[['labor','勞保'],['gov','公保'],['nat','國保'],['farm','農保'],['none','沒保']];
+const RD_JOB=[['gov','公務員'],['labor','一般受僱']];
+const RD_CITY=[['tp','臺北市'],['other','其他縣市']];
+function rdP(){return store.get('roadPrefs',{})||{}}
+function rdShow(x,p=rdP()){const o=x.only;if(!o)return true;return Object.keys(o).every(k=>!p[k]||p[k]===o[k])}
+function rdNow(){const d=age();for(let i=ROAD.length-1;i>=1;i--){if(d>=ROAD[i].from)return i}return 1}
+function rdStat(st){const it=st.items.filter(x=>rdShow(x)),done=it.filter(x=>s.tasks[x.key]).length;return [done,it.length]}
+function rdFmt(ds){return ds.replace(/-/g,'/')}
+function rdDue(x){if(!x.dl)return null;return x.dl.m?addDays(addMonths(s.date,x.dl.m),-1):addDays(s.date,x.dl.d)}
+function rdDueTxt(x){const d=rdDue(x);if(!d)return x.at;if(s.tasks[x.key])return x.at;const n=dayDiff(todayStr(),d);return n<0?'已過期限':n===0?'今天到期':s.born&&n<=30?'剩 '+n+' 天':rdFmt(d).slice(5)+(s.born?' 前':' 前（估）')}
+function rdHot(){if(!s.born)return [];return ROAD_ITEMS.filter(x=>x.dl&&rdShow(x)&&!s.tasks[x.key]).map(x=>({x,n:dayDiff(todayStr(),rdDue(x))})).filter(o=>o.n>=-30&&o.n<=30).sort((a,b)=>a.n-b.n)}
+function rdRange(st){if(st.from==null)return '懷孕前';const a=addDays(s.date,st.from),b=addDays(s.date,st.to);return rdFmt(a)+' – '+rdFmt(b)+(s.born?'':'（估）')}
+function roadTile(){const i=rdNow(),st=ROAD[i],all=ROAD_ITEMS.filter(x=>rdShow(x)),done=all.filter(x=>s.tasks[x.key]).length,hot=rdHot()[0],nx=st.items.find(x=>rdShow(x)&&!s.tasks[x.key]);
+ return `<button type="button" class="tile span2 rdtile" data-go="road"><span class="k">爸爸路線圖</span><span class="rdmini" aria-hidden="true">${ROAD.map((r,j)=>`<i class="${j<i?'p':j===i?'c':''}"></i>`).join('')}</span><b>第 ${i+1} 站・${esc(st.t)}</b><small>${hot?esc(hot.x.t)+'：'+esc(rdDueTxt(hot.x)):nx?'下一件：'+esc(nx.t):'這一站完成了，左右滑看下一站'}</small><small class="rdsm">全程完成 ${done}／${all.length} 項 ›</small></button>`}
+function rdRow(x){const on=!!s.tasks[x.key],late=!on&&x.dl&&dayDiff(todayStr(),rdDue(x))<0&&s.born,soon=!on&&s.born&&x.dl&&dayDiff(todayStr(),rdDue(x))<=14,[kn,kc]=RD_KIND[x.k];
+ return `<div class="task rdrow${on?' done':''}"><input type="checkbox" id="t-${x.key}" data-task="${x.key}"${on?' checked':''} aria-label="完成：${esc(x.t)}"><button type="button" class="rdopen" data-rdopen="${x.id}"><b>${esc(x.t)}</b><small><span class="rdtag" style="--k:${kc}">${kn}</span>${x.dl?`<span class="rdwhen${late?' late':soon?' soon':''}">${esc(rdDueTxt(x))}</span>`:`<span class="rdwhen">${esc(x.at)}</span>`}</small></button><span class="rdgo" aria-hidden="true">›</span></div>`}
+function rdCard(st){const [d,n]=rdStat(st),k=s.rdKind||'all',it=st.items.filter(x=>rdShow(x)&&(k==='all'||x.k===k)),nx=ROAD[st.i+1];
+ return `<article class="rdcard" data-rdc="${st.i}" style="--c:${st.c}"><div class="rdch"><span class="rdno">第 ${st.i+1} 站／${ROAD.length}</span>${st.i===rdNow()?'<span class="rdhere">你在這裡</span>':''}</div><h2>${esc(st.t)}</h2><p class="rdrange">${st.sub?esc(st.sub)+'・':''}${esc(rdRange(st))}</p><p class="rdgist">${esc(st.gist)}</p><div class="rdbar" role="img" aria-label="完成 ${d}／${n}"><i style="width:${n?Math.round(d/n*100):0}%"></i></div><p class="rdrange" style="margin:0">完成 ${d}／${n}</p><div class="tasks">${it.length?it.map(rdRow).join(''):'<p class="note" style="margin:0">這一站沒有這個分類的項目。</p>'}</div>${nx?`<button type="button" class="btn light sm rdnext" data-rdjump="${st.i+1}">下一站：${esc(nx.t)} ›</button>`:''}</article>`}
+function rdPick(k,l,opts,p){return `<div class="rdprow"><span>${l}</span><div class="row">${opts.map(([v,n])=>`<button type="button" class="chip rdchip" data-rdp="${k}:${v}" aria-pressed="${p[k]===v}">${n}</button>`).join('')}</div></div>`}
+function roadHTML(){if(s.rdIdx==null)s.rdIdx=rdNow();const p=rdP(),now=rdNow(),hot=rdHot().slice(0,2),k=s.rdKind||'all',set=['ins','job','city'].filter(x=>p[x]).length;
+ const prefs=`<details class="tile span2 rdprefs"${s.rdPrefOpen?' open':''}><summary><b>我家狀況</b>${set?`<small>已選 ${set}／3</small>`:'<small>點開設定，只留適用項目 ›</small>'}</summary>${rdPick('ins','媽媽的保險',RD_INS,p)}${rdPick('job','爸爸的工作',RD_JOB,p)}${rdPick('city','戶籍地',RD_CITY,p)}</details>`;
+ return `<div class="bento rdwrap"><div class="span2 row between"><button type="button" class="btn light sm" data-go="today">‹ 回首頁</button><span class="rdswipehint">左右滑看每一站</span></div>
+  ${hot.length?`<section class="tile span2 t-rose rdhot"><p class="k">快到期</p>${hot.map(o=>`<button type="button" class="rdhotrow" data-rdopen="${o.x.id}"><b>${esc(o.x.t)}</b><span>${esc(rdDueTxt(o.x))} ›</span></button>`).join('')}</section>`:''}
+  <nav class="rdline span2" id="rdLine" aria-label="階段">${ROAD.map((st,i)=>{const [d,n]=rdStat(st);return `<button type="button" class="rdstep${i===now?' here':''}${n&&d===n?' full':''}" data-rdjump="${i}" aria-current="${i===s.rdIdx}" style="--c:${st.c}"><i>${n&&d===n?'✓':i+1}</i><span>${esc(st.no)}</span></button>`}).join('')}</nav>
+  ${set<3?prefs:''}
+  <div class="span2 rdkinds" role="group" aria-label="分類"><button type="button" class="chip rdchip" data-rdk="all" aria-pressed="${k==='all'}">全部</button>${Object.entries(RD_KIND).map(([key,[n]])=>`<button type="button" class="chip rdchip" data-rdk="${key}" aria-pressed="${k===key}">${n}</button>`).join('')}</div>
+  <div class="rdswipe span2" id="rdSwipe">${ROAD.map(rdCard).join('')}</div>
+  ${set<3?'':prefs}
+  <p class="note span2" style="margin:0">規定與金額查證至 ${RD_CHECKED}，會隨政府公告調整，送件前請以主管機關為準。補助細節目前以臺北市為主。</p></div>`}
+function rdAfter(){const sw=document.getElementById('rdSwipe');if(!sw)return;const c=sw.children[s.rdIdx];if(!c)return;const prev=sw.style.scrollBehavior;sw.style.scrollBehavior='auto';sw.scrollLeft=s.rdIdx*(c.offsetWidth+12);sw.style.scrollBehavior=prev;rdSync(true)}
+function rdSync(center){const sw=document.getElementById('rdSwipe');if(!sw||!sw.children.length)return;const w=sw.children[0].offsetWidth+12,i=Math.max(0,Math.min(ROAD.length-1,Math.round(sw.scrollLeft/w)));const ch=i!==s.rdIdx;s.rdIdx=i;sw.style.height=sw.children[i].offsetHeight+'px';
+ if(ch||center){const ln=document.getElementById('rdLine');if(ln){[...ln.children].forEach((b,j)=>b.setAttribute('aria-current',j===i?'true':'false'));const b=ln.children[i];ln.scrollLeft=b.offsetLeft-ln.clientWidth/2+b.clientWidth/2}}}
+let rdRaf=0;view.addEventListener('scroll',e=>{if(e.target&&e.target.id==='rdSwipe'&&!rdRaf)rdRaf=requestAnimationFrame(()=>{rdRaf=0;rdSync()})},true);
+addEventListener('resize',()=>{if(s.tab==='road')rdAfter()});
+function rdTo(i){const sw=document.getElementById('rdSwipe');if(!sw)return;const c=sw.children[i];if(!c)return;s.rdIdx=i;sw.style.height=c.offsetHeight+'px';sw.scrollTo({left:i*(c.offsetWidth+12),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});rdSync(true);const top=sw.getBoundingClientRect().top;if(top<0)scrollBy({top:top-96,behavior:'auto'})}
+function rdVar(x,p){const ok=v=>!v.on||Object.keys(v.on).every(k=>!p[k]||p[k]===v.on[k]);return (x.vars||[]).filter(ok)}
+function rdList(a,cls){return `<ul class="${cls}">${a.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`}
+const RD_GO={health:()=>{s.abuSeg='health';go('timeline')},methods:()=>{s.abuSeg='methods';go('timeline')},labor:()=>go('labor'),lists:()=>go('lists'),wife:()=>{s.wifeSeg='log';go('lines')},momcare:()=>{s.wifeSeg='care';go('lines')},ask:()=>{s.learnSeg='ask';go('learn')}};
+function rdOpen(id){const x=ROAD_ITEMS.find(i=>i.id===id);if(!x)return;const p=rdP(),on=!!s.tasks[x.key],[kn,kc]=RD_KIND[x.k],vs=rdVar(x,p),box=document.getElementById('rdSheet');s.rdTask=id;
+ document.getElementById('rdPanel').innerHTML=`<div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><div><p class="rdrange" style="margin:0">第 ${x.st.i+1} 站・${esc(x.st.t)}</p><h2>${esc(x.t)}</h2></div><button type="button" class="rdx" data-rdclose aria-label="關閉">×</button></div>
+  <p class="rdmeta"><span class="rdtag" style="--k:${kc}">${kn}</span><span>${esc(x.who||'爸媽')}</span><span>${esc(x.at)}</span>${x.dl?`<b>${s.born?'':'估算 '}期限 ${rdFmt(rdDue(x))}</b>`:''}</p>
+  ${x.only&&!Object.keys(x.only).every(k=>p[k])?`<p class="rdlimit">限${esc([x.only.city==='tp'?'臺北市':x.only.city==='other'?'其他縣市':'',x.only.job==='gov'?'公教人員':''].filter(Boolean).join('、'))}適用</p>`:''}
+  ${x.why?`<section><h3>為什麼要做</h3><p>${esc(x.why)}</p></section>`:''}
+  ${x.where?`<section><h3>去哪裡辦</h3><p>${esc(x.where)}</p></section>`:''}
+  ${x.facts?`<section><h3>重點數字</h3>${rdList(x.facts,'rdfacts')}</section>`:''}
+  ${vs.length?vs.map(v=>`<section class="rdvar"><h3>${esc(v.h)}</h3>${rdList(v.b,'rdol')}</section>`).join(''):''}
+  ${x.steps?`<section><h3>怎麼做</h3>${`<ol class="rdol">${x.steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`}</section>`:''}
+  ${x.docs?`<section><h3>要帶什麼</h3>${rdList(x.docs,'rdfacts')}</section>`:''}
+  ${x.tip?`<p class="rdtip">${esc(x.tip)}</p>`:''}
+  <div class="row"><button type="button" class="btn" data-rddone="${x.id}">${on?'改回未完成':'標記完成'}</button>${x.go?`<button type="button" class="btn light" data-rdgo="${x.go[0]}">${esc(x.go[1])} ›</button>`:''}</div>
+  ${x.src?`<section><h3>官方與參考來源</h3><div class="rdsrc">${x.src.map(k=>RS[k]?`<a href="${esc(RS[k][1])}" target="_blank" rel="noopener">${esc(RS[k][0])}</a>`:'').join('')}</div></section>`:''}
+  <p class="note" style="margin:0">查證至 ${RD_CHECKED}，送件前請以主管機關最新公告為準。</p>`;
+ box.hidden=false;document.getElementById('rdPanel').scrollTop=0}
+function rdClose(){document.getElementById('rdSheet').hidden=true;s.rdTask=null}
+view.addEventListener('click',e=>{const t=e.target.closest('[data-rdopen],[data-rdjump],[data-rdp],[data-rdk]');if(!t)return;
+ if(t.dataset.rdopen){rdOpen(t.dataset.rdopen);return}
+ if(t.dataset.rdjump){rdTo(+t.dataset.rdjump);return}
+ if(t.dataset.rdk){s.rdKind=t.dataset.rdk;render();return}
+ if(t.dataset.rdp){const [k,v]=t.dataset.rdp.split(':'),p={...rdP()};if(p[k]===v)delete p[k];else p[k]=v;store.set('roadPrefs',p);render()}});
+view.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('rdprefs')){s.rdPrefOpen=e.target.open;if(s.tab==='road')rdSync()}},true);
+document.getElementById('rdSheet').addEventListener('click',e=>{const b=e.currentTarget;if(e.target===b||e.target.closest('[data-rdclose]')){rdClose();return}
+ const d=e.target.closest('[data-rddone]');if(d){const x=ROAD_ITEMS.find(i=>i.id===d.dataset.rddone),on=!s.tasks[x.key];s.tasks[x.key]=on;store.set('tasks',s.tasks);if(on){confetti(d);toast('+10 點，好爸爸')}rdClose();render();return}
+ const g=e.target.closest('[data-rdgo]');if(g){const f=RD_GO[g.dataset.rdgo];rdClose();if(f)f()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&s.rdTask)rdClose()});
 function render(){
   if(!V[s.tab]||s.tab==='_unused')s.tab='today';
   const ae=document.activeElement,fid=ae&&ae.id&&view.contains(ae)?ae.id:null;
@@ -2745,10 +2987,11 @@ function render(){
   if(fid){const n=document.getElementById(fid);if(n){n.focus({preventScroll:true});try{if(sel)n.setSelectionRange(sel[0],sel[1])}catch(_){}}}
   if(document.getElementById('ctLive')){ctTick();if(!ctTimer)ctTimer=setInterval(ctTick,1000)}
   document.querySelectorAll('nav.tabbar button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===s.tab?'page':'false'));
+  if(s.tab==='road')rdAfter();
   if(s.tab==='timeline'&&s.abuSeg==='weeks'){const c=document.querySelector('#weekChips [aria-pressed="true"]'),wc=document.getElementById('weekChips');if(c&&wc)wc.scrollLeft=c.offsetLeft-wc.clientWidth/2+c.clientWidth/2}
   try{const x=xpStats(),lv=levelOf(x.total),cid=classOf(x);document.getElementById('lvTxt').textContent='Lv.'+lv;const m=document.getElementById('lvMini');if(m.dataset.c!==cid){m.innerHTML=dadSVG(cid);m.dataset.c=cid}checkLevel()}catch(_){}
 }
-function go(tab){if(tab==='game'&&s.game&&s.game.done)s.game=null;s.tab=tab;store.set('tab',tab);if(tab!=='timeline')s.selStage=null;view.classList.remove('anim');void view.offsetWidth;view.classList.add('anim');render();setTimeout(()=>view.classList.remove('anim'),500);window.scrollTo(0,0)}
+function go(tab){if(tab==='road'&&s.tab!=='road')s.rdIdx=null;if(tab==='game'&&s.game&&s.game.done)s.game=null;s.tab=tab;store.set('tab',tab);if(tab!=='timeline')s.selStage=null;view.classList.remove('anim');void view.offsetWidth;view.classList.add('anim');render();setTimeout(()=>view.classList.remove('anim'),500);window.scrollTo(0,0)}
 document.querySelector('nav.tabbar').addEventListener('click',e=>{const b=e.target.closest('button[data-tab]');if(b)go(b.dataset.tab)});
 
 function toast(m){document.querySelectorAll('.toast').forEach(x=>x.remove());const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1600)}
@@ -3014,7 +3257,7 @@ const FIREBASE_CONFIG={
   appId:"1:537055313899:web:8a9447cd7dfffae18ce3ae"
 };
 const FIREBASE_VER='10.12.2';
-const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes','contractions','notify','blog','homeHide','homeCfg'];
+const SYNC_KEYS=['born','date','baby','tasks','bought','fav','checkins','quests','growth','wife','askHist','myThreads','momlog','games','gameSeen','todos','notes','contractions','notify','blog','homeHide','homeCfg','roadPrefs'];
 const _rawSet=store.set.bind(store);
 const syncTs=()=>store.get('_syncts',{});
 let fbAuth=null,fbDb=null,syncUser=null,syncUnsub=null,syncState=FIREBASE_CONFIG?'loading':'nocfg',syncAt=0,pushTimer=null,applyingRemote=false;
