@@ -1,6 +1,59 @@
 {
- "updatedAt": "2026-11-08 07:58",
+ "updatedAt": "2026-11-08 19:55",
  "threads": [
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "author": "yiyun530",
+   "stage": "n0",
+   "summary": "剖腹產媽媽發問產後束腹帶要用多久，留言有過來人分享經驗。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@yiyun530/post/DR6v0KfkYQj",
+   "why": "先了解束腹帶用法，出院前就能幫老婆備好。"
+  },
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "author": "ooxxoo_feel",
+   "stage": "pre",
+   "summary": "媽媽提醒懷孕累是正常的，量力而為、多休息，不必被「多走動」綁架。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ooxxoo_feel/post/DXcDskHkbJE",
+   "why": "老婆想躺就讓她躺，別催她運動。"
+  },
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "研究指出約一成新手爸爸產後也會情緒低落，壓力與缺乏支援是主因。",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DJ3d1Wozs2i",
+   "why": "照顧老婆之外，也要留意自己的狀態。"
+  },
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "author": "1.5.7.__",
+   "stage": "n0",
+   "summary": "媽媽分享在家請月嫂的方式：依需求煮全家餐，日薪另計、菜自己買。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@1.5.7.__/post/DTgyfhtEvzz",
+   "why": "考慮在家坐月子時，可參考月嫂分工與費用。"
+  },
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "author": "nianxoxo",
+   "stage": "pre",
+   "summary": "孕晚期媽媽記錄睡覺最難熬：喘、頻尿、起身困難，兩三小時就醒。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@nianxoxo/post/DBOwc0Hzcnv",
+   "why": "半夜扶她起身、幫墊枕頭，就是最實際的體貼。"
+  },
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "author": "cherry_cheng_1217",
+   "stage": "n0",
+   "summary": "自然產媽媽詢問會陰縫合處腫痛多久會消、哺乳期能否吃止痛藥。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@cherry_cheng_1217/post/C-fBWRspHJu",
+   "why": "傷口痛坐不住很常見，止痛藥記得陪她問醫師。"
+  },
   {
    "addedAt": "2026-11-08T07:58:00+08:00",
    "author": "s228587sarah",
@@ -1263,6 +1316,14 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "stage": "pre",
+   "summary": "網友詢問現在生小孩是否大多住月子中心。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/257253935",
+   "why": "月中或在家坐月子，早點和老婆一起決定。"
+  },
+  {
    "addedAt": "2026-11-08T07:58:00+08:00",
    "stage": "pre",
    "summary": "討論生產時陪產者是否需要全程陪同。",
@@ -1578,6 +1639,26 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "channel": "嬰兒與母親",
+   "note": "產後束腹帶綁法",
+   "stage": "n0",
+   "thumb": "thumbs/4Iu-5XZDaWI.jpg",
+   "title": "束腹帶怎麼用？正確綁法輕鬆學",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=4Iu-5XZDaWI"
+  },
+  {
+   "addedAt": "2026-11-08T19:55:00+08:00",
+   "channel": "宏其婦幼醫院",
+   "note": "孕婦睡姿調整",
+   "stage": "pre",
+   "thumb": "thumbs/yet1zI3NdaI.jpg",
+   "title": "懷孕怎麼睡？側睡時機與睡姿調整",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=yet1zI3NdaI"
+  },
   {
    "addedAt": "2026-11-08T07:58:00+08:00",
    "channel": "嘉義基督教醫院",
