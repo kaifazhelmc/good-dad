@@ -1,6 +1,41 @@
 {
- "updatedAt": "2026-11-11 07:58",
+ "updatedAt": "2026-11-11 19:58",
  "threads": [
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "author": "sa_taiwan",
+   "stage": "n0",
+   "summary": "解釋產後憂鬱和荷爾蒙驟降、大腦調節有關，不是媽媽想太多或不知足。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@sa_taiwan/post/DUXoen7D9wc",
+   "why": "別說「為母則強」，她需要的是支持與就醫。"
+  },
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "新生兒睡覺時小動作會驚醒自己，包巾可安撫驚跳反射；確認真醒再抱。",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DFPQk3ETh0w",
+   "why": "寶寶哼哼不一定醒了，先觀察再出手。"
+  },
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "author": "pt_lienlien",
+   "stage": "pre",
+   "summary": "物理治療師說明孕期恥骨痛多和鬆弛素讓關節變鬆有關，可做骨盆穩定運動。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@pt_lienlien/post/DDPrelWzqiv",
+   "why": "她喊恥骨痛不是嬌氣，可陪她找專業評估。"
+  },
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "產後一年內都可能出現焦慮，列出心慌、失眠、反應過度等警訊。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DPN9bj_kxE2",
+   "why": "記住這幾個徵兆，發現了陪她一起求助。"
+  },
   {
    "addedAt": "2026-11-11T07:58:00+08:00",
    "author": "9306yuna",
@@ -1540,6 +1575,22 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "stage": "pre",
+   "summary": "孕媽詢問懷孕脹氣到睡不著怎麼辦。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/259626279",
+   "why": "她夜裡睡不好，幫她墊枕頭、陪她散步。"
+  },
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "stage": "pre",
+   "summary": "孕媽在親子板聊孕晚期的疲憊與嗜睡。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/260656499",
+   "why": "她白天一直想睡很正常，家事多分擔。"
+  },
+  {
    "addedAt": "2026-11-11T07:58:00+08:00",
    "stage": "pre",
    "summary": "新手媽媽請網友幫忙檢查待產包內容。",
@@ -1907,6 +1958,26 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "channel": "YouTube",
+   "note": "認識產後憂鬱",
+   "stage": "n0",
+   "thumb": "thumbs/q1nFvxgHAxA.jpg",
+   "title": "媽媽辛苦了：瞭解產前產後憂鬱",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=q1nFvxgHAxA"
+  },
+  {
+   "addedAt": "2026-11-11T19:58:00+08:00",
+   "channel": "BeautyMama",
+   "note": "爸爸也能學的按摩",
+   "stage": "pre",
+   "thumb": "thumbs/GPYVTUPxue4.jpg",
+   "title": "新手父母必學孕婦按摩",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=GPYVTUPxue4"
+  },
   {
    "addedAt": "2026-11-11T07:58:00+08:00",
    "channel": "國泰產後護理之家",
