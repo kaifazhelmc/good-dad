@@ -1,6 +1,49 @@
 {
- "updatedAt": "2026-11-13 07:57",
+ "updatedAt": "2026-11-13 19:54",
  "threads": [
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "author": "zerachou0306",
+   "stage": "n0",
+   "summary": "育兒顧問說明奶量要以泡開後總刻度計算，再扣掉剩奶就是實際喝下量。",
+   "url": "https://www.threads.com/@zerachou0306/post/DbYcnnNk__q",
+   "why": "記錄奶量統一算法，回診跟醫師報數字才準。"
+  },
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "author": "albee.c0221",
+   "stage": "pre",
+   "summary": "孕晚期媽媽胃食道逆流嚴重，連後頸都刺痛，崩潰求助有沒有人一樣。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@albee.c0221/post/DSf6z9Gk7lD",
+   "why": "睡前少量進食、墊高枕頭，不舒服就陪她問醫師。"
+  },
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "author": "yuwei__1266",
+   "stage": "pre",
+   "summary": "倒數近兩個月要剖腹的準媽媽很緊張，徵求過來人分享產後心得與疤痕照顧。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@yuwei__1266/post/DIPLRWkTy40",
+   "why": "若排剖腹，先了解術後頭幾天她需要你幫什麼。"
+  },
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "依美國兒科醫學會指引，整理小嬰兒發燒、沒精神或吃奶變少時要立刻就醫。",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DLZcDOlz9rW",
+   "why": "肛溫38度就要看醫生，這條爸爸要背起來。"
+  },
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "author": "xh__0801",
+   "stage": "n0",
+   "summary": "剖腹產媽媽請教大家傷口怎麼顧得好，除疤要擦什麼、美容膠怎麼貼。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@xh__0801/post/DMWqQyCTLbC",
+   "why": "除疤產品先問醫師，幫她記得換貼、別讓傷口悶濕。"
+  },
   {
    "addedAt": "2026-11-13T07:56:00+08:00",
    "author": "ginnybaby.zzz",
@@ -1699,6 +1742,14 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "stage": "n0",
+   "summary": "剖腹產媽媽記錄產後半年的疤痕照顧過程。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/261710321",
+   "why": "了解疤痕恢復要花幾個月，耐心陪她顧。"
+  },
+  {
    "addedAt": "2026-11-13T07:56:00+08:00",
    "stage": "pre",
    "summary": "整理產兆與宮縮的認識，減少臨產焦慮和被醫院退回的機率。",
@@ -2119,6 +2170,25 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "channel": "成大醫院",
+   "note": "黃疸與膽道閉鎖",
+   "stage": "n0",
+   "thumb": "thumbs/QRE81qxHe0M.jpg",
+   "title": "小時候黃真的不是黃嗎？小心膽道閉鎖",
+   "url": "https://www.youtube.com/watch?v=QRE81qxHe0M"
+  },
+  {
+   "addedAt": "2026-11-13T19:54:00+08:00",
+   "channel": "媽咪學苑",
+   "note": "剖腹傷口照護",
+   "stage": "n0",
+   "thumb": "thumbs/oJzCOon61r4.jpg",
+   "title": "剖腹產傷口該如何照護？",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=oJzCOon61r4"
+  },
   {
    "addedAt": "2026-11-13T07:56:00+08:00",
    "channel": "黃瑽寧醫師健康講堂",
