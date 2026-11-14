@@ -1,6 +1,46 @@
 {
- "updatedAt": "2026-11-14 19:54",
+ "updatedAt": "2026-11-15 08:00",
  "threads": [
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "整理寶寶喝完1–2小時吐水的常見原因：溢奶、胃食道逆流與吸入空氣。",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DHAe_XyTltw",
+   "why": "綠色嘔吐物或體重不增要盡快就醫。"
+  },
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "author": "iambellakang_",
+   "stage": "n0",
+   "summary": "過來人提醒新生兒洗澡用清水就夠，不一定要用沐浴乳。",
+   "url": "https://www.threads.com/@iambellakang_/post/C_HI5nVtE6h",
+   "why": "爸爸負責洗澡時，簡單清水更好上手。"
+  },
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "author": "pmlifestyle_becky",
+   "stage": "pre",
+   "summary": "媽媽拆解在台灣生小孩的花費：產檢、生產、月子中心與補品，建議備約30萬。",
+   "url": "https://www.threads.com/@pmlifestyle_becky/post/C1zb95WP3rp",
+   "why": "先把預算談好，產後少吵一半。"
+  },
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "author": "sit.down.please.md",
+   "stage": "n0",
+   "summary": "醫師說明有些寶寶天天溢奶，只要體重正常增加、沒有異常症狀就不必太緊張。",
+   "url": "https://www.threads.com/@sit.down.please.md/post/DZA6AaFk1O1",
+   "why": "看懂正常溢奶，看不懂就送醫別硬撐。"
+  },
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "author": "joesimplelife",
+   "stage": "pre",
+   "summary": "二寶媽比較在禾馨與台大待產生產的費用、止痛安排與陪產舒適度。",
+   "url": "https://www.threads.com/@joesimplelife/post/DBNEytPStYF",
+   "why": "選產房時也想想陪產者能不能撐住。"
+  },
   {
    "addedAt": "2026-11-14T19:54:00+08:00",
    "author": "yaris.yeh",
@@ -1834,6 +1874,13 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "stage": "n0",
+   "summary": "家長在親子板請教寶寶紅屁股的處理。",
+   "url": "https://www.dcard.tw/f/parentchild/p/260360941",
+   "why": "換尿布勤一點，紅屁股就少一點。"
+  },
+  {
    "addedAt": "2026-11-14T19:54:00+08:00",
    "stage": "n0",
    "summary": "曾嚴重塞奶的媽媽整理吃過幾款卵磷脂的心得。",
@@ -2292,6 +2339,24 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "channel": "澄清綜合醫院中港分院",
+   "note": "嗆奶急救觀念",
+   "stage": "n0",
+   "thumb": "thumbs/JqP1JCJhQ4w.jpg",
+   "title": "小兒科醫師：溢奶、嗆奶怎麼辦？",
+   "url": "https://www.youtube.com/watch?v=JqP1JCJhQ4w"
+  },
+  {
+   "addedAt": "2026-11-15T08:00:00+08:00",
+   "channel": "黃瑽寧",
+   "note": "溢奶原因與處理",
+   "stage": "n0",
+   "thumb": "thumbs/_DXoOcGFIk4.jpg",
+   "title": "新生寶寶溢奶問題一次解決（短版）",
+   "url": "https://www.youtube.com/watch?v=_DXoOcGFIk4"
+  },
   {
    "addedAt": "2026-11-14T19:54:00+08:00",
    "channel": "黃瑽寧醫師",
@@ -2968,16 +3033,6 @@
    "url": "https://www.youtube.com/watch?v=YbNiK3BxLSQ"
   },
   {
-   "addedAt": "2026-10-28T15:40:00+08:00",
-   "channel": "黃瑽寧醫師的暢所育言",
-   "note": "夫妻關係",
-   "stage": "n1",
-   "thumb": "thumbs/SdBkkRuPhds.jpg",
-   "title": "產後夫妻如何重建關係？ ft. 許書華醫師",
-   "topic": "mom",
-   "url": "https://www.youtube.com/watch?v=SdBkkRuPhds"
-  },
-  {
    "addedAt": "2026-10-28T15:21:09+08:00",
    "channel": "YouTube",
    "note": "陪產入門",
@@ -3039,15 +3094,6 @@
    "thumb": "thumbs/gGb1WPAfXPE.jpg",
    "title": "新生兒趴睡恐窒息！頭型重要還是命重要？",
    "url": "https://www.youtube.com/watch?v=gGb1WPAfXPE"
-  },
-  {
-   "addedAt": "2026-10-28T15:21:02+08:00",
-   "channel": "黃瑽寧醫師健康講堂",
-   "note": "鼻子、睡眠、便便顏色",
-   "stage": "n1",
-   "thumb": "thumbs/eVZ9MKdHHl4.jpg",
-   "title": "新手爸媽問題多，小毛小病逐項問答",
-   "url": "https://www.youtube.com/watch?v=eVZ9MKdHHl4"
   }
  ]
 }
