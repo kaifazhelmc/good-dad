@@ -1,6 +1,51 @@
 {
- "updatedAt": "2026-11-16 07:55",
+ "updatedAt": "2026-11-16 19:58",
  "threads": [
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "author": "nanci_chen",
+   "stage": "pre",
+   "summary": "孕媽苦惱懷孕後到底能不能平躺睡，網路說法很多不知該聽誰的。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@nanci_chen/post/C9L7qfQvJlh",
+   "why": "睡姿疑問直接問產檢醫師，晚上幫她墊好枕頭。"
+  },
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "author": "j.wen_ye",
+   "stage": "pre",
+   "summary": "網友提醒孕後期水腫會讓腳皮膚緊繃、又痛又癢，記得多擦乳液。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@j.wen_ye/post/DVjaANHE0ZQ",
+   "why": "睡前幫老婆擦乳液、輕按小腿，簡單又貼心。"
+  },
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "author": "1.5.7.__",
+   "stage": "pre",
+   "summary": "生過一胎的媽媽進入孕晚期依然很緊張，提早備好待產包，詢問二胎產兆是否相同。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@1.5.7.__/post/DLXTooAST26",
+   "why": "產前焦慮很正常，爸爸一起熟悉產兆能讓她安心。"
+  },
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "author": "4meyiiw",
+   "stage": "n0",
+   "summary": "過來人說產後生理性漲奶很痛，靠寶寶多吸、擠奶和冷敷撐過那幾天就會舒服些。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@4meyiiw/post/C74Ip5-S0Oe",
+   "why": "產後頭幾天老婆漲奶，幫忙備冷敷、抱寶寶去吸。"
+  },
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "author": "hungchihospital",
+   "stage": "pre",
+   "summary": "婦幼醫院帳號回覆孕媽：症狀時有時無容易緊張，先好好休息別自己嚇自己。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@hungchihospital/post/DYBTj-Lkh5G",
+   "why": "老婆擔心時先陪她冷靜，真有異狀再一起就醫。"
+  },
   {
    "addedAt": "2026-11-16T07:55:00+08:00",
    "author": "chen_so1122",
@@ -1950,6 +1995,22 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "stage": "pre",
+   "summary": "孕媽在親子板求助懷孕嚴重失眠該怎麼辦。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/259767189",
+   "why": "老婆睡不好時，分擔家務讓她白天能補眠。"
+  },
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "stage": "pre",
+   "summary": "孕媽在親子板詢問懷孕後情緒是否真的會失控。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/258135549",
+   "why": "先理解孕期情緒起伏，別跟老婆硬碰硬。"
+  },
+  {
    "addedAt": "2026-11-15T19:55:00+08:00",
    "stage": "n0",
    "summary": "媽媽分享產後肚子難消，90天居家健身的心得。",
@@ -2423,6 +2484,25 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "channel": "YouTube",
+   "note": "新生兒篩檢",
+   "stage": "n0",
+   "thumb": "thumbs/di94J12r-qs.jpg",
+   "title": "【小兒科】新生兒要做哪些篩檢？",
+   "url": "https://www.youtube.com/watch?v=di94J12r-qs"
+  },
+  {
+   "addedAt": "2026-11-16T19:58:00+08:00",
+   "channel": "YouTube",
+   "note": "孕期水腫",
+   "stage": "pre",
+   "thumb": "thumbs/lD9GNtNFVkw.jpg",
+   "title": "改善孕期水腫 中醫師來解答",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=lD9GNtNFVkw"
+  },
   {
    "addedAt": "2026-11-16T07:55:00+08:00",
    "channel": "媽咪愛MamiLove",
