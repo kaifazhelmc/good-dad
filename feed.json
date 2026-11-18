@@ -1,6 +1,41 @@
 {
- "updatedAt": "2026-11-18 07:54",
+ "updatedAt": "2026-11-18 19:56",
  "threads": [
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "新生兒不用硬排時間表，跟著睡眠與飢餓訊號走，白天單次小睡別太長。",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DIAxx9-zKgU",
+   "why": "排夜班前先懂寶寶睡眠節奏，少走冤枉路。"
+  },
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "author": "maggiek_1123",
+   "stage": "pre",
+   "summary": "媽媽分享開到兩指才打減痛，之前已陣痛四個多小時，開指偏慢。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@maggiek_1123/post/DWbiXN9lE-D",
+   "why": "減痛時機因人而異，先問清楚醫院施打流程。"
+  },
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "author": "eat_tea_dessert",
+   "stage": "pre",
+   "summary": "孕後期媽媽擔心胎動變少差點衝醫院，晚餐後寶寶又動得很活潑。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@eat_tea_dessert/post/DVdjWg1ARVj",
+   "why": "陪她留意胎動，有疑慮就直接就醫別硬撐。"
+  },
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "author": "ga_jin_chang",
+   "stage": "pre",
+   "summary": "二胎媽媽完整記錄待產：入院檢查、先打減痛、上催生點滴到開指過程。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ga_jin_chang/post/C6x_rJfPdMI",
+   "why": "先看懂待產流程，陪產時才知道每一步在做什麼。"
+  },
   {
    "addedAt": "2026-11-18T07:58:00+08:00",
    "author": "nancy10242002",
@@ -2130,6 +2165,22 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "stage": "n0",
+   "summary": "媽媽分享產後請月嫂坐月子的心得。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/239172304",
+   "why": "考慮在家坐月子，先看過來人怎麼評估月嫂。"
+  },
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "stage": "n0",
+   "summary": "媽媽分享第一胎坐月子時沒人提醒的事。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/257226980",
+   "why": "提早知道月子眉角，才能幫老婆先打點好。"
+  },
+  {
    "addedAt": "2026-11-18T07:58:00+08:00",
    "stage": "pre",
    "summary": "親子板分享新生兒與嬰兒用品準備清單。",
@@ -2663,6 +2714,26 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "channel": "台大醫院麻醉部",
+   "note": "減痛分娩流程",
+   "stage": "pre",
+   "thumb": "thumbs/hEMAKqnGNm0.jpg",
+   "title": "台大醫院減痛分娩衛教",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=hEMAKqnGNm0"
+  },
+  {
+   "addedAt": "2026-11-18T19:55:00+08:00",
+   "channel": "陳彥廷醫師",
+   "note": "無痛分娩入門",
+   "stage": "pre",
+   "thumb": "thumbs/9IS3SNCqbxo.jpg",
+   "title": "產痛的福音：無痛分娩",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=9IS3SNCqbxo"
+  },
   {
    "addedAt": "2026-11-18T07:58:00+08:00",
    "channel": "優迪診療間",
