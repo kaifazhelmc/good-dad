@@ -1,6 +1,32 @@
 {
- "updatedAt": "2026-11-19 07:58",
+ "updatedAt": "2026-11-19 19:55",
  "threads": [
+  {
+   "addedAt": "2026-11-19T19:55:00+08:00",
+   "author": "wang.kylie",
+   "stage": "pre",
+   "summary": "孕33週媽媽開始夜裡睡不著、焦慮難專心，問大家工作做到第幾週才休息。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@wang.kylie/post/C9Bof12PT-6",
+   "why": "孕晚期焦慮失眠常見，先陪她聊聊何時請假、怎麼分擔。"
+  },
+  {
+   "addedAt": "2026-11-19T19:55:00+08:00",
+   "author": "0315chiao",
+   "stage": "n0",
+   "summary": "準媽媽打算產後全配方奶，詢問退奶要打針、吃藥，還是完全不擠就好。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@0315chiao/post/C86CmRyytDP",
+   "why": "餵奶方式先尊重她的決定，退奶細節陪她問醫師。"
+  },
+  {
+   "addedAt": "2026-11-19T19:55:00+08:00",
+   "author": "sweethouse.sl",
+   "stage": "n0",
+   "summary": "整理到戶政幫寶寶首次辦護照：本人到場、兩吋照、戶籍謄本與費用。",
+   "url": "https://www.threads.com/@sweethouse.sl/post/DN7H5sWD0Fz",
+   "why": "報完戶口後的文件跑腿，爸爸可以一手包辦。"
+  },
   {
    "addedAt": "2026-11-19T07:58:00+08:00",
    "author": "ginnybaby.zzz",
@@ -2197,6 +2223,14 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-19T19:55:00+08:00",
+   "stage": "n0",
+   "summary": "媽媽分享自己成功退奶的過程。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/259215445",
+   "why": "想改配方奶時，先了解退奶會經歷什麼。"
+  },
+  {
    "addedAt": "2026-11-19T07:58:00+08:00",
    "stage": "n0",
    "summary": "網友比較三款包巾的使用心得。",
@@ -2760,6 +2794,26 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-19T19:55:00+08:00",
+   "channel": "YouTube",
+   "note": "脹奶冷熱敷",
+   "stage": "n0",
+   "thumb": "thumbs/QOmv3mH3ok0.jpg",
+   "title": "產後脹奶該冷敷還是熱敷？",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=QOmv3mH3ok0"
+  },
+  {
+   "addedAt": "2026-11-19T19:55:00+08:00",
+   "channel": "宏其婦幼醫院",
+   "note": "認識產後憂鬱",
+   "stage": "n0",
+   "thumb": "thumbs/YbNiK3BxLSQ.jpg",
+   "title": "產後憂鬱別輕忽！廖翌喬醫師解答",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=YbNiK3BxLSQ"
+  },
   {
    "addedAt": "2026-11-19T07:58:00+08:00",
    "channel": "YouTube",
