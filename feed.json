@@ -1,6 +1,59 @@
 {
- "updatedAt": "2026-11-22 07:58",
+ "updatedAt": "2026-11-22 19:58",
  "threads": [
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "author": "lo_chiao_lin",
+   "stage": "n0",
+   "summary": "自然產媽媽詢問產後多久能開始運動，眾說紛紜想聽過來人經驗。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@lo_chiao_lin/post/DNqVr8avyZL",
+   "why": "別催老婆瘦身，何時運動先讓醫師評估。"
+  },
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "author": "showdodo_pedgi",
+   "stage": "n0",
+   "summary": "小兒腸胃科醫師談寶寶溢奶、吐奶的常見狀況與照護觀念。",
+   "url": "https://www.threads.com/@showdodo_pedgi/post/DG_14HXTWBc",
+   "why": "先懂溢吐奶差別，半夜才不會慌張。"
+  },
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "author": "0315chiao",
+   "stage": "pre",
+   "summary": "準媽媽看到有人產程拖了三天很害怕，問大家自然產花多久。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@0315chiao/post/C7B-Ecjyoet",
+   "why": "產程長短差很多，陪產要備好體力和耐心。"
+  },
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "author": "chu_1o3o",
+   "stage": "pre",
+   "summary": "孕媽回顧從孕吐到胃食道逆流的孕期，坦言心裡的焦慮比身體更重。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@chu_1o3o/post/DXMSZGOgXeu",
+   "why": "卸貨倒數時多問她心情，傾聽比給建議重要。"
+  },
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "author": "mizo.tw",
+   "stage": "n0",
+   "summary": "說明產後落髮是雌激素下降引起的休止期掉髮，多數一年內會長回來。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@mizo.tw/post/DPfpRM1j9K0",
+   "why": "老婆看到一把頭髮崩潰時，先安撫她這是暫時的。"
+  },
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "author": "bright.moona",
+   "stage": "n0",
+   "summary": "媽媽產後四個半月才開始大量掉髮，問大家何時開始、何時停止。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@bright.moona/post/DPvccXhDhyW",
+   "why": "掉髮可能幾個月後才來，先有心理準備。"
+  },
   {
    "addedAt": "2026-11-22T07:58:00+08:00",
    "author": "ginnybaby.zzz",
@@ -2440,6 +2493,14 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "stage": "n0",
+   "summary": "媽媽分享產後嚴重掉髮、後來慢慢救回來的經驗。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/260094264",
+   "why": "掉髮讓她很焦慮，多給安慰別開玩笑。"
+  },
+  {
    "addedAt": "2026-11-22T07:58:00+08:00",
    "stage": "n0",
    "summary": "親子板網友整理育嬰相關補助的請領攻略。",
@@ -3049,6 +3110,26 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "channel": "健康2.0",
+   "note": "坐月子重點",
+   "stage": "n0",
+   "thumb": "thumbs/V0BFKwlruCM.jpg",
+   "title": "做好月子愈活愈年輕！兩胎產後大不同",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=V0BFKwlruCM"
+  },
+  {
+   "addedAt": "2026-11-22T19:55:00+08:00",
+   "channel": "光田中醫部",
+   "note": "中醫月子調理",
+   "stage": "n0",
+   "thumb": "thumbs/FeO8Gm_c2_M.jpg",
+   "title": "坐月子中醫調理 助產後媽咪恢復元氣",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=FeO8Gm_c2_M"
+  },
   {
    "addedAt": "2026-11-22T07:58:00+08:00",
    "channel": "YouTube",
