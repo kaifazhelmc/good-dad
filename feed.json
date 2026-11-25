@@ -1,6 +1,58 @@
 {
- "updatedAt": "2026-11-25 07:54",
+ "updatedAt": "2026-11-25 19:56",
  "threads": [
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "author": "ynsuper",
+   "stage": "pre",
+   "summary": "解釋孕晚期恥骨痛來自鬆弛素讓骨盆變鬆，產後數週才慢慢緩解，嚴重時可就醫評估。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@ynsuper/post/DStPyAekpq9",
+   "why": "老婆翻身、穿褲會痛不是嬌氣，記得扶一把。"
+  },
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "author": "ginnybaby.zzz",
+   "stage": "n0",
+   "summary": "教爸媽怎麼和新生兒玩：每次5到10分鐘，黑白卡、鏡子、說話對望都算遊戲。",
+   "url": "https://www.threads.com/@ginnybaby.zzz/post/DB-2JlETgIN",
+   "why": "爸爸也能每天陪玩幾分鐘，培養感情。"
+  },
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "author": "lovebabyfloat2015",
+   "stage": "n0",
+   "summary": "整理新生兒抓握、擊劍、踏步等原始反射與消失時間，並介紹居家被動運動。",
+   "url": "https://www.threads.com/@lovebabyfloat2015/post/DUIF8ptknqB",
+   "why": "知道哪些反射正常，左右不對稱就要問醫師。"
+  },
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "author": "gyn_dr_chi",
+   "stage": "n0",
+   "summary": "婦產科醫師分享案例：骨盆底肌已過度緊繃的人猛練凱格爾，反而會加重疼痛。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@gyn_dr_chi/post/DXj2eEngeRE",
+   "why": "產後有骨盆痛就先看醫師，別亂練。"
+  },
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "author": "yuna.57_",
+   "stage": "pre",
+   "summary": "孕媽問懷孕後日夜顛倒，長輩說寶寶出生後也會半夜不睡，是真的嗎。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@yuna.57_/post/DRz_4P5kkP_",
+   "why": "別拿長輩說法給老婆壓力，先陪她好好睡。"
+  },
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "author": "urogynecologist_drhsieh",
+   "stage": "n0",
+   "summary": "婦女泌尿醫師提醒產後半年是骨盆底肌恢復黃金期，持續做凱格爾能慢慢改善。",
+   "topic": "mom",
+   "url": "https://www.threads.com/@urogynecologist_drhsieh/post/DR6OG4KkQgG",
+   "why": "幫老婆排出練習時間，寶寶先交給你。"
+  },
   {
    "addedAt": "2026-11-25T07:55:00+08:00",
    "author": "jian.sunny",
@@ -2676,6 +2728,14 @@
  ],
  "dcard": [
   {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "stage": "pre",
+   "summary": "媽媽分享懷孕腰痠的緩解方式與孕婦按摩心得。",
+   "topic": "mom",
+   "url": "https://www.dcard.tw/f/parentchild/p/261780073",
+   "why": "參考看看，幫老婆安排一次孕婦按摩。"
+  },
+  {
    "addedAt": "2026-11-24T19:55:00+08:00",
    "stage": "n0",
    "summary": "媽媽用週記記錄從漲奶到退奶的歷程。",
@@ -3337,6 +3397,26 @@
   }
  ],
  "videos": [
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "channel": "宜真醫週報",
+   "note": "產後漏尿怎麼練",
+   "stage": "n0",
+   "thumb": "thumbs/HNAjZpwpXaY.jpg",
+   "title": "產後改善漏尿！醫師教你強化骨盆底肌",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=HNAjZpwpXaY"
+  },
+  {
+   "addedAt": "2026-11-25T19:56:00+08:00",
+   "channel": "YouTube",
+   "note": "恥骨痛舒緩運動",
+   "stage": "pre",
+   "thumb": "thumbs/TLcrjywLXcI.jpg",
+   "title": "孕期恥骨痛，我是這樣改善（經驗分享）",
+   "topic": "mom",
+   "url": "https://www.youtube.com/watch?v=TLcrjywLXcI"
+  },
   {
    "addedAt": "2026-11-25T07:55:00+08:00",
    "channel": "禾馨醫療",
